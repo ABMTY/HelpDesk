@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    @*<meta charset="utf-8">*@
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HelpDesk | Acceso</title>
+
+    <link href="~/Content/Acceso.css" rel="stylesheet" />
+    <!-- jQuery 2.1.4 -->
+    <script src="~/Content/js/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/js/app.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/css/font-awesome.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="~/Content/css/_all-skins.min.css">
+    <link rel="apple-touch-icon" href="~/Content/img/apple-touch-icon.png">
+    <link rel="shortcut icon" href="~/Content/img/favicon.ico">
+    <!-- Jcrop -->
+    <link rel="stylesheet" href="~/Content/css/Jcrop.css" />
+    @Styles.Render("~/Content/css/bootstrap-select.min.css")
+</head>
+<body class="hold-transition login-page" style="background-color:transparent;">
+    @using (Html.BeginForm("Index", "Acceso", FormMethod.Post))
+    {
+        <div class="login-box">
+            <!-- /.login-logo -->
+            <div class="login-box-body">
+                <div class="login-logo">                    
+                    <img src="~/Content/img/logo_helpdesk.png" class="user-image" alt="User Image">
+                </div>
+                <p class="login-box-msg">Administración de Soporte y Servicos</p>
+                <p class="login-box-msg">Inicio de Sesión</p>
+                <div class="form-group has-feedback">
+                    <select class="form-control selectpicker" id="ddl_Empresa" data-live-search="true" name="id_Empresa"></select>                    
+                    <span class="fa fa-home form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" id="txtUsuario" placeholder="Usuario" name="Usuario">
+                    <span class="fa fa-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" id="txtPassword" placeholder="Contraseña" name="Password">
+                    <span class="fa fa-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" id="btnAccesar">Accesar</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <a class="text-center" id="mensaje"><input id="txtMensaje" type="text" style="border:none; width:250px;" readonly="readonly" /></a>
+            </div>
+            <!-- /.login-box-body -->
+        </div>
+    <!-- /.login-box -->
+    }
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+        window.onload = function () {
+            $("#txtMensaje").val("Usuario y/o Contraseña es Incorrecta!");
+            };
+        </script>
+    }
+
+    <script>
+
+    $(function () {
+        //Cargar_Empresas();
+    });
+
+    //function Cargar_Empresas() {
+    //    $("#ddl_Empresa").html("");
+    //    $.ajax({
+    //        url: "/Empresa/GetEmpresas/",
+    //        async: true,
+    //        dataType: "json",
+    //        type: "POST",
+    //        contentType: "application/json; charset=utf-8",
+    //        success: function (data) {
+    //            $("#ddl_Empresa").append("<option value='0'>Seleccione la empresa</option>");
+    //            $.each(data.data, function (i, Item) {
+    //                $("#ddl_Empresa").append("<option value='" + Item.id_empresa + "'>" + Item.razon_social + "</option>");
+    //            });
+    //            $('#ddl_Empresa').selectpicker('refresh');
+    //        },
+    //        error: function (request, status, error) {
+    //            console.log("error" + error);
+    //        }
+    //    });
+    //}
+
+    //EJECUTAR EL ENTER
+    $(document).keypress(function (e) {
+        e = e || window.event;
+        if (e.keyCode == 13) {
+            document.getElementById('btnAccesar').click();
+            return false;
+        }
+        return true;
+    });
+
+
+    //$("#ddl_Empresa").change(function () {
+    //    var color = $("#ddl_Empresa").val();
+    //});
+
+    </script>
+    @Scripts.Render("~/Content/js/bootstrap-select.min.js")
+</body>
+</html>
+
