@@ -197,8 +197,19 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Administracion\AreasController.cs" />
+    <Compile Include="Controllers\Administracion\EstadosController.cs" />
+    <Compile Include="Controllers\Administracion\PermisosController.cs" />
+    <Compile Include="Controllers\Administracion\PoliticasController.cs" />
+    <Compile Include="Controllers\Administracion\PrioridadController.cs" />
+    <Compile Include="Controllers\Administracion\SucursalesController.cs" />
+    <Compile Include="Controllers\Administracion\TipoSoporteController.cs" />
+    <Compile Include="Controllers\Administracion\TipoUsuarioController.cs" />
+    <Compile Include="Controllers\Administracion\UsuariosController.cs" />
+    <Compile Include="Controllers\Administracion\ZonasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Proceso\TiketsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -720,6 +731,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Acceso\Index.cshtml" />
+    <Content Include="Views\Areas\Index.cshtml" />
+    <Content Include="Views\Prioridad\Index.cshtml" />
+    <Content Include="Views\TipoSoporte\Index.cshtml" />
+    <Content Include="Views\Politicas\Index.cshtml" />
+    <Content Include="Views\Estados\Index.cshtml" />
+    <Content Include="Views\Zonas\Index.cshtml" />
+    <Content Include="Views\TipoUsuario\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -727,6 +745,10 @@
     <Folder Include="Content\Ionicons\" />
     <Folder Include="Content\plugins\datatables\css\" />
     <Folder Include="Content\plugins\datatables\swf\" />
+    <Folder Include="Views\Permisos\" />
+    <Folder Include="Views\Sucursales\" />
+    <Folder Include="Views\Tikets\" />
+    <Folder Include="Views\Usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
