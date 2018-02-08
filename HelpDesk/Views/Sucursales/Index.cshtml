@@ -10,7 +10,7 @@
             <!--header -->
             <div class="box-header with-border">
                 <h1 class="box-title">
-                    Zonas
+                    Sucursales
                     <button class="btn btn-success" onclick="Agregar()" id="btnAgregar">
                         <i class="fa fa-plus-circle"></i> Agregar
                     </button>
@@ -22,13 +22,11 @@
             <!-- body -->
             <div class="panel-body table-responsive" id="secc_lista">
                 <div class="card-box">
-                    <table id="Lista_Zonas" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                    <table id="Lista_Sucursales" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Opciones</th>
                                 <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th>Foto</th>
                             </tr>
                         </thead>
                     </table>
@@ -39,18 +37,17 @@
                 <input type="text" id="id" value="" hidden />
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Nombre *</label>
-                    <input type="text" class="form-control" name="Zona" id="txt_Nombre" maxlength="100" required>
+                    <input type="text" class="form-control" id="txt_Nombre" maxlength="100" required>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Descripción *</label>
-                    <input type="text" class="form-control" name="Zona" id="txt_Descripcion" maxlength="100" required>
+                    <label>Dirección *</label>
+                    <input type="text" class="form-control" id="txt_Direccion" maxlength="100" required>
                 </div>
-                <div class="form-group col-md-12">
-                    <label>Foto</label>
-                    <input type="file" id="subirImagen" onchange="ConvertirImagen()" value="" />
-                    <p id="imgBase64" style="display: none;"></p>
-                    <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />
-                    <img src="" alt="" id="imagenOriginal" width="30%;" height="30%;" />
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Zona *</label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_Zonas" required data-live-search="true"></select>
+                    </div>
                 </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
@@ -68,7 +65,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="mensaje_modal">Eliminar Zona</h4>
+                        <h4 class="modal-title" id="mensaje_modal">Eliminar Sucursal</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -95,43 +92,31 @@
 <script>
 
     $(document).ready(function () {
-        $('#Lista_Zonas').DataTable();
-        //Cargar_Zonas();
+        $('#Lista_Sucursales').DataTable();
+        //Cargar_Sucursales();
     });
 
-    function Cargar_Zonas() {
-        $('#Lista_Zonas').DataTable({
+    function Cargar_Sucursales() {
+        $('#Lista_Sucursales').DataTable({
             destroy: true,
             searching: true,
             "ajax": {
-                "url": "/Zonas/GetZonas/",
+                "url": "/Sucursales/GetSucursales/",
                 "type": "GET"
             },
             "columns": [
                 { "defaultContent": "<i>..</i>" },
-                { "data": "id_zona" },
+                { "data": "id_sucursal" },
                 { "data": "nombre" },
-                { "data": "descripcion" },
-                { "defaultContent": "" },
+                { "data": "direccion" },
+                { "data": "desc_zona" },
             ],
             "columnDefs": [
                 {
-                    "targets": 0, "data": "id_zona", "render": function (data, type, full, meta) {
+                    "targets": 0, "data": "id_sucursal", "render": function (data, type, full, meta) {
                         return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-warning' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-danger' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
                     }
-                },
-                {
-                    "targets": 4, "data": "imagen", "render": function (data, type, full, meta) {
-                        if (data != null) {
-                            var url = "data:image/png;base64," + data;
-                            return "<img src=" + url + " width='60px;' height='50px;' />"
-                        } else {
-                            return "<p></p>"
-                        }
-
-                    }
-                }
-            ]
+                }]
         });
     }
 
@@ -140,6 +125,7 @@
         $("#secc_add").show();
         $("#btnAgregar").hide();
         Limpiar();
+        //Cargar_Zonas();
     }
 
     function Cancelar() {
@@ -152,18 +138,37 @@
         $("#id").val("");
         $("#txt_Nombre").val("");
         $("#txt_Descripcion").val("");
-        $("#imgBase64").text("");
-        $("#subirImagen").val("");
-        $("#imagen").attr('src', '');
-        $("#imagenOriginal").attr('src', '');
+        $("#ddl_Zonas").html();
     }
 
-    function Editar(id_zona) {
+    function Cargar_Zonas() {
+
+        $("#ddl_Zonas").html("");
+
         $.ajax({
-            url: "/Zonas/GetZona/",
+            url: "/Zonas/GetZonas/",
             async: true,
             dataType: "json",
-            data: '{ id:' + id_zona + '}',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data.data, function (i, Item) {
+                    $("#ddl_Zonas").append("<option value='" + Item.id_zona + "'>" + Item.nombre + "</option>");
+                });
+                $('#ddl_Zonas').selectpicker('refresh');
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
+    }    
+
+    function Editar(id_sucursal) {
+        $.ajax({
+            url: "/Sucursales/GetSucursal/",
+            async: true,
+            dataType: "json",
+            data: '{ id:' + id_sucursal + '}',
             type: "POST",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -171,14 +176,12 @@
                 $("#secc_lista").hide();
                 $("#secc_add").show();
                 $("#btnAgregar").hide();
-                $("#id").val(id_zona);
+                $("#id").val(id_sucursal);
                 $("#txt_Nombre").val(data.data.nombre);
-                $("#txt_Descripcion").val(data.data.descripcion);
-                $("#imgBase64").text(data.data.imagen)
-                if (data.data.imagen != "") {
-                    $('#imagen').css({ 'width': '0%', 'height': '0%' });
-                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
-                }
+                $("#txt_Direccion").val(data.data.nombre);
+                Cargar_Zonas();
+                $("#ddl_Zonas").append("<option value=" + data.data.id_zona + ">" + data.data.nombre + "</option>");
+                $("#ddl_Zonas").selectpicker('refresh');
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -187,22 +190,22 @@
     }
 
     function Guardar() {
-        Zona = {
-            "id_zona": $("#id").val() == "" ? 0 : $("#id").val(),
+        Sucursal = {
+            "id_sucursal": $("#id").val() == "" ? 0 : $("#id").val(),
             "nombre": $("#txt_Nombre").val(),
-            "descripcion": $("#txt_descripcion").val(),
-            "imagen": $("#imgBase64").text(),
+            "direccion": $("#txt_Direccion").val(),
+            "id_zona":$("#ddl_Zonas").val(),
         };
         $.ajax(
         {
-            url: "/Zonas/Guardar/",
+            url: "/Sucursales/Guardar/",
             async: true,
             dataType: "json",
-            data: JSON.stringify(Zona),
+            data: JSON.stringify(Sucursal),
             type: "POST",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                swal({ title: "Zonas", text: "Guardada Correctamente", type: "success" }, function () { Cargar_Zonas(); Cancelar(); });
+                swal({ title: "Sucursales", text: "Guardada Correctamente", type: "success" }, function () { Cargar_Sucursales(); Cancelar(); });
             },
             error: function (request, status, error) {
                 swal("Error al Guardar la Usuario");
@@ -211,43 +214,24 @@
         });
     }
 
-    function ConvertirImagen() {
-        var archivoImagen = document.getElementById("subirImagen").files;
-        if (archivoImagen.length > 0) {
-            var archivoCargar = archivoImagen[0];
-            var archivoLeer = new FileReader();
-
-            archivoLeer.onload = function (eventoCargarArchivo) {
-                var srcData = eventoCargarArchivo.target.result; //Imagen base64
-                //alert(srcData);
-                var Logo = srcData.split(',')[1];
-                //alert(Logo)
-                document.getElementById("imagen").src = srcData;
-                document.getElementById("imgBase64").textContent = Logo;
-
-            }
-            archivoLeer.readAsDataURL(archivoCargar);
-        }
-    }
-
-    function Confirma_Eliminar(id_zona) {
+    function Confirma_Eliminar(id_sucursal) {
         $('#Form_DeleteTipo').modal('show');
-        $("#lbl_msjborrar").html("Se va a eliminar el Zona No. " + id_zona + ". <br/>¿Desea Continuar?");
-        $("#txt_idborrar").text(id_zona);
+        $("#lbl_msjborrar").html("Se va a eliminar el Sucursal No. " + id_sucursal + ". <br/>¿Desea Continuar?");
+        $("#txt_idborrar").text(id_sucursal);
     }
 
     function Eliminar() {
-        id_zona = $("#txt_idborrar").text();
+        id_sucursal = $("#txt_idborrar").text();
         $.ajax({
-            url: "/Zonas/Eliminar/",
+            url: "/Sucursales/Eliminar/",
             async: true,
             dataType: "json",
-            data: '{id:' + id_zona + '}',
+            data: '{id:' + id_sucursal + '}',
             type: "POST",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $('#Form_DeleteTipo').modal('hide');
-                swal({ title: "Zonas", text: "Se elimino Correctamente", type: "success" }, function () { Cargar_Zonas(); });
+                swal({ title: "Sucursales", text: "Se elimino Correctamente", type: "success" }, function () { Cargar_Sucursales(); });
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -256,4 +240,5 @@
     }
 
 </script>
+
 
