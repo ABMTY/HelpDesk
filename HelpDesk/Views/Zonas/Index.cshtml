@@ -10,12 +10,12 @@
             <!--header -->
             <div class="box-header with-border">
                 <h1 class="box-title">
-                    Zonas
-                    <button class="btn btn-success" onclick="Agregar()" id="btnAgregar">
-                        <i class="fa fa-plus-circle"></i> Agregar
-                    </button>
+                    Zonas                   
                 </h1>
                 <div class="box-tools pull-right">
+                    <button class="btn btn-primary" onclick="Agregar()" id="btnAgregar">
+                        <i class="fa fa-plus-circle"></i> Agregar
+                    </button>
                 </div>
             </div>
             <!-- Fin header -->
@@ -46,8 +46,8 @@
                     <input type="text" class="form-control" name="Zona" id="txt_Descripcion" maxlength="100" required>
                 </div>
                 <div class="form-group col-md-12">
-                    <label>Foto de la Zona </label>
-                    <input type="file" id="subirImagen" onchange="convertirImagen()" value="" />
+                    <label>Foto</label>
+                    <input type="file" id="subirImagen" onchange="ConvertirImagen()" value="" />
                     <p id="imgBase64" style="display: none;"></p>
                     <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />
                     <img src="" alt="" id="imagenOriginal" width="30%;" height="30%;" />
@@ -56,7 +56,7 @@
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
                         <i class="fa fa-save"></i> Guardar
                     </button>
-                    <button class="btn btn-danger" onclick="Cancelar()" type="button">
+                    <button class="btn btn-default" onclick="Cancelar()" type="button">
                         <i class="fa fa-arrow-circle-left"></i> Cancelar
                     </button>
                 </div>
@@ -173,7 +173,7 @@
                 $("#btnAgregar").hide();
                 $("#id").val(id_zona);
                 $("#txt_Nombre").val(data.data.nombre);
-                $("#txt_Nombre").val(data.data.descripcion);
+                $("#txt_Descripcion").val(data.data.descripcion);
                 $("#imgBase64").text(data.data.imagen)
                 if (data.data.imagen != "") {
                     $('#imagen').css({ 'width': '0%', 'height': '0%' });
@@ -211,7 +211,7 @@
         });
     }
 
-    function convertirImagen() {
+    function ConvertirImagen() {
         var archivoImagen = document.getElementById("subirImagen").files;
         if (archivoImagen.length > 0) {
             var archivoCargar = archivoImagen[0];

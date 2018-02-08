@@ -10,12 +10,12 @@
             <!--header -->
             <div class="box-header with-border">
                 <h1 class="box-title">
-                    Areas
-                    <button class="btn btn-success" onclick="Agregar()" id="btnAgregar">
-                        <i class="fa fa-plus-circle"></i> Agregar
-                    </button>
+                    Areas                    
                 </h1>
                 <div class="box-tools pull-right">
+                    <button class="btn btn-primary" onclick="Agregar()" id="btnAgregar">
+                        <i class="fa fa-plus-circle"></i> Agregar
+                    </button>
                 </div>
             </div>
             <!-- Fin header -->
@@ -37,13 +37,13 @@
                 <input type="text" id="id" value="" hidden />
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Nombre *</label>
-                    <input type="text" class="form-control" name="area" id="txt_Nombre" maxlength="100" required>
+                    <input type="text" class="form-control" id="txt_Nombre" maxlength="100" required>
                 </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
                         <i class="fa fa-save"></i> Guardar
                     </button>
-                    <button class="btn btn-danger" onclick="Cancelar()" type="button">
+                    <button class="btn btn-default" onclick="Cancelar()" type="button">
                         <i class="fa fa-arrow-circle-left"></i> Cancelar
                     </button>
                 </div>

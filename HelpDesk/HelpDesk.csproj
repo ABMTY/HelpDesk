@@ -738,17 +738,15 @@
     <Content Include="Views\Estados\Index.cshtml" />
     <Content Include="Views\Zonas\Index.cshtml" />
     <Content Include="Views\TipoUsuario\Index.cshtml" />
+    <Content Include="Views\Sucursales\Index.cshtml" />
+    <Content Include="Views\Permisos\Index.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\font-awesome\" />
-    <Folder Include="Content\Ionicons\" />
     <Folder Include="Content\plugins\datatables\css\" />
     <Folder Include="Content\plugins\datatables\swf\" />
-    <Folder Include="Views\Permisos\" />
-    <Folder Include="Views\Sucursales\" />
     <Folder Include="Views\Tikets\" />
-    <Folder Include="Views\Usuarios\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
