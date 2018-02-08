@@ -744,8 +744,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\font-awesome\" />
-    <Folder Include="Content\Ionicons\" />
     <Folder Include="Content\plugins\datatables\css\" />
     <Folder Include="Content\plugins\datatables\swf\" />
     <Folder Include="Views\Tikets\" />

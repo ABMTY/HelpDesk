@@ -21,7 +21,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
+         folder instead of downloading all of them to reduce the load. -->    
     <link rel="stylesheet" href="~/Content/css/_all-skins.min.css">
     <link rel="apple-touch-icon" href="~/Content/img/apple-touch-icon.png">
     <link rel="shortcut icon" href="~/Content/img/favicon.ico">
@@ -40,13 +40,13 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue-light sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
             <!-- Logo -->
             <a href="/Home/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>Help</b>Desk</span>
+                <span class="logo-mini"><img src="~/Content/img/apple-touch-icon.png" class="user-image" width="42px"></span>                
                 <!-- logo for regular state and mobile devices -->                
                 <img src="~/Content/img/logo_helpdesk_b.png" class="user-image" >
             </a>
@@ -64,15 +64,15 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="~/Content/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">@Session["Nombre"]</span>
+                                <span class="hidden-xs">@Session["Nombre"]devluisangel</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="~/Content/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
-                                        @Session["Nombre"]
-                                        <small>@Session["RazonSocial"]</small>
+                                        @Session["Nombre"]Luis Angel Garcia Magaña  
+                                        <small>@Session["RazonSocial"]Abarrotes Monterrey S.A. de C.V.</small>
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->
