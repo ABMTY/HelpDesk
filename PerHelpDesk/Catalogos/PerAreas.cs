@@ -69,7 +69,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Areas";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
-                cmd.Parameters.AddWithValue("@IdArea", id);
+                comandoSelect.Parameters.AddWithValue("@IdArea", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

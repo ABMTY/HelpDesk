@@ -79,7 +79,7 @@ namespace PerHelpDesk.Sevicios
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_detalle_ticket";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
-                cmd.Parameters.AddWithValue("@IdDetalleTicket", id);
+                comandoSelect.Parameters.AddWithValue("@IdDetalleTicket", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())
