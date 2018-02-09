@@ -46,7 +46,7 @@
     <Compile Include="Catalogos\PerDetallePoliticas.cs" />
     <Compile Include="Catalogos\PerEstado.cs" />
     <Compile Include="Catalogos\PerPermisos.cs" />
-    <Compile Include="Catalogos\PerPolicaSucursales.cs" />
+    <Compile Include="Catalogos\PerPoliticaSucursales.cs" />
     <Compile Include="Catalogos\PerPoliticas.cs" />
     <Compile Include="Catalogos\PerPrioridad.cs" />
     <Compile Include="Catalogos\PerSucursales.cs" />

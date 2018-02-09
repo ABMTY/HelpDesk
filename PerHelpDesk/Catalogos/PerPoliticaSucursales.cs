@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PerHelpDesk.Catalogos
 {
-   public  class PerPolicaSucursales : Persistencia
+   public  class PerPoliticaSucursales : Persistencia
     {
         public List<politica_sucursales> ObtenerTodos()
         {
@@ -56,7 +56,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public politica_sucursales Obtener()
+        public politica_sucursales Obtener(int id)
         {
             politica_sucursales entidad = new politica_sucursales();
             try
@@ -70,6 +70,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Politica_Sucursales";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdPoliticaSucursales", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

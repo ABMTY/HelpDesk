@@ -55,7 +55,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public estado Obtener()
+        public estado Obtener(int id)
         {
             estado entidad = new estado();
             try
@@ -69,6 +69,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Estado";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdEstado", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

@@ -56,7 +56,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public detalle_permiso Obtener()
+        public detalle_permiso Obtener(int id)
         {
             detalle_permiso entidad = new detalle_permiso();
             try
@@ -70,6 +70,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Detalle_Permiso";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdPermiso", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

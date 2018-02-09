@@ -55,7 +55,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public areas Obtener()
+        public areas Obtener(int id)
         {
             areas entidad = new areas();
             try
@@ -69,6 +69,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Areas";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                cmd.Parameters.AddWithValue("@IdArea", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

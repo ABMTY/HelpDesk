@@ -65,7 +65,7 @@ namespace PerHelpDesk.Sevicios
             }
             return lista;
         }
-        public detalle_ticket Obtener()
+        public detalle_ticket Obtener(int id)
         {
             detalle_ticket entidad = new detalle_ticket();
             try
@@ -79,6 +79,7 @@ namespace PerHelpDesk.Sevicios
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_detalle_ticket";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                cmd.Parameters.AddWithValue("@IdDetalleTicket", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

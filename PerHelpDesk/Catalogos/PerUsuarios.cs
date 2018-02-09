@@ -63,7 +63,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public usuarios Obtener()
+        public usuarios Obtener(int id)
         {
             usuarios entidad = new usuarios();
             try
@@ -77,6 +77,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Usuarios";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdUsuario", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

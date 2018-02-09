@@ -55,7 +55,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public tipo_soporte Obtener()
+        public tipo_soporte Obtener(int id)
         {
             tipo_soporte entidad = new tipo_soporte();
             try
@@ -69,6 +69,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Tipo_Soporte";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@Idtipo_soporte", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

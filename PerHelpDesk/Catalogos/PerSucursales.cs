@@ -57,7 +57,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public sucursales Obtener()
+        public sucursales Obtener(int id)
         {
             sucursales entidad = new sucursales();
             try
@@ -71,6 +71,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_sucursales";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdSucursales", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

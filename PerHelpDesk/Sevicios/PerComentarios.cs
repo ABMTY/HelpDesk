@@ -59,7 +59,7 @@ namespace PerHelpDesk.Sevicios
             }
             return lista;
         }
-        public comentarios Obtener()
+        public comentarios Obtener(int id)
         {
             comentarios entidad = new comentarios();
             try
@@ -73,6 +73,7 @@ namespace PerHelpDesk.Sevicios
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Comentarios";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdComentario", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

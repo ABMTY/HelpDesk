@@ -55,7 +55,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public prioridad Obtener()
+        public prioridad Obtener(int id)
         {
             prioridad entidad = new prioridad();
             try
@@ -69,6 +69,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Prioridad";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                cmd.Parameters.AddWithValue("@IdPrioridad", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

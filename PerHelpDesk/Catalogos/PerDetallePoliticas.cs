@@ -58,7 +58,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public detalle_politicas Obtener()
+        public detalle_politicas Obtener(int id)
         {
             detalle_politicas entidad = new detalle_politicas();
             try
@@ -72,6 +72,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_detalle_politicas";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdDetallePolitica", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

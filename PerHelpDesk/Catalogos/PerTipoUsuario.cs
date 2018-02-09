@@ -55,7 +55,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public tipo_usuario Obtener()
+        public tipo_usuario Obtener(int id)
         {
             tipo_usuario entidad = new tipo_usuario();
             try
@@ -69,6 +69,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_tipo_usuario";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdTipoUsuario", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())

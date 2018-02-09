@@ -58,7 +58,7 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
-        public zonas Obtener()
+        public zonas Obtener(int id)
         {            
             zonas entidad = new zonas();
             try
@@ -72,6 +72,7 @@ namespace PerHelpDesk.Catalogos
                 comandoSelect.CommandType = CommandType.StoredProcedure;
                 comandoSelect.CommandText = "DML_Zonas";
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdZona", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())
