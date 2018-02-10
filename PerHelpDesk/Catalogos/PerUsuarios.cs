@@ -44,6 +44,23 @@ namespace PerHelpDesk.Catalogos
                         lista.Add(entidad);
                     }
                 }
+                #region ObtenerPermisos
+                comandoSelect.CommandText = "DML_Detalle_Permiso";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdUsuario", entidad.id_usuario);
+                entidad.permisos_usuario = new List<detalle_permiso>();
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        detalle_permiso permiso = new detalle_permiso();
+                        permiso.id_detalle_permiso = int.Parse(dr["id_detalle_permiso"].ToString());
+                        permiso.id_permiso = int.Parse(dr["id_permiso"].ToString());
+                        permiso.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                    }
+                }
+
+              #endregion
             }
             catch (InvalidCastException ex)
             {
