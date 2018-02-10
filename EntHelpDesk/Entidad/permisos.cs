@@ -12,5 +12,6 @@ namespace EntHelpDesk.Entidad
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public bool selected { get; set; }
+        public string url { get; set; }
     }
 }

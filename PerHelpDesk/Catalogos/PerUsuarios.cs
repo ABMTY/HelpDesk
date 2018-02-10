@@ -56,7 +56,7 @@ namespace PerHelpDesk.Catalogos
                         detalle_permiso permiso = new detalle_permiso();
                         permiso.id_detalle_permiso = int.Parse(dr["id_detalle_permiso"].ToString());
                         permiso.id_permiso = int.Parse(dr["id_permiso"].ToString());
-                        permiso.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        permiso.id_tipo_usuario = int.Parse(dr["id_usuario"].ToString());
                     }
                 }
 

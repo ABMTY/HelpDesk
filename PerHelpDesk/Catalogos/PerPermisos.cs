@@ -34,6 +34,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_permiso = int.Parse(dr["id_permiso"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
+                        entidad.url = dr["url"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -78,6 +79,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_permiso = int.Parse(dr["id_permiso"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
+                        entidad.url = dr["url"].ToString();
                     }
                 }
             }
@@ -113,6 +115,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdPermiso", entidad.id_permiso);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
+                cmd.Parameters.AddWithValue("@url", entidad.url);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -149,6 +152,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdPermiso", entidad.id_permiso);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
+                cmd.Parameters.AddWithValue("@url", entidad.url);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }

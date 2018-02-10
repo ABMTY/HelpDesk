@@ -32,7 +32,7 @@ namespace PerHelpDesk.Catalogos
                     while (dr.Read())
                     {
                         entidad.id_detalle_permiso = int.Parse(dr["id_detalle_permiso"].ToString());
-                        entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
                         entidad.id_permiso = int.Parse(dr["id_permiso"].ToString());
                         lista.Add(entidad);
                     }
@@ -76,7 +76,7 @@ namespace PerHelpDesk.Catalogos
                     if (dr.Read())
                     {
                         entidad.id_detalle_permiso = int.Parse(dr["id_detalle_permiso"].ToString());
-                        entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
                         entidad.id_permiso = int.Parse(dr["id_permiso"].ToString());
                     }
                 }
@@ -111,7 +111,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.CommandText = "DML_Detalle_Permiso";
                 cmd.Parameters.AddWithValue("@Sentencia", "Insert");
                 cmd.Parameters.AddWithValue("@IdDetallePermiso", entidad.id_detalle_permiso);
-                cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
+                cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
                 cmd.Parameters.AddWithValue("@id_permiso", entidad.id_permiso);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
@@ -147,7 +147,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.CommandText = "DML_Detalle_Permiso";
                 cmd.Parameters.AddWithValue("@Sentencia", "Update");
                 cmd.Parameters.AddWithValue("@IdDetallePermiso", entidad.id_detalle_permiso);
-                cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
+                cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
                 cmd.Parameters.AddWithValue("@id_permiso", entidad.id_permiso);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
