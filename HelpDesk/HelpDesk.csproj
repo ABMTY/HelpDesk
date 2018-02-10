@@ -759,6 +759,16 @@
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CtrlHelpDesk\CtrlHelpDesk.csproj">
+      <Project>{aa1960ba-97f2-4800-b5d4-053ecb8e998b}</Project>
+      <Name>CtrlHelpDesk</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EntHelpDesk\EntHelpDesk.csproj">
+      <Project>{d4dedf31-00f2-40a5-9ff9-d981ad0f9f2d}</Project>
+      <Name>EntHelpDesk</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
