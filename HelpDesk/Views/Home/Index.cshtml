@@ -1,19 +1,192 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<section class="content-header">
+    <h1>
+        Resumen de Tickets
+        @*<small>Version 2.0</small>*@
+    </h1>
+    <ol class="breadcrumb">
+        @*<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>*@
+    </ol>
+</section>
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-2 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>1</h3>
+                        <p>Vencidos</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ticket"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Ver <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-2 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                        <h3>5</h3>
+                        <p>Abiertos</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ticket"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Ver <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-2 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>6</h3>
+                        <p>En espera</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ticket"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Ver <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-2 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>1</h3>
+                        <p>Vence hoy</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ticket"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Ver <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-2 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>2</h3>
+                        <p>Sin asignar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ticket"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Ver <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-2 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-gray">
+                    <div class="inner">
+                        <h3>2</h3>
+                        <p>Otro Indicador</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-ticket"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Ver <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+    </div><!-- /.col -->
+</div><!-- /.row -->
 
 <div class="row">
     <div class="col-md-12">
-        <div class="box">
+        <!-- PRODUCT LIST -->
+        <div class="box box-primary">
             <div class="box-header with-border">
-                Dashboard
+                <h3 class="box-title">Actividades Recientes</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    @*<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                </div>
             </div>
             <!-- /.box-header -->
-            <!-- centro -->
-            <div class="panel-body table-responsive" style="height: 400px;" id="listadoregistros">
-               
+            <div class="box-body">
+                <ul class="products-list product-list-in-box">
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="~/Content/img/IconUser.png" alt="Product Image">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                               Daniel
+                                <span class="label label-warning pull-right">$1800</span>
+                            </a>
+                            <span class="product-description">
+                                Registro un nuevo tiket
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="~/Content/img/IconUser.png" alt="Product Image">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                                Alvarado
+                                <span class="label label-info pull-right">$700</span>
+                            </a>
+                            <span class="product-description">
+                                Tiket Asignado No. 10
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="~/Content/img/IconUser.png" alt="Product Image">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                                Luis <span class="label label-danger pull-right">$350</span>
+                            </a>
+                            <span class="product-description">
+                                Tiket No. 20 Asignado
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                    <li class="item">
+                        <div class="product-img">
+                            <img src="~/Content/img/IconUser.png" alt="Product Image">
+                        </div>
+                        <div class="product-info">
+                            <a href="javascript:void(0)" class="product-title">
+                                Sergio
+                                <span class="label label-success pull-right">$399</span>
+                            </a>
+                            <span class="product-description">
+                               Registro el Tiket 34
+                            </span>
+                        </div>
+                    </li>
+                    <!-- /.item -->
+                </ul>
             </div>
-            <!--Fin centro -->
-        </div><!-- /.box -->
-    </div><!-- /.col -->
-</div><!-- /.row -->
+            <!-- /.box-body -->
+            <div class="box-footer text-center">
+                <a href="javascript:void(0)" class="uppercase">Visualizar todas las actividades</a>
+            </div>
+            <!-- /.box-footer -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>

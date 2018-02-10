@@ -209,7 +209,8 @@
     <Compile Include="Controllers\Administracion\ZonasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\Proceso\TiketsController.cs" />
+    <Compile Include="Controllers\Proceso\RegistroTicketController.cs" />
+    <Compile Include="Controllers\Proceso\TicketsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,6 +236,7 @@
     <Content Include="Content\css\bootstrap-select.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\ionicons.css" />
     <Content Include="Content\css\Jcrop.css" />
     <Content Include="Content\css\_all-skins.css" />
     <Content Include="Content\css\_all-skins.min.css" />
@@ -741,12 +743,13 @@
     <Content Include="Views\Sucursales\Index.cshtml" />
     <Content Include="Views\Permisos\Index.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\RegistroTicket\Index.cshtml" />
+    <Content Include="Views\Tickets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\datatables\css\" />
     <Folder Include="Content\plugins\datatables\swf\" />
-    <Folder Include="Views\Tikets\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -118,6 +118,43 @@
             </div>
         </div>
 
+        <!-- Modal Permisos -->
+        <div class="modal fade" id="Form_Permisos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="mensaje_modal">Asignar Permisos</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body ">
+
+                        <table id="Lista_Permisos" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<input id="seleccionarTodos" type="checkbox" /></th>
+                                    <th>No.</th>
+                                    <th>Permiso</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <span id="txt_idusuario" style="display:none;"></span>
+
+                        @*<form role="form" data-toggle="validator">
+                            <h4 id="lbl_msjborrar"></h4>
+                            <span id="txt_idborrar" style="display:none;"></span>
+                        </form>*@
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" onclick="GuardarPermisos(); return false;"><i class="fa fa-check" aria-hidden="true"></i> Guardar</button>
+                        <button class="btn btn-danger" onclick="Cancelar()" ; return false;" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div><!-- /.col -->
 </div><!-- /.row -->
 <!--Fin-Contenido-->
@@ -147,7 +184,7 @@
             "columnDefs": [
                 {
                     "targets": 0, "data": "id_usuario", "render": function (data, type, full, meta) {
-                        return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-warning' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-danger' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
+                        return "<button type='button' title='Permisos' id='btn_mas" + data + "' class='btn btn-warning' onclick='AsignarPermisos(" + data + ")'  ><i class='fa fa-edit'></i></button> <button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-warning' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-danger' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
                     }
                 },
                 {
@@ -370,6 +407,111 @@
                 console.log("error" + error);
             }
         });
+    }
+
+    function Cargar_Permisos() {
+        $('#Lista_Permisos').DataTable({
+            destroy: true,
+            searching: true,
+            "ajax": {
+                "url": "/Permisos/GetPermisos/",
+                "type": "GET"
+            },
+            "columns": [
+                { "defaultContent": "<i>&nbsp; &nbsp; &nbsp; </i>" },
+                { "data": "id_permiso" },
+                { "data": "nombre" },
+            ],
+            "columnDefs": [
+                {
+                    "targets": 0, "data": "id_permiso", "render": function (data, type, full, meta) {
+                        return "<div class='checkbox checkbox-success checkbox-circle'>" +
+                        "<input  type='checkbox'  id='chk_seleccionado" + data + "' value='' ><label></label></div>"
+                    }
+                }
+            ]
+        });
+    }
+
+    function Cargar_UsuarioPermisos(id_usuario) {
+        $('#Lista_Permisos').DataTable({
+            destroy: true,
+            searching: true,
+            "ajax": {
+                "url": "/Usuarios/GetUsuarioPermisos/?id=" + id_usuario,
+                "dataType": "json",
+                "type": "GET",
+                "contentType": "application/json; charset=utf-8"
+            },
+            "columnDefs": [
+               {
+                   "targets": [0],
+                   "visible": false,
+                   "searchable": false
+               }
+            ],
+            "columns": [
+                { "defaultContent": "<i>&nbsp; &nbsp; &nbsp; </i>" },
+                { "data": "id_permiso" },
+                { "data": "nombre" }
+            ],
+            "columnDefs": [
+                {
+                    "targets": 0, "data": "selected", "render": function (data, type, full, meta) {
+                        var items = [];
+                        items = data.split('&');
+                        console.log(items[0]);
+                        return "<div class='checkbox checkbox-success checkbox-circle'>" +
+                        "&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<input  type='checkbox' id='chk_seleccionado" + items[1] + "'  value='' " + items[0] + "  ><label></label></div>"
+                    }
+                }
+            ]
+        });
+    }
+
+    function AsignarPermisos(id_usuario) {
+        $('#Form_Permisos').modal('show');
+        //Cargar_Permisos();
+        Cargar_UsuarioPermisos(id_usuario)        
+        $("#txt_idusuario").text(id_usuario);
+    }
+
+    function GuardarPermisos() {
+        id_usuario = $("#txt_idusuario").text();
+
+        var PermisosSeleccionados = [];
+
+        var table = document.getElementById("Lista_Permisos");
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            idpermiso = $('#Lista_Permisos tr:nth-child(' + i + ') td:nth-child(3)').html();
+            if ($("#chk_seleccionado" + idvista).is(':checked')) {
+                PermisosSeleccionados.push({ id_permiso: idpermiso });
+            }
+        }
+
+        UsuarioPermisos = {
+            "id_usuario": id_usuario,            
+            "permisos": PermisosSeleccionados
+        };
+
+        $.ajax(
+         {
+             url: "/Usuarios/GuardarPermisos/",
+             async: true,
+             dataType: "json",
+             data: JSON.stringify(UsuarioPermisos),
+             type: "POST",
+             contentType: "application/json; charset=utf-8",
+             success: function (data) {
+                 swal({ title: "Permisos", text: "Guardada Correctamente", type: "success" }, function () { Cargar_Usuarios(); Cancelar(); });
+             },
+             error: function (request, status, error) {
+                 swal("Error al Guardar los permisos del usuarios");
+                 console.log("error" + error);
+             }
+         }
+
+         );
     }
 
 </script>
