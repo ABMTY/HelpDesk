@@ -37,9 +37,9 @@ namespace CtrlHelpDesk.Catalogos
             return PerDetallePermiso.Update(Entidad);
         }
 
-        public bool Eliminar(int id_detalle_permiso)
+        public bool Eliminar(int id_tipo_usuario)
         {
-            return PerDetallePermiso.Delete(id_detalle_permiso);
+            return PerDetallePermiso.Delete(id_tipo_usuario);
         }
     }
 }

@@ -38,10 +38,10 @@ namespace HelpDesk.Controllers.Administracion
         }
         public ActionResult GetPoliticas()
         {
-            var Turnos = control.ObtenerTodos();
+            var Listado = control.ObtenerTodos();
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
-            var json = Json(new { data = Turnos }, JsonRequestBehavior.AllowGet);
+            var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
             return json;
         }

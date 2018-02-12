@@ -38,16 +38,16 @@ namespace HelpDesk.Controllers.Administracion
         }
         public ActionResult GetPermisos()
         {
-            var Turnos = control.ObtenerTodos();
+            var Listado = control.ObtenerTodos();
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
-            var json = Json(new { data = Turnos }, JsonRequestBehavior.AllowGet);
+            var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
             return json;
         }
         public ActionResult GetPermiso(int id)
         {
-            var Turno = control.Obtener(id);
+            var entidad = control.Obtener(id);
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
             var json = Json(new { data = Turno }, JsonRequestBehavior.AllowGet);

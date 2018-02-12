@@ -183,7 +183,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.CommandText = "DML_Detalle_Permiso";
                 cmd.Parameters.AddWithValue("@Sentencia", "Delete");
-                cmd.Parameters.AddWithValue("@IdPermiso", id);
+                cmd.Parameters.AddWithValue("@IdTipoUsuario", id);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
