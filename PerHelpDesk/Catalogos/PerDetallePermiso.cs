@@ -113,7 +113,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@Sentencia", "Insert");
                 cmd.Parameters.AddWithValue("@IdDetallePermiso", entidad.id_detalle_permiso);
                 cmd.Parameters.AddWithValue("@IdTipoUsuario", entidad.id_tipo_usuario);
-                cmd.Parameters.AddWithValue("@id_permiso", entidad.id_permiso);
+                cmd.Parameters.AddWithValue("@IdPermiso", entidad.id_permiso);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -149,7 +149,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@Sentencia", "Update");
                 cmd.Parameters.AddWithValue("@IdDetallePermiso", entidad.id_detalle_permiso);
                 cmd.Parameters.AddWithValue("@IdTipoUsuario", entidad.id_tipo_usuario);
-                cmd.Parameters.AddWithValue("@id_permiso", entidad.id_permiso);
+                cmd.Parameters.AddWithValue("@IdPermiso", entidad.id_permiso);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
