@@ -39,19 +39,16 @@ namespace HelpDesk.Controllers.Administracion
                 else
                 {
                     r = control.Insertar(entidad);
-                    int id_rol = control.ObtenerTodos().ToList().Max(p => p.id_tipo_usuario);
+                    int id_tipo_usuario = control.ObtenerTodos().ToList().Max(p => p.id_tipo_usuario);
                     foreach (detalle_permiso item in entidad.permisos_tipo_usuario)
                     {
                         ctrlDetPermisos.Insertar(new detalle_permiso
                         {
-                            id_tipo_usuario = entidad.id_tipo_usuario,
+                            id_tipo_usuario = id_tipo_usuario,
                             id_permiso = item.id_permiso
                         });
                     }
                 }
-                //var r = entidad.id_tipo_usuario > 0 ?
-                //   control.Actualizar(entidad) :
-                //   control.Insertar(entidad);
 
                 if (!r)
                 {
