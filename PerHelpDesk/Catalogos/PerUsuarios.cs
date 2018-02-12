@@ -38,7 +38,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.correo = dr["correo"].ToString();
                         entidad.telefono = int.Parse(dr["telefono"].ToString());
                         entidad.ext = int.Parse(dr["ext"].ToString());
-                        entidad.foto = dr["foto"].ToString();
+                        if (dr["foto"].ToString()!=string.Empty)
+                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]); 
                         entidad.id_area = int.Parse(dr["id_area"].ToString());
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
@@ -90,7 +91,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.correo = dr["correo"].ToString();
                         entidad.telefono = int.Parse(dr["telefono"].ToString());
                         entidad.ext = int.Parse(dr["ext"].ToString());
-                        entidad.foto = dr["foto"].ToString();
+                        if (dr["foto"].ToString() != string.Empty)
+                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
                         entidad.id_area = int.Parse(dr["id_area"].ToString());
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
@@ -132,7 +134,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@correo", entidad.correo);
                 cmd.Parameters.AddWithValue("@telefono", entidad.telefono);
                 cmd.Parameters.AddWithValue("@ext", entidad.ext);
-                cmd.Parameters.AddWithValue("@foto", entidad.foto);
+                cmd.Parameters.AddWithValue("@foto", Convert.FromBase64String(entidad.foto));
                 cmd.Parameters.AddWithValue("@id_area", entidad.id_area);
                 cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
@@ -175,7 +177,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@correo", entidad.correo);
                 cmd.Parameters.AddWithValue("@telefono", entidad.telefono);
                 cmd.Parameters.AddWithValue("@ext", entidad.ext);
-                cmd.Parameters.AddWithValue("@foto", entidad.foto);
+                cmd.Parameters.AddWithValue("@foto", Convert.FromBase64String(entidad.foto));
                 cmd.Parameters.AddWithValue("@id_area", entidad.id_area);
                 cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);

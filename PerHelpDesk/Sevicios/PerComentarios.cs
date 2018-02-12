@@ -33,7 +33,8 @@ namespace PerHelpDesk.Sevicios
                     {
                         entidad.id_comentario = int.Parse(dr["id_comentario"].ToString());
                         entidad.comentario = dr["comentario"].ToString();
-                        entidad.imagen = dr["imagen"].ToString();                        
+                        if (dr["imagen"].ToString() != string.Empty)
+                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());
                         entidad.status = int.Parse(dr["status"].ToString());
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
@@ -80,7 +81,8 @@ namespace PerHelpDesk.Sevicios
                     {
                         entidad.id_comentario = int.Parse(dr["id_comentario"].ToString());
                         entidad.comentario = dr["comentario"].ToString();
-                        entidad.imagen = dr["imagen"].ToString();
+                        if (dr["imagen"].ToString() != string.Empty)
+                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());
                         entidad.status = int.Parse(dr["status"].ToString());
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
@@ -118,7 +120,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@Sentencia", "Insert");
                 cmd.Parameters.AddWithValue("@IdComentario", entidad.id_comentario);
                 cmd.Parameters.AddWithValue("@comentario", entidad.comentario);
-                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                 cmd.Parameters.AddWithValue("@fechahora_comentario", entidad.fechahora_comentario);
                 cmd.Parameters.AddWithValue("@status", entidad.status);
                 cmd.Parameters.AddWithValue("@id_detalle_ticket", entidad.id_detalle_ticket);                
@@ -157,7 +159,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@Sentencia", "Update");
                 cmd.Parameters.AddWithValue("@IdComentario", entidad.id_comentario);
                 cmd.Parameters.AddWithValue("@comentario", entidad.comentario);
-                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                 cmd.Parameters.AddWithValue("@fechahora_comentario", entidad.fechahora_comentario);
                 cmd.Parameters.AddWithValue("@status", entidad.status);
                 cmd.Parameters.AddWithValue("@id_detalle_ticket", entidad.id_detalle_ticket);
