@@ -9,6 +9,9 @@ namespace HelpDesk
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            //mapeo de signalR para las notificaciones
+            app.MapSignalR();
+            /*--------------------------------------*/
         }
     }
 }

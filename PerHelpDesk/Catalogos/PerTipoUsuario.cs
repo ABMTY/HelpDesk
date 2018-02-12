@@ -83,6 +83,7 @@ namespace PerHelpDesk.Catalogos
 
                 #region ObtenerPermisos
                 comandoSelect.CommandText = "DML_Detalle_Permiso";
+                comandoSelect.Parameters.Clear();
                 comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
                 comandoSelect.Parameters.AddWithValue("@IdTipoUsuario", entidad.id_tipo_usuario);
                 entidad.permisos_tipo_usuario = new List<detalle_permiso>();
