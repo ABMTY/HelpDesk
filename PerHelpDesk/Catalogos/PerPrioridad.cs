@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new prioridad();
                         entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         lista.Add(entidad);
@@ -74,6 +75,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     if (dr.Read())
                     {
+                        entidad = new prioridad();
                         entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                     }
