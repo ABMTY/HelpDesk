@@ -41,8 +41,11 @@ namespace PerHelpDesk.Catalogos
                         if (dr["foto"].ToString()!=string.Empty)
                             entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]); 
                         entidad.id_area = int.Parse(dr["id_area"].ToString());
+                        entidad.area = dr["area"].ToString();
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
+                        entidad.sucursal = dr["sucursal"].ToString();
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
+                        entidad.tipo_usuario = dr["tipo_usuario"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -94,8 +97,11 @@ namespace PerHelpDesk.Catalogos
                         if (dr["foto"].ToString() != string.Empty)
                             entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
                         entidad.id_area = int.Parse(dr["id_area"].ToString());
+                        entidad.area = dr["area"].ToString();
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
+                        entidad.sucursal = dr["sucursal"].ToString();
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
+                        entidad.tipo_usuario = dr["tipo_usuario"].ToString();
                     }
                 }
             }
