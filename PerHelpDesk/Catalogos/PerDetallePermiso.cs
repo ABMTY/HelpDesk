@@ -112,7 +112,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.CommandText = "DML_Detalle_Permiso";
                 cmd.Parameters.AddWithValue("@Sentencia", "Insert");
                 cmd.Parameters.AddWithValue("@IdDetallePermiso", entidad.id_detalle_permiso);
-                cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
+                cmd.Parameters.AddWithValue("@IdTipoUsuario", entidad.id_tipo_usuario);
                 cmd.Parameters.AddWithValue("@id_permiso", entidad.id_permiso);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
@@ -148,7 +148,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.CommandText = "DML_Detalle_Permiso";
                 cmd.Parameters.AddWithValue("@Sentencia", "Update");
                 cmd.Parameters.AddWithValue("@IdDetallePermiso", entidad.id_detalle_permiso);
-                cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
+                cmd.Parameters.AddWithValue("@IdTipoUsuario", entidad.id_tipo_usuario);
                 cmd.Parameters.AddWithValue("@id_permiso", entidad.id_permiso);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
