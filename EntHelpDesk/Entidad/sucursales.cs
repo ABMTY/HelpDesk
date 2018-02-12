@@ -11,6 +11,7 @@ namespace EntHelpDesk.Entidad
         public int id_sucursal { get; set; }
         public string nombre { get; set; }
         public string direccion { get; set; }
-        public int id_zona { get; set; }       
+        public int id_zona { get; set; }
+        public string zona { get; set; }
     }
 }

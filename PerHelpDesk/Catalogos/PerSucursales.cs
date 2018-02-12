@@ -36,6 +36,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.direccion = dr["direccion"].ToString();
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
+                        entidad.zona = dr["zona"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -81,6 +82,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.direccion = dr["direccion"].ToString();
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
+                        entidad.zona = dr["zona"].ToString();
                     }
                 }
             }
