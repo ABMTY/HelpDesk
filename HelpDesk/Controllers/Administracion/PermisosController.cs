@@ -50,7 +50,7 @@ namespace HelpDesk.Controllers.Administracion
             var entidad = control.Obtener(id);
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
-            var json = Json(new { data = Turno }, JsonRequestBehavior.AllowGet);
+            var json = Json(new { data = entidad }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
             return json;
         }

@@ -76,10 +76,10 @@ namespace HelpDesk.Controllers.Administracion
         }
         public ActionResult GetTipoUsuario(int id)
         {
-            var Turno = control.Obtener(id);
+            var Listado = control.Obtener(id);
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
-            var json = Json(new { data = Turno }, JsonRequestBehavior.AllowGet);
+            var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
             return json;
         }
