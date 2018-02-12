@@ -21,6 +21,9 @@ namespace EntHelpDesk.Entidad
         public string area { get; set; }
         public string sucursal { get; set; }
         public string tipo_usuario { get; set; }
+        public string user_name { get; set; }
+        public string password { get; set; }
+        public string nombre_completo { get { return nombre +" "+ apellidos; } }
         public List<detalle_permiso> permisos_usuario { get; set; }
     }
 }

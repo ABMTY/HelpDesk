@@ -46,6 +46,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
                         entidad.tipo_usuario = dr["tipo_usuario"].ToString();
+                        entidad.user_name = dr["user_name"].ToString();
+                        entidad.password = dr["password"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -102,6 +104,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
                         entidad.tipo_usuario = dr["tipo_usuario"].ToString();
+                        entidad.user_name = dr["user_name"].ToString();
+                        entidad.password = dr["password"].ToString();
                     }
                 }
             }
@@ -144,6 +148,8 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@id_area", entidad.id_area);
                 cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
+                cmd.Parameters.AddWithValue("@user_name", entidad.user_name);
+                cmd.Parameters.AddWithValue("@password", entidad.password);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -163,7 +169,7 @@ namespace PerHelpDesk.Catalogos
             {
                 CerrarConexion();
                 cmd = null;
-            }
+            } 
             return respuesta;
         }
         public bool Update(usuarios entidad)
@@ -187,6 +193,8 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@id_area", entidad.id_area);
                 cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
+                cmd.Parameters.AddWithValue("@user_name", entidad.user_name);
+                cmd.Parameters.AddWithValue("@password", entidad.password);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
