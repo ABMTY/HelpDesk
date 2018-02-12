@@ -15,7 +15,7 @@ namespace PerHelpDesk.Catalogos
         public List<zonas> ObtenerTodos()
         {
             List<zonas> lista = new List<zonas>();
-            zonas entidad = new zonas();
+            zonas entidad;
             try
             {
                 AbrirConexion();
@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new zonas();
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
@@ -59,7 +60,7 @@ namespace PerHelpDesk.Catalogos
             return lista;
         }
         public zonas Obtener(int id)
-        {            
+        {
             zonas entidad = new zonas();
             try
             {
@@ -76,7 +77,7 @@ namespace PerHelpDesk.Catalogos
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())
-                    {
+                    {                        
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();

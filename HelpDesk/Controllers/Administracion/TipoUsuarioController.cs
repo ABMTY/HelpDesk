@@ -11,6 +11,8 @@ namespace HelpDesk.Controllers.Administracion
     public class TipoUsuarioController : Controller
     {
         CtrlTipoUsuario control = new CtrlTipoUsuario();
+        CtrlDetallePermiso ctrlDetPermisos = new CtrlDetallePermiso();
+        CtrlPermisos ctrlpermisos = new CtrlPermisos();
         // GET: TipoUsuario
         public ActionResult Index()
         {
@@ -18,11 +20,38 @@ namespace HelpDesk.Controllers.Administracion
         }
         public ActionResult Guardar(tipo_usuario entidad)
         {
+            var r = false;
             try
             {
-                var r = entidad.id_tipo_usuario > 0 ?
-                   control.Actualizar(entidad) :
-                   control.Insertar(entidad);
+                if (entidad.id_tipo_usuario > 0)
+                {
+                    r = control.Actualizar(entidad);
+                    ctrlDetPermisos.Eliminar(entidad.id_tipo_usuario);
+                    foreach (detalle_permiso item in entidad.permisos_tipo_usuario)
+                    {
+                        ctrlDetPermisos.Insertar(new detalle_permiso
+                        {
+                            id_tipo_usuario = entidad.id_tipo_usuario,
+                            id_permiso = item.id_permiso
+                        });
+                    }
+                }
+                else
+                {
+                    r = control.Insertar(entidad);
+                    int id_rol = control.ObtenerTodos().ToList().Max(p => p.id_tipo_usuario);
+                    foreach (detalle_permiso item in entidad.permisos_tipo_usuario)
+                    {
+                        ctrlDetPermisos.Insertar(new detalle_permiso
+                        {
+                            id_tipo_usuario = entidad.id_tipo_usuario,
+                            id_permiso = item.id_permiso
+                        });
+                    }
+                }
+                //var r = entidad.id_tipo_usuario > 0 ?
+                //   control.Actualizar(entidad) :
+                //   control.Insertar(entidad);
 
                 if (!r)
                 {
@@ -71,6 +100,38 @@ namespace HelpDesk.Controllers.Administracion
             {
                 return View("Error", new HandleErrorInfo(ex, "TipoUsuario", "Eliminar"));
             }
+        }
+        public ActionResult GetPermisoUsuarios(int id)
+        {
+            var Permisos = ctrlpermisos.ObtenerTodos();
+            var TipoUsuario = control.Obtener(id);
+
+            bool bandera = false;
+
+            foreach (var itemPermiso in Permisos)
+            {
+                foreach (var itemPermisos in TipoUsuario.permisos_tipo_usuario)
+                {
+
+                    if (itemPermisos.id_permiso == itemPermiso.id_permiso)
+                    {
+                        itemPermiso.selected = "checked='checked'" + "&" + itemPermiso.id_permiso;
+                        bandera = true;
+                    }
+                }
+
+                if (bandera == false)
+                {
+                    itemPermiso.selected = " &" + itemPermiso.id_permiso.ToString();
+                }
+                bandera = false;
+            }
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Permisos }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
         }
     }
 }

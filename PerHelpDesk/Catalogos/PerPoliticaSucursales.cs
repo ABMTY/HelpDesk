@@ -58,7 +58,7 @@ namespace PerHelpDesk.Catalogos
         }
         public politica_sucursales Obtener(int id)
         {
-            politica_sucursales entidad = new politica_sucursales();
+            politica_sucursales entidad = new politica_sucursales(); ;
             try
             {
                 AbrirConexion();
@@ -75,6 +75,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     if (dr.Read())
                     {
+                        entidad = new politica_sucursales();
                         entidad.id_politica_sucursale = int.Parse(dr["id_politica_sucursale"].ToString());
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());

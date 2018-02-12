@@ -11,7 +11,7 @@ namespace EntHelpDesk.Entidad
         public int id_permiso { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public bool selected { get; set; }
+        public string selected { get; set; }
         public string url { get; set; }
     }
 }

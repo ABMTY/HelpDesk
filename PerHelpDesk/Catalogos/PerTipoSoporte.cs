@@ -15,7 +15,7 @@ namespace PerHelpDesk.Catalogos
         public List<tipo_soporte> ObtenerTodos()
         {
             List<tipo_soporte> lista = new List<tipo_soporte>();
-            tipo_soporte entidad = new tipo_soporte();
+            tipo_soporte entidad;
             try
             {
                 AbrirConexion();
@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new tipo_soporte();
                         entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
                         entidad.descripcion = dr["descripcion"].ToString();
                         lista.Add(entidad);
@@ -57,7 +58,7 @@ namespace PerHelpDesk.Catalogos
         }
         public tipo_soporte Obtener(int id)
         {
-            tipo_soporte entidad = new tipo_soporte();
+            tipo_soporte entidad = new tipo_soporte(); ;
             try
             {
                 AbrirConexion();
@@ -73,7 +74,7 @@ namespace PerHelpDesk.Catalogos
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     if (dr.Read())
-                    {
+                    {                        
                         entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
                         entidad.descripcion = dr["descripcion"].ToString();
                     }

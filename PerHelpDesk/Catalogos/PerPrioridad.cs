@@ -15,7 +15,7 @@ namespace PerHelpDesk.Catalogos
         public List<prioridad> ObtenerTodos()
         {
             List<prioridad> lista = new List<prioridad>();
-            prioridad entidad = new prioridad();
+            prioridad entidad;
             try
             {
                 AbrirConexion();

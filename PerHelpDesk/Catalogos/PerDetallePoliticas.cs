@@ -15,7 +15,7 @@ namespace PerHelpDesk.Catalogos
         public List<detalle_politicas> ObtenerTodos()
         { 
             List<detalle_politicas> lista = new List<detalle_politicas>();
-            detalle_politicas entidad = new detalle_politicas();
+            detalle_politicas entidad;
             try
             {
                 AbrirConexion();
@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new detalle_politicas();
                         entidad.id_detalle_politica = int.Parse(dr["id_detalle_politica"].ToString());
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());

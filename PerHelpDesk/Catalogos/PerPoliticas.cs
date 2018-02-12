@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new politicas();
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
@@ -58,7 +59,7 @@ namespace PerHelpDesk.Catalogos
         }
         public politicas Obtener(int id)
         {
-            politicas entidad = new politicas();
+            politicas entidad =  new politicas(); 
             try
             {
                 AbrirConexion();
@@ -75,6 +76,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     if (dr.Read())
                     {
+                        entidad = new politicas();
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();

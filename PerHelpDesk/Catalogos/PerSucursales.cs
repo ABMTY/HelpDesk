@@ -15,7 +15,7 @@ namespace PerHelpDesk.Catalogos
         public List<sucursales> ObtenerTodos()
         {
             List<sucursales> lista = new List<sucursales>();
-            sucursales entidad = new sucursales();
+            sucursales entidad;
             try
             {
                 AbrirConexion();
@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new sucursales();
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.direccion = dr["direccion"].ToString();

@@ -15,7 +15,7 @@ namespace PerHelpDesk.Catalogos
         public List<estado> ObtenerTodos()
         {
             List<estado> lista = new List<estado>();
-            estado entidad = new estado();
+            estado entidad;
             try
             {
                 AbrirConexion();
@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new estado();
                         entidad.id_estado = int.Parse(dr["id_estado"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         lista.Add(entidad);

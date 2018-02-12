@@ -15,7 +15,7 @@ namespace PerHelpDesk.Catalogos
         public List<permisos> ObtenerTodos() 
         {
             List<permisos> lista = new List<permisos>();
-            permisos entidad = new permisos();
+            permisos entidad;
             try
             {
                 AbrirConexion();
@@ -31,6 +31,7 @@ namespace PerHelpDesk.Catalogos
                 {
                     while (dr.Read())
                     {
+                        entidad = new permisos();
                         entidad.id_permiso = int.Parse(dr["id_permiso"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
