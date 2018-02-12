@@ -35,7 +35,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
-                        if (entidad.imagen!=string.Empty)
+                        if (dr["imagen"].ToString() != string.Empty)
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         lista.Add(entidad);
                     }
@@ -81,7 +81,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
-                        if (entidad.imagen != string.Empty)
+                        if (dr["imagen"].ToString() != string.Empty)
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                     }
                 }
@@ -118,7 +118,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -155,7 +155,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
