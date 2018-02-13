@@ -83,7 +83,7 @@
 
     $(document).ready(function () {
         $('#Lista_TipoSoporte').DataTable();
-        //Cargar_TipoSoporte();
+        Cargar_TipoSoporte();
     });
 
     function Cargar_TipoSoporte() {
@@ -91,13 +91,12 @@
             destroy: true,
             searching: true,
             "ajax": {
-                "url": "/TipoSoporte/GetTipoSoporte/",
+                "url": "/TipoSoporte/GetTipoSoportes/",
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },
-                { "data": "id_tipo_soporte" },
-                { "data": "nombre" },
+                { "defaultContent": "<i>..</i>" },                
+                { "data": "descripcion" },
             ],
             "columnDefs": [
                 {
