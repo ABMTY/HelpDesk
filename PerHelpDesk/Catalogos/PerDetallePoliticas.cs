@@ -35,8 +35,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_detalle_politica = int.Parse(dr["id_detalle_politica"].ToString());
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
-                        entidad.responderen = DateTime.Parse(dr["responderen"].ToString());
-                        entidad.resolveren = DateTime.Parse(dr["resolveren"].ToString());
+                        entidad.tiempo_min = int.Parse(dr["tiempo_min"].ToString());
+                        entidad.tiempo_max = int.Parse(dr["tiempo_max"].ToString());
                         lista.Add(entidad);
                     }
                 }
@@ -81,8 +81,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_detalle_politica = int.Parse(dr["id_detalle_politica"].ToString());
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
-                        entidad.responderen = DateTime.Parse(dr["responderen"].ToString());
-                        entidad.resolveren = DateTime.Parse(dr["resolveren"].ToString());
+                        entidad.tiempo_min = int.Parse(dr["tiempo_min"].ToString());
+                        entidad.tiempo_max = int.Parse(dr["tiempo_max"].ToString());
                     }
                 }
             }
@@ -118,8 +118,8 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdDetallePolitica", entidad.id_detalle_politica);
                 cmd.Parameters.AddWithValue("@id_politica", entidad.id_politica);
                 cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
-                cmd.Parameters.AddWithValue("@responderen", entidad.responderen);
-                cmd.Parameters.AddWithValue("@resolveren", entidad.resolveren);
+                cmd.Parameters.AddWithValue("@tiempo_min", entidad.tiempo_min);
+                cmd.Parameters.AddWithValue("@tiempo_max", entidad.tiempo_max);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -156,8 +156,8 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdDetallePolitica", entidad.id_detalle_politica);
                 cmd.Parameters.AddWithValue("@id_politica", entidad.id_politica);
                 cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
-                cmd.Parameters.AddWithValue("@responderen", entidad.responderen);
-                cmd.Parameters.AddWithValue("@resolveren", entidad.resolveren);
+                cmd.Parameters.AddWithValue("@tiempo_min", entidad.tiempo_min);
+                cmd.Parameters.AddWithValue("@tiempo_max", entidad.tiempo_max);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }

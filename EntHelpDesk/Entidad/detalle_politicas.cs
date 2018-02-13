@@ -11,7 +11,7 @@ namespace EntHelpDesk.Entidad
         public int id_detalle_politica { get; set; }
         public int id_politica { get; set; }
         public int id_prioridad { get; set; }
-        public DateTime responderen { get; set; }
-        public DateTime resolveren { get; set; }
+        public int tiempo_min { get; set; }
+        public int tiempo_max { get; set; }
     }
 }

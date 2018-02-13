@@ -5,7 +5,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - HelpDesk </title>
-
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- jQuery 2.1.4 -->
@@ -20,6 +19,10 @@
     <link rel="stylesheet" href="~/Content/css/font-awesome.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/css/AdminLTE.min.css">
+    <!-- jquery signalR-->
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <!-- jquery signalR hubs-->
+    <script src="/signalr/hubs"></script>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->    
     <link rel="stylesheet" href="~/Content/css/_all-skins.min.css">
@@ -140,45 +143,15 @@
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning">10</span>
+                            <a href="#" class="toggle" data-toggle="dropdown">
+                                <span class="fa fa-bell-o"></span>
+                                <span class="count label label-warning"></span>
+                                <div class="noti-content">
+                                    <div class="noti-top-arrow"></div>
+                                    <ul id="notiContent"></ul>
+                                </div>                                                           
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 10 notifications</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                                page and may cause design problems
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-red"></i> 5 new members joined
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-user text-red"></i> You changed your username
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">View all</a></li>
-                            </ul>
+                            
                         </li>
                         <!-- Tasks: style can be found in dropdown.less -->
                         <li class="dropdown tasks-menu">
@@ -393,9 +366,8 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
                 </div>
             </div>
-        </div>
-    </div>
-
+        </div>   
+   </div>
     @*@{
         try
         {
@@ -440,5 +412,119 @@
             return window.location.href = "@Url.Action("CerrarSesion", "Acceso")";
         }
     </script>
+        <style type="text/css">
+            /*Added css for design notification area, you can design by your self*/
+            /* COPY css content from youtube video description*/
+            .noti-content {
+                position: fixed;
+                right: 100px;
+                background: #e5e5e5;
+                border-radius: 4px;
+                top: 47px;
+                width: 250px;
+                display: none;
+                border: 1px solid #9E988B;
+            }
+
+            ul#notiContent {
+                max-height: 200px;
+                overflow: auto;
+                padding: 0px;
+                margin: 0px;
+                padding-left: 20px;
+            }
+
+                ul#notiContent li {
+                    margin: 3px;
+                    padding: 6px;
+                    background: #fff;
+                }
+
+            .noti-top-arrow {
+                border-color: transparent;
+                border-bottom-color: #F5DEB3;
+                border-style: dashed dashed solid;
+                border-width: 0 8.5px 8.5px;
+                position: absolute;
+                right: 32px;
+                top: -8px;
+            }
+
+            span.noti {
+                color: #FF2323;
+                margin: 15px;
+                position: fixed;
+                right: 100px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+
+            span.count {
+                position: relative;
+                top: -3px;
+            }
+        </style>
+
+        @* Add jquery code for Get Notification & setup signalr *@
+        <script type="text/javascript">
+        $(function () {
+            // Click on notification icon for show notification
+            $('span.noti').click(function (e) {
+                e.stopPropagation();
+                $('.noti-content').show();
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                //only load notification if not already loaded
+                if (count > 0) {
+                    updateNotification();
+                }
+                $('span.count', this).html('&nbsp;');
+            })
+            // hide notifications
+            $('html').click(function () {
+                $('.noti-content').hide();
+            })
+            // update notification
+            function updateNotification() {
+                $('#notiContent').empty();
+                $('#notiContent').append($('<li>Loading...</li>'));
+                $.ajax({
+                    type: 'GET',
+                    url: '/home/GetNotificationContacts',
+                    success: function (response) {
+                        $('#notiContent').empty();
+                        if (response.length  == 0) {
+                            $('#notiContent').append($('<li>No data available</li>'));
+                        }
+                        $.each(response, function (index, value) {
+                            $('#notiContent').append($('<li>New contact : ' + value.ContactName + ' (' + value.ContactNo + ') added</li>'));
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+            }
+            // update notification count
+            function updateNotificationCount() {
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                count++;
+                $('span.count').html(count);
+            }
+            // signalr js code for start hub and send receive notification
+            var notificationHub = $.connection.notificationHub;
+            $.connection.hub.start().done(function () {
+                console.log('Notification hub started');
+            });
+            //signalr method for push server message to client
+            notificationHub.client.notify = function (message) {
+                if (message && message.toLowerCase() == "added") {
+                    updateNotificationCount();
+                    console.log('Notification Update');
+                }
+            }
+        })
+        </script>
 </body>
 </html>

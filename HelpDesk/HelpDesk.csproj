@@ -88,6 +88,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -203,6 +205,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Contacts.cs">
+      <DependentUpon>NotificationModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccesoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Administracion\AreasController.cs" />
@@ -227,6 +232,21 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="NotificationComponent.cs" />
     <Compile Include="NotificationHub.cs" />
+    <Compile Include="NotificationModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NotificationModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -693,6 +713,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="NotificationModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
+      <LastGenOutput>NotificationModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="NotificationModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
+      <LastGenOutput>NotificationModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -720,6 +750,13 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\plugins\datatables\json\scroller-demo.json" />
+    <EntityDeploy Include="NotificationModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NotificationModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="NotificationModel.edmx.diagram">
+      <DependentUpon>NotificationModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -781,6 +818,9 @@
       <Project>{d4dedf31-00f2-40a5-9ff9-d981ad0f9f2d}</Project>
       <Name>EntHelpDesk</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

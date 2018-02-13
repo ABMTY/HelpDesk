@@ -1,4 +1,6 @@
 ﻿using CtrlHelpDesk.Catalogos;
+using EntHelpDesk.Entidad;
+using HelpDesk;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
@@ -10,14 +12,13 @@ using System.Web;
 namespace HelpDesk
 {
     public class NotificationComponent
-    {       
+    {
+        CtrlZonas control = new CtrlZonas();
         public void RegisterNotification(DateTime currentTime)
         {
 
             string conStr = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-            string  sqlCommand = @"SELECT OBJECT_NAME(OBJECT_ID)AS DatabaseName, last_user_update" +
-                " FROM sys.dm_db_index_usage_stats WHERE database_id = DB_ID('db_tickets') AND OBJECT_ID = OBJECT_ID('zonas') " +
-                " AND last_user_update > @AddedOn";
+            string sqlCommand = @"SELECT [ContactID],[ContactName],[ContactNo] from [dbo].[Contacts] where [AddedOn] > @AddedOn";
             using (SqlConnection con = new SqlConnection(conStr))
             {
                 SqlCommand cmd = new SqlCommand(sqlCommand, con);
@@ -50,6 +51,14 @@ namespace HelpDesk
                 RegisterNotification(DateTime.Now);
             }
         }
-        
+
+        public List<Contacts> GetContacts(DateTime afterDate)
+        {
+            using (db_ticketsEntities dc = new db_ticketsEntities())
+            {
+                return dc.Contacts.Where(a => a.AddedOn > afterDate).OrderByDescending(a => a.AddedOn).ToList();
+            }
+        }
+
     }
 }

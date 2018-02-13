@@ -17,7 +17,7 @@ namespace HelpDesk.Controllers.Administracion
         {
             return View();
         }
-        public ActionResult Guardar(zonas entidad)
+        public ActionResult Guardar(EntHelpDesk.Entidad.zonas entidad)
         {
             bool r = false;
             try
