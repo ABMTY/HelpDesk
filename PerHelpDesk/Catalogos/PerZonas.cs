@@ -12,8 +12,9 @@ namespace PerHelpDesk.Catalogos
 {
     public class PerZonas : Persistencia
     {
-        public void RegisterNotification(DateTime currentTime)
+        public bool RegisterNotification(DateTime currentTime)
         {
+            bool respuesta = false;
             try
             {
                 AbrirConexion();
@@ -36,12 +37,13 @@ namespace PerHelpDesk.Catalogos
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    //add a notification
+                    respuesta =  true;
                 }
             }
             catch (Exception )
             {
             }
+            return respuesta;
         }
         public List<zonas> ObtenerTodos()
         {
