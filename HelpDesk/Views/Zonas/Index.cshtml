@@ -96,7 +96,7 @@
 
     $(document).ready(function () {
         $('#Lista_Zonas').DataTable();
-        //Cargar_Zonas();
+        Cargar_Zonas();
     });
 
     function Cargar_Zonas() {
@@ -108,8 +108,7 @@
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },
-                { "data": "id_zona" },
+                { "defaultContent": "<i>..</i>" },                
                 { "data": "nombre" },
                 { "data": "descripcion" },
                 { "defaultContent": "" },
@@ -121,9 +120,9 @@
                     }
                 },
                 {
-                    "targets": 4, "data": "imagen", "render": function (data, type, full, meta) {
+                    "targets": 3, "data": "imagen", "render": function (data, type, full, meta) {
                         if (data != null) {
-                            var url = "data:image/png;base64," + data;
+                            var url = data;
                             return "<img src=" + url + " width='60px;' height='50px;' />"
                         } else {
                             return "<p></p>"
@@ -177,7 +176,7 @@
                 $("#imgBase64").text(data.data.imagen)
                 if (data.data.imagen != "") {
                     $('#imagen').css({ 'width': '0%', 'height': '0%' });
-                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
+                    $('#imagenOriginal').attr('src',data.data.imagen);
                 }
             },
             error: function (request, status, error) {
@@ -190,7 +189,7 @@
         Zona = {
             "id_zona": $("#id").val() == "" ? 0 : $("#id").val(),
             "nombre": $("#txt_Nombre").val(),
-            "descripcion": $("#txt_descripcion").val(),
+            "descripcion": $("#txt_Descripcion").val(),
             "imagen": $("#imgBase64").text(),
         };
         $.ajax(
@@ -211,7 +210,7 @@
         });
     }
 
-    function ConvertirImagen() {
+    function ConvertirImagen() {       
         var archivoImagen = document.getElementById("subirImagen").files;
         if (archivoImagen.length > 0) {
             var archivoCargar = archivoImagen[0];

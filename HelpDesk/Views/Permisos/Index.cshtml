@@ -27,6 +27,8 @@
                             <tr>
                                 <th>Opciones</th>
                                 <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Url</th>
                             </tr>
                         </thead>
                     </table>
@@ -40,8 +42,12 @@
                     <input type="text" class="form-control" id="txt_Nombre" maxlength="100" required>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Dirección *</label>
-                    <input type="text" class="form-control" id="txt_Direccion" maxlength="100" required>
+                    <label>Descripcion *</label>
+                    <input type="text" class="form-control" id="txt_Descripcion" maxlength="100" required>
+                </div>                
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Url *</label>
+                    <input type="text" class="form-control" id="txt_Url" maxlength="100" required>
                 </div>                
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
@@ -87,7 +93,7 @@
 
     $(document).ready(function () {
         $('#Lista_Permisos').DataTable();
-        //Cargar_Permisos();
+        Cargar_Permisos();
     });
 
     function Cargar_Permisos() {
@@ -99,10 +105,10 @@
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },
-                { "data": "id_permiso" },
+                { "defaultContent": "<i>..</i>" },                
                 { "data": "nombre" },
-                { "data": "direccion" },                
+                { "data": "descripcion" },
+                { "data": "url" },
             ],
             "columnDefs": [
                 {
@@ -130,7 +136,7 @@
         $("#id").val("");
         $("#txt_Nombre").val("");
         $("#txt_Descripcion").val("");
-        $("#ddl_Zonas").html();
+        $("#txt_Url").val("");        
     }
     
     function Editar(id_permiso) {
@@ -148,7 +154,8 @@
                 $("#btnAgregar").hide();
                 $("#id").val(id_permiso);
                 $("#txt_Nombre").val(data.data.nombre);
-                $("#txt_Direccion").val(data.data.nombre);     
+                $("#txt_Descripcion").val(data.data.descripcion);
+                $("#txt_Url").val(data.data.url);
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -160,7 +167,8 @@
         Permiso = {
             "id_permiso": $("#id").val() == "" ? 0 : $("#id").val(),
             "nombre": $("#txt_Nombre").val(),
-            "direccion": $("#txt_Direccion").val(),            
+            "descripcion": $("#txt_Descripcion").val(),
+            "url": $("#txt_Url").val(),
         };
         $.ajax(
         {

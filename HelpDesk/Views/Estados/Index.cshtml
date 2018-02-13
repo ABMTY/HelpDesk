@@ -22,7 +22,7 @@
             <!-- body -->
             <div class="panel-body table-responsive" id="secc_lista">
                 <div class="card-box">
-                    <table id="Lista_Estados del Tiket" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+                    <table id="Lista_Estados" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>Opciones</th>
@@ -83,20 +83,19 @@
 
     $(document).ready(function () {
         $('#Lista_Estados').DataTable();
-        //Cargar_Estados();
+        Cargar_Estados();
     });
 
-    function Cargar_Estados() {
+    function Cargar_Estados() {       
         $('#Lista_Estados').DataTable({
             destroy: true,
             searching: true,
             "ajax": {
-                "url": "/Estados/GetEstados/",
+                "url": "/Estados/GetEstado/",
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },
-                { "data": "id_estado" },
+                { "defaultContent": "<i>..</i>" },                
                 { "data": "nombre" },
             ],
             "columnDefs": [
