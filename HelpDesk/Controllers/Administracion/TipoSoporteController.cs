@@ -38,19 +38,19 @@ namespace HelpDesk.Controllers.Administracion
         }
         public ActionResult GetTipoSoportes()
         {
-            var Turnos = control.ObtenerTodos();
+            var Lista = control.ObtenerTodos();
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
-            var json = Json(new { data = Turnos }, JsonRequestBehavior.AllowGet);
+            var json = Json(new { data = Lista }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
             return json;
         }
         public ActionResult GetTipoSoporte(int id)
         {
-            var Turno = control.Obtener(id);
+            var Entidad = control.Obtener(id);
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
-            var json = Json(new { data = Turno }, JsonRequestBehavior.AllowGet);
+            var json = Json(new { data = Entidad }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
             return json;
         }
