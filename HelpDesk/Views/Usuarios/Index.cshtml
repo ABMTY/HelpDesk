@@ -27,6 +27,7 @@
                             <tr>
                                 <th>Opciones</th>
                                 <th>Nombre</th>
+                                <th>Usuario</th>
                                 <th>Tipo Usuario</th>
                                 <th>Foto</th>
                             </tr>
@@ -37,6 +38,14 @@
 
             <div class="panel-body" id="secc_add" style="display:none;">
                 <input type="text" id="id" value="" hidden />
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Usuario *</label>
+                    <input type="text" class="form-control" id="txt_Usuario" maxlength="100" required>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Contraseña *</label>
+                    <input type="text" class="form-control" id="txt_Contraseña" maxlength="100" required>
+                </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Nombre *</label>
                     <input type="text" class="form-control" id="txt_Nombre" maxlength="100" required>
@@ -116,45 +125,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Modal Permisos -->
-        <div class="modal fade" id="Form_Permisos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="mensaje_modal">Asignar Permisos</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body ">
-
-                        <table id="Lista_Permisos" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<input id="seleccionarTodos" type="checkbox" /></th>
-                                    <th>No.</th>
-                                    <th>Permiso</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <span id="txt_idusuario" style="display:none;"></span>
-
-                        @*<form role="form" data-toggle="validator">
-                            <h4 id="lbl_msjborrar"></h4>
-                            <span id="txt_idborrar" style="display:none;"></span>
-                        </form>*@
-
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" onclick="GuardarPermisos(); return false;"><i class="fa fa-check" aria-hidden="true"></i> Guardar</button>
-                        <button class="btn btn-danger" onclick="Cancelar()" ; return false;" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        </div>       
     </div><!-- /.col -->
 </div><!-- /.row -->
 <!--Fin-Contenido-->
@@ -163,7 +134,7 @@
 
     $(document).ready(function () {
         $('#Lista_Usuarios').DataTable();
-        //Cargar_Usuarios();
+        Cargar_Usuarios();
     });
 
     function Cargar_Usuarios() {
@@ -176,21 +147,21 @@
             },
             "columns": [
                 { "defaultContent": "<i>..</i>" },
-                { "data": "id_usuario" },
-                { "data": "nombre_completo" },                
-                { "data": "desc_tipousuario" },
+                { "data": "nombre_completo" },
+                { "data": "user_name" },                
+                { "data": "tipo_usuario" },
                 { "defaultContent": "" },
             ],
             "columnDefs": [
                 {
                     "targets": 0, "data": "id_usuario", "render": function (data, type, full, meta) {
-                        return "<button type='button' title='Permisos' id='btn_mas" + data + "' class='btn btn-warning' onclick='AsignarPermisos(" + data + ")'  ><i class='fa fa-edit'></i></button> <button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-warning' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-danger' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
+                        return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-warning' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-danger' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
                     }
                 },
                 {
                     "targets": 4, "data": "foto", "render": function (data, type, full, meta) {
                         if (data != null) {
-                            var url = "data:image/png;base64," + data;
+                            var url = data;
                             return "<img src=" + url + " width='60px;' height='50px;' />"
                         } else {
                             return "<p></p>"
@@ -207,9 +178,9 @@
         $("#secc_add").show();
         $("#btnAgregar").hide();
         Limpiar();        
-        //Cargar_TipoUsuario();
-        //Cargar_Areas();
-        //Cargar_Sucursales();
+        Cargar_TipoUsuario();
+        Cargar_Areas();
+        Cargar_Sucursales();
     }
 
     function Cancelar() {
@@ -220,6 +191,8 @@
 
     function Limpiar() {
         $("#id").val("");
+        $("#txt_Usuario").val("");
+        $("#txt_Contraseña").val("");
         $("#txt_Nombre").val("");
         $("#txt_Apellidos").val("");
         $("#txt_Correo").val("");
@@ -235,7 +208,7 @@
         $("#ddl_TipoUsuario").html("");
 
         $.ajax({
-            url: "/TipoUsuario/GetTipoUsuario/",
+            url: "/TipoUsuario/GetTipoUsuarios/",
             async: true,
             dataType: "json",
             type: "POST",
@@ -265,7 +238,7 @@
                 $.each(data.data, function (i, Item) {
                     $("#ddl_Areas").append("<option value='" + Item.id_area + "'>" + Item.nombre + "</option>");
                 });
-                $('#ddl_Zonas').selectpicker('refresh');
+                $('#ddl_Areas').selectpicker('refresh');
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -307,25 +280,27 @@
                 $("#secc_lista").hide();
                 $("#secc_add").show();
                 $("#btnAgregar").hide();
-                $("#id").val(id_usuario);
+                $("#id").val(id_usuario);                
+                $("#txt_Usuario").val(data.data.user_name);
+                $("#txt_Contraseña").val(data.data.password);
                 $("#txt_Nombre").val(data.data.nombre);
                 $("#txt_Apellidos").val(data.data.apellidos);
                 $("#txt_Correo").val(data.data.correo);
                 $("#txt_Telefono").val(data.data.telefono);
                 $("#txt_Extension").val(data.data.ext);                
                 Cargar_TipoUsuario();               
-                $("#ddl_TipoUsuario").append("<option value=" + data.data.id_tipo_usuario + ">" + data.data.nombre + "</option>");
+                $("#ddl_TipoUsuario").append("<option value=" + data.data.id_tipo_usuario + ">" + data.data.tipo_usuario + "</option>");
                 $("#ddl_TipoUsuario").selectpicker('refresh');
                 Cargar_Areas();
-                $("#ddl_Areas").append("<option value=" + data.data.id_area + ">" + data.data.nombre + "</option>");
+                $("#ddl_Areas").append("<option value=" + data.data.id_area + ">" + data.data.area + "</option>");
                 $("#ddl_Areas").selectpicker('refresh');
                 Cargar_Sucursales();
-                $("#ddl_Sucursales").append("<option value=" + data.data.id_sucursal + ">" + data.data.nombre + "</option>");
+                $("#ddl_Sucursales").append("<option value=" + data.data.id_sucursal + ">" + data.data.sucursal + "</option>");
                 $("#ddl_Sucursales").selectpicker('refresh');
-                $("#imgBase64").text(data.data.imagen)
+                $("#imgBase64").text(data.data.foto)
                 if (data.data.imagen != "") {
                     $('#imagen').css({ 'width': '0%', 'height': '0%' });
-                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
+                    $('#imagenOriginal').attr('src', data.data.foto);
                 }
             },
             error: function (request, status, error) {
@@ -337,11 +312,13 @@
     function Guardar() {
         Usuario = {
             "id_usuario": $("#id").val() == "" ? 0 : $("#id").val(),
+            "user_name": $("#txt_Usuario").val(),
+            "password": $("#txt_Contraseña").val(),
             "nombre": $("#txt_Nombre").val(),
             "apellidos": $("#txt_Apellidos").val(),
-            "correo": $("#txt_Apellidos").val(),
-            "telefono": $("#txt_Apellidos").val(),
-            "ext": $("#txt_Apellidos").val(),            
+            "correo": $("#txt_Correo").val(),
+            "telefono": $("#txt_Telefono").val(),
+            "ext": $("#txt_Extension").val(),            
             "id_tipo_usuario": $("#ddl_TipoUsuario").val(),            
             "id_area": $("#ddl_Areas").val(),
             "id_sucursal": $("#ddl_Sucursales").val(),
@@ -407,111 +384,6 @@
                 console.log("error" + error);
             }
         });
-    }
-
-    function Cargar_Permisos() {
-        $('#Lista_Permisos').DataTable({
-            destroy: true,
-            searching: true,
-            "ajax": {
-                "url": "/Permisos/GetPermisos/",
-                "type": "GET"
-            },
-            "columns": [
-                { "defaultContent": "<i>&nbsp; &nbsp; &nbsp; </i>" },
-                { "data": "id_permiso" },
-                { "data": "nombre" },
-            ],
-            "columnDefs": [
-                {
-                    "targets": 0, "data": "id_permiso", "render": function (data, type, full, meta) {
-                        return "<div class='checkbox checkbox-success checkbox-circle'>" +
-                        "<input  type='checkbox'  id='chk_seleccionado" + data + "' value='' ><label></label></div>"
-                    }
-                }
-            ]
-        });
-    }
-
-    function Cargar_UsuarioPermisos(id_usuario) {
-        $('#Lista_Permisos').DataTable({
-            destroy: true,
-            searching: true,
-            "ajax": {
-                "url": "/Usuarios/GetUsuarioPermisos/?id=" + id_usuario,
-                "dataType": "json",
-                "type": "GET",
-                "contentType": "application/json; charset=utf-8"
-            },
-            "columnDefs": [
-               {
-                   "targets": [0],
-                   "visible": false,
-                   "searchable": false
-               }
-            ],
-            "columns": [
-                { "defaultContent": "<i>&nbsp; &nbsp; &nbsp; </i>" },
-                { "data": "id_permiso" },
-                { "data": "nombre" }
-            ],
-            "columnDefs": [
-                {
-                    "targets": 0, "data": "selected", "render": function (data, type, full, meta) {
-                        var items = [];
-                        items = data.split('&');
-                        console.log(items[0]);
-                        return "<div class='checkbox checkbox-success checkbox-circle'>" +
-                        "&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;<input  type='checkbox' id='chk_seleccionado" + items[1] + "'  value='' " + items[0] + "  ><label></label></div>"
-                    }
-                }
-            ]
-        });
-    }
-
-    function AsignarPermisos(id_usuario) {
-        $('#Form_Permisos').modal('show');
-        //Cargar_Permisos();
-        Cargar_UsuarioPermisos(id_usuario)        
-        $("#txt_idusuario").text(id_usuario);
-    }
-
-    function GuardarPermisos() {
-        id_usuario = $("#txt_idusuario").text();
-
-        var PermisosSeleccionados = [];
-
-        var table = document.getElementById("Lista_Permisos");
-        for (var i = 1, row; row = table.rows[i]; i++) {
-            idpermiso = $('#Lista_Permisos tr:nth-child(' + i + ') td:nth-child(3)').html();
-            if ($("#chk_seleccionado" + idvista).is(':checked')) {
-                PermisosSeleccionados.push({ id_permiso: idpermiso });
-            }
-        }
-
-        UsuarioPermisos = {
-            "id_usuario": id_usuario,            
-            "permisos": PermisosSeleccionados
-        };
-
-        $.ajax(
-         {
-             url: "/Usuarios/GuardarPermisos/",
-             async: true,
-             dataType: "json",
-             data: JSON.stringify(UsuarioPermisos),
-             type: "POST",
-             contentType: "application/json; charset=utf-8",
-             success: function (data) {
-                 swal({ title: "Permisos", text: "Guardada Correctamente", type: "success" }, function () { Cargar_Usuarios(); Cancelar(); });
-             },
-             error: function (request, status, error) {
-                 swal("Error al Guardar los permisos del usuarios");
-                 console.log("error" + error);
-             }
-         }
-
-         );
     }
 
 </script>

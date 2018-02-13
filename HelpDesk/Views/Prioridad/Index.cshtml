@@ -83,7 +83,7 @@
 
     $(document).ready(function () {
         $('#Lista_Prioridad').DataTable();
-        //Cargar_Prioridad();
+        Cargar_Prioridad();
     });
 
     function Cargar_Prioridad() {
@@ -91,12 +91,11 @@
             destroy: true,
             searching: true,
             "ajax": {
-                "url": "/Prioridad/GetPrioridad/",
+                "url": "/Prioridad/GetPrioridades/",
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },
-                { "data": "id_prioridad" },
+                { "defaultContent": "<i>..</i>" },                
                 { "data": "nombre" },
             ],
             "columnDefs": [

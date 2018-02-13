@@ -88,7 +88,7 @@
 
     $(document).ready(function () {
         $('#Lista_Politicas').DataTable();
-        //Cargar_Politicas();
+        Cargar_Politicas();
     });
 
     function Cargar_Politicas() {
@@ -100,8 +100,7 @@
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },
-                { "data": "id_politica" },
+                { "defaultContent": "<i>..</i>" },                
                 { "data": "nombre" },
                 { "data": "descripcion" },
             ],

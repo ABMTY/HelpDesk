@@ -84,7 +84,7 @@
 
     $(document).ready(function () {
         $('#Lista_Areas').DataTable();
-        //Cargar_Areas();
+        Cargar_Areas();
     });
 
     function Cargar_Areas() {
@@ -96,8 +96,7 @@
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },
-                { "data": "id_area" },
+                { "defaultContent": "<i>..</i>" },                
                 { "data": "nombre" },
             ],
             "columnDefs": [
