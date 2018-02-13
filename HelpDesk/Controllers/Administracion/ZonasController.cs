@@ -1,5 +1,6 @@
 ﻿using CtrlHelpDesk.Catalogos;
 using EntHelpDesk.Entidad;
+using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,13 @@ namespace HelpDesk.Controllers.Administracion
         }
         public ActionResult Guardar(zonas entidad)
         {
-            
+            bool r = false;
             try
             {
-                var r = entidad.id_zona > 0 ?
+                 r = entidad.id_zona > 0 ?
                    control.Actualizar(entidad) :
                    control.Insertar(entidad);
-
+                
                 if (!r)
                 {
                     return Json("Error al realizar la operacion", JsonRequestBehavior.AllowGet);

@@ -6,11 +6,11 @@ using Microsoft.AspNet.SignalR;
 
 namespace HelpDesk
 {
-    public class notificationHub : Hub
+    public class NotificationHub : Hub
     {
-        public void Hello()
-        {
-            Clients.All.hello();
-        }
+        //public void Hello()
+        //{
+        //    Clients.All.hello();
+        //}
     }
 }

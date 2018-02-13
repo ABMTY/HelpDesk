@@ -41,5 +41,10 @@ namespace CtrlHelpDesk.Catalogos
         {
             return PerZonas.Delete(id_zona);
         }
+
+        public void RegisterNotification(DateTime currentime)
+        {
+            PerZonas.RegisterNotification(currentime);
+        }
     }
 }
