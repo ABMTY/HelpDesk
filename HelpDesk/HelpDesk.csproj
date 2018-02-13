@@ -450,6 +450,7 @@
     <Content Include="Content\img\logo_helpdesk.png" />
     <Content Include="Content\img\logo_helpdesk_b.png" />
     <Content Include="Content\img\muser2-160x160.jpg" />
+    <Content Include="Content\img\ticket.png" />
     <Content Include="Content\js\app.js" />
     <Content Include="Content\js\app.min.js" />
     <Content Include="Content\js\bootstrap-select.min.js" />
