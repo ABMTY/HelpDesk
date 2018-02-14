@@ -38,8 +38,6 @@ namespace PerHelpDesk.Sevicios
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
                         entidad.fechahora_creacion = DateTime.Parse(dr["asunto"].ToString());
-                        entidad.status = int.Parse(dr["asunto"].ToString());
-                        entidad.comentario = dr["comentario"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -88,8 +86,6 @@ namespace PerHelpDesk.Sevicios
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
                         entidad.fechahora_creacion = DateTime.Parse(dr["asunto"].ToString());
-                        entidad.status = int.Parse(dr["asunto"].ToString());
-                        entidad.comentario = dr["comentario"].ToString();
                     }
                 }
             }
@@ -129,8 +125,6 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
                 cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
                 cmd.Parameters.AddWithValue("@fechahora_creacion", entidad.fechahora_creacion);
-                cmd.Parameters.AddWithValue("@status", entidad.status);
-                cmd.Parameters.AddWithValue("@comentario", entidad.comentario);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -171,8 +165,6 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
                 cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
                 cmd.Parameters.AddWithValue("@fechahora_creacion", entidad.fechahora_creacion);
-                cmd.Parameters.AddWithValue("@status", entidad.status);
-                cmd.Parameters.AddWithValue("@comentario", entidad.comentario);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }

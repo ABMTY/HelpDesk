@@ -35,6 +35,9 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
+                        entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.responder_en = int.Parse(dr["responder_en"].ToString());
+                        entidad.resolver_en = int.Parse(dr["resolver_en"].ToString());
                         lista.Add(entidad);
                     }
                 }
@@ -80,6 +83,9 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_politica = int.Parse(dr["id_politica"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
+                        entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.responder_en = int.Parse(dr["responder_en"].ToString());
+                        entidad.resolver_en = int.Parse(dr["resolver_en"].ToString());
                     }
                 }
             }
@@ -115,6 +121,9 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
+                cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
+                cmd.Parameters.AddWithValue("@responder_en", entidad.responder_en);
+                cmd.Parameters.AddWithValue("@resolver_en", entidad.resolver_en);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -151,6 +160,9 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
+                cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
+                cmd.Parameters.AddWithValue("@responder_en", entidad.responder_en);
+                cmd.Parameters.AddWithValue("@resolver_en", entidad.resolver_en);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }

@@ -37,6 +37,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.direccion = dr["direccion"].ToString();
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.zona = dr["zona"].ToString();
+                        entidad.id_politica = int.Parse(dr["id_politica"].ToString());
+                        entidad.politica = dr["politica"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -83,6 +85,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.direccion = dr["direccion"].ToString();
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.zona = dr["zona"].ToString();
+                        entidad.id_politica = int.Parse(dr["id_politica"].ToString());
+                        entidad.politica = dr["politica"].ToString();
                     }
                 }
             }
@@ -119,6 +123,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@direccion", entidad.direccion);
                 cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
+                cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -156,6 +161,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@direccion", entidad.direccion);
                 cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
+                cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }

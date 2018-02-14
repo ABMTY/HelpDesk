@@ -13,5 +13,7 @@ namespace EntHelpDesk.Entidad
         public string direccion { get; set; }
         public int id_zona { get; set; }
         public string zona { get; set; }
+        public int id_politica { get; set; }
+        public string politica { get; set; }
     }
 }
