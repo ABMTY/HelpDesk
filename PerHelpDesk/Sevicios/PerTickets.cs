@@ -123,8 +123,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@asunto", entidad.asunto);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
-                cmd.Parameters.AddWithValue("@fechahora_creacion", entidad.fechahora_creacion);
+                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);                
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -163,8 +162,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@asunto", entidad.asunto);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);
-                cmd.Parameters.AddWithValue("@fechahora_creacion", entidad.fechahora_creacion);
+                cmd.Parameters.AddWithValue("@imagen", entidad.imagen);                
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
