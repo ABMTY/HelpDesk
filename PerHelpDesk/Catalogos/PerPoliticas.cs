@@ -36,6 +36,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.prioridad = dr["prioridad"].ToString();
                         entidad.responder_en = int.Parse(dr["responder_en"].ToString());
                         entidad.resolver_en = int.Parse(dr["resolver_en"].ToString());
                         lista.Add(entidad);
@@ -84,6 +85,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.prioridad = dr["prioridad"].ToString();
                         entidad.responder_en = int.Parse(dr["responder_en"].ToString());
                         entidad.resolver_en = int.Parse(dr["resolver_en"].ToString());
                     }
