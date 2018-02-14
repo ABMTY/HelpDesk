@@ -119,8 +119,8 @@ namespace PerHelpDesk.Sevicios
                 cmd.CommandText = "DML_Tickets";
                 cmd.Parameters.AddWithValue("@Sentencia", "Insert");
                 cmd.Parameters.AddWithValue("@IdTicket", entidad.id_ticket);
-                cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
-                cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
+                cmd.Parameters.AddWithValue("@IdUsuario", entidad.id_usuario);
+                cmd.Parameters.AddWithValue("@IdSucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@asunto", entidad.asunto);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
                 cmd.Parameters.AddWithValue("@imagen", entidad.imagen);                
@@ -158,8 +158,8 @@ namespace PerHelpDesk.Sevicios
                 cmd.CommandText = "DML_Tickets";
                 cmd.Parameters.AddWithValue("@Sentencia", "Update");
                 cmd.Parameters.AddWithValue("@IdTicket", entidad.id_ticket);
-                cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
-                cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
+                cmd.Parameters.AddWithValue("@IdUsuario", entidad.id_usuario);
+                cmd.Parameters.AddWithValue("@IdSucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@asunto", entidad.asunto);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
                 cmd.Parameters.AddWithValue("@imagen", entidad.imagen);                
