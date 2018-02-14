@@ -37,7 +37,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
-                        entidad.fechahora_creacion = DateTime.Parse(dr["asunto"].ToString());
+                        entidad.fechahora_creacion = DateTime.Parse(dr["fechahora_creacion"].ToString());
                         lista.Add(entidad);
                     }
                 }
@@ -85,7 +85,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
-                        entidad.fechahora_creacion = DateTime.Parse(dr["asunto"].ToString());
+                        entidad.fechahora_creacion = DateTime.Parse(dr["fechahora_creacion"].ToString());
                     }
                 }
             }
