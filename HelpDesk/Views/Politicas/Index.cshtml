@@ -27,7 +27,9 @@
                             <tr>
                                 <th>Opciones</th>
                                 <th>Nombre</th>
-                                <th>Descripción</th>
+                                <th>Tiempo de Respuesta</th>
+                                <th>Tiempo de Solución</th>
+                                <th>Política</th>
                             </tr>
                         </thead>
                     </table>
@@ -43,6 +45,21 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Descripción *</label>
                     <input type="text" class="form-control" name="descripcion" id="txt_Descripcion" maxlength="100" required>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Responder en *</label>
+                    <input type="text" class="form-control" id="txt_Responder_en" maxlength="100" required>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Resolver en *</label>
+                    <input type="text" class="form-control" id="txt_Resolver_en" maxlength="100" required>
+                </div>
+
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Prioridad *</label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_Prioridades" required data-live-search="true"></select>
+                    </div>
                 </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
@@ -101,8 +118,10 @@
             },
             "columns": [
                 { "defaultContent": "<i>..</i>" },                
-                { "data": "nombre" },
-                { "data": "descripcion" },
+                { "data": "nombre" },                
+                { "data": "responder_en" },
+                { "data": "resolver_en" },
+                { "data": "prioridad" },
             ],
             "columnDefs": [
                 {
@@ -118,6 +137,30 @@
         $("#secc_add").show();
         $("#btnAgregar").hide();
         Limpiar();
+        Cargar_Prioridades();
+    }
+
+
+    function Cargar_Prioridades() {
+
+        $("#ddl_Prioridades").html("");
+
+        $.ajax({
+            url: "/Prioridad/GetPrioridades/",
+            async: true,
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data.data, function (i, Item) {
+                    $("#ddl_Prioridades").append("<option value='" + Item.id_prioridad + "'>" + Item.nombre + "</option>");
+                });
+                $('#ddl_Prioridades').selectpicker('refresh');
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
     }
 
     function Cancelar() {
@@ -130,6 +173,9 @@
         $("#id").val("");
         $("#txt_Nombre").val("");
         $("#txt_Descripcion").val("");
+         $("#ddl_Prioridades").html();
+         $("#txt_Responder_en").val("");
+         $("#txt_Resolver_en").val("");
     }
 
     function Editar(id_politica) {
@@ -148,6 +194,11 @@
                 $("#id").val(id_politica);
                 $("#txt_Nombre").val(data.data.nombre);
                 $("#txt_Descripcion").val(data.data.descripcion);
+                $("#txt_Responder_en").val(data.data.responder_en);
+                $("#txt_Resolver_en").val(data.data.resolver_en);
+                Cargar_Prioridades();
+                $("#ddl_Prioridades").append("<option value=" + data.data.id_prioridad + ">" + data.data.prioridad + "</option>");
+                $("#ddl_Prioridades").selectpicker('refresh');                
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -160,6 +211,9 @@
             "id_politica": $("#id").val() == "" ? 0 : $("#id").val(),
             "nombre": $("#txt_Nombre").val(),
             "descripcion": $("#txt_Descripcion").val(),
+            "id_prioridad": $("#ddl_Prioridades").val(),
+            "responder_en": $("#txt_Responder_en").val(),
+            "resolver_en": $("#txt_Resolver_en").val(),
         };
         $.ajax(
         {

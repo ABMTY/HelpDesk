@@ -39,7 +39,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.telefono = int.Parse(dr["telefono"].ToString());
                         entidad.ext = int.Parse(dr["ext"].ToString());
                         if (dr["foto"].ToString()!=string.Empty)
-                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]); 
+                            entidad.foto = Convert.ToBase64String((byte[])dr["foto"]); 
                         entidad.id_area = int.Parse(dr["id_area"].ToString());
                         entidad.area = dr["area"].ToString();
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
@@ -97,7 +97,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.telefono = int.Parse(dr["telefono"].ToString());
                         entidad.ext = int.Parse(dr["ext"].ToString());
                         if (dr["foto"].ToString() != string.Empty)
-                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
+                            entidad.foto = Convert.ToBase64String((byte[])dr["foto"]);
                         entidad.id_area = int.Parse(dr["id_area"].ToString());
                         entidad.area = dr["area"].ToString();
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());

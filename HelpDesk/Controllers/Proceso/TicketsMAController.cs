@@ -8,14 +8,15 @@ using System.Web.Mvc;
 
 namespace HelpDesk.Controllers.Proceso
 {
-    public class RegistroTicketController : Controller
+    public class TicketsMAController : Controller
     {
         CtrlTickets control = new CtrlTickets();
-        // GET: RegistroTicket
+        // GET: TicketsMA
         public ActionResult Index()
         {
             return View();
         }
+
         public ActionResult Guardar(tickets entidad)
         {
             try

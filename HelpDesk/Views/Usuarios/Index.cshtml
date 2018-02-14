@@ -161,7 +161,7 @@
                 {
                     "targets": 4, "data": "foto", "render": function (data, type, full, meta) {
                         if (data != null) {
-                            var url = data;
+                            var url = "data:image/png;base64,"+data;
                             return "<img src=" + url + " width='60px;' height='50px;' />"
                         } else {
                             return "<p></p>"
@@ -300,7 +300,7 @@
                 $("#imgBase64").text(data.data.foto)
                 if (data.data.imagen != "") {
                     $('#imagen').css({ 'width': '0%', 'height': '0%' });
-                    $('#imagenOriginal').attr('src', data.data.foto);
+                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.foto);
                 }
             },
             error: function (request, status, error) {
@@ -310,6 +310,7 @@
     }
 
     function Guardar() {
+        debugger;
         Usuario = {
             "id_usuario": $("#id").val() == "" ? 0 : $("#id").val(),
             "user_name": $("#txt_Usuario").val(),

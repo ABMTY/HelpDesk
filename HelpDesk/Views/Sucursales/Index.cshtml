@@ -26,9 +26,9 @@
                         <thead>
                             <tr>
                                 <th>Opciones</th>
-                                <th>Nombre</th>
-                                <th>Direccion</th>
+                                <th>Nombre</th>                                
                                 <th>Zona</th>
+                                <th>Politica</th>
                             </tr>
                         </thead>
                     </table>
@@ -49,6 +49,12 @@
                     <label>Zona *</label>
                     <div>
                         <select class="form-control selectpicker" id="ddl_Zonas" required data-live-search="true"></select>
+                    </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Politica *</label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_Politicas" required data-live-search="true"></select>
                     </div>
                 </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -108,9 +114,9 @@
             },
             "columns": [
                 { "defaultContent": "<i>..</i>" },                
-                { "data": "nombre" },
-                { "data": "direccion" },
+                { "data": "nombre" },                
                 { "data": "zona" },
+                { "data": "politica" },
             ],
             "columnDefs": [
                 {
@@ -127,6 +133,7 @@
         $("#btnAgregar").hide();
         Limpiar();
         Cargar_Zonas();
+        Cargar_Politicas();
     }
 
     function Cancelar() {
@@ -140,6 +147,7 @@
         $("#txt_Nombre").val("");
         $("#txt_Descripcion").val("");
         $("#ddl_Zonas").html();
+        $("#ddl_Politicas").html();
     }
 
     function Cargar_Zonas() {
@@ -162,7 +170,29 @@
                 console.log("error" + error);
             }
         });
-    }    
+    }
+
+    function Cargar_Politicas() {
+
+        $("#ddl_Politicas").html("");
+
+        $.ajax({
+            url: "/Politicas/GetPoliticas/",
+            async: true,
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data.data, function (i, Item) {
+                    $("#ddl_Politicas").append("<option value='" + Item.id_politica + "'>" + Item.nombre + "</option>");
+                });
+                $('#ddl_Politicas').selectpicker('refresh');
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
+    }
 
     function Editar(id_sucursal) {
         $.ajax({
@@ -183,6 +213,9 @@
                 Cargar_Zonas();                
                 $("#ddl_Zonas").append("<option value=" + data.data.id_zona + ">" + data.data.zona + "</option>");
                 $("#ddl_Zonas").selectpicker('refresh');
+                Cargar_Politicas();
+                $("#ddl_Politicas").append("<option value=" + data.data.id_politica + ">" + data.data.politica + "</option>");
+                $("#ddl_Politicas").selectpicker('refresh');
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -195,7 +228,8 @@
             "id_sucursal": $("#id").val() == "" ? 0 : $("#id").val(),
             "nombre": $("#txt_Nombre").val(),
             "direccion": $("#txt_Direccion").val(),
-            "id_zona":$("#ddl_Zonas").val(),
+            "id_zona": $("#ddl_Zonas").val(),
+            "id_politica": $("#ddl_Politicas").val(),
         };
         $.ajax(
         {

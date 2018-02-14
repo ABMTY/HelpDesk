@@ -69,7 +69,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
-                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
+                            entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
                         lista.Add(entidad);
                     }
                 }
@@ -115,7 +115,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
-                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
+                            entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
                     }
                 }
             }

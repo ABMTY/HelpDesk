@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace HelpDesk.Controllers.Proceso
 {
-    public class TicketsController : Controller
+    public class TicketsSucursalController : Controller
     {
-        // GET: Tickets
+        // GET: TicketsSucursal
         public ActionResult Index()
         {
             return View();

@@ -10,11 +10,11 @@
             <!--header -->
             <div class="box-header with-border">
                 <h1 class="box-title">
-                    Registro de Ticket
+                    Soluciones de Tickets
                 </h1>
                 <div class="box-tools pull-right">
                     <button class="btn btn-primary" onclick="Agregar()" id="btnAgregar">
-                        <i class="fa fa-plus-circle"></i> Agregar
+                        <i class="fa fa-plus-circle"></i> Crear Ticket
                     </button>
                 </div>
             </div>
@@ -38,37 +38,37 @@
 
             <div class="panel-body" id="secc_add" style="display:none;">
                 <input type="text" id="id" value="" hidden />
-                            <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                                <label class="control-label" for="">Sucursal *</label>
-                                <div>
-                                    <select class="form-control selectpicker" id="ddl_Sucursal" required data-live-search="true"></select>
-                                </div>
-                            </div>                          
-                            <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                                <label>Asunto *</label>
-                                <input type="text" class="form-control" id="txt_Asunto" placeholder="Asunto del Tiket">
-                            </div>                            
-                            <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                                <label>Descripcion *</label>
-                                <textarea class="textarea" id="txt_Descripcion" placeholder="Describe el Problema"
-                                          style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </div> 
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <label>Adjuntar una foto de evidencia</label>
-                                <input type="file" id="subirImagen" onchange="ConvertirImagen()" value="" />
-                                <p id="imgBase64" style="display: none;"></p>
-                                <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />
-                                <img src="" alt="" id="imagenOriginal" width="30%;" height="30%;" />
-                            </div>                 
-                   
-                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
-                                <i class="fa fa-save"></i> Guardar
-                            </button>
-                            <button class="btn btn-default" onclick="Cancelar()" type="button">
-                                <i class="fa fa-arrow-circle-left"></i> Cancelar
-                            </button>
-                        </div>                   
+                <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                    <label class="control-label" for="">Sucursal *</label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_Sucursal" required data-live-search="true"></select>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                    <label>Asunto *</label>
+                    <input type="text" class="form-control" id="txt_Asunto" placeholder="Asunto del Tiket">
+                </div>
+                <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
+                    <label>Descripcion *</label>
+                    <textarea class="textarea" id="txt_Descripcion" placeholder="Describe el Problema"
+                              style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Adjuntar una foto de evidencia</label>
+                    <input type="file" id="subirImagen" onchange="ConvertirImagen()" value="" />
+                    <p id="imgBase64" style="display: none;"></p>
+                    <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />
+                    <img src="" alt="" id="imagenOriginal" width="30%;" height="30%;" />
+                </div>
+
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
+                        <i class="fa fa-save"></i> Guardar
+                    </button>
+                    <button class="btn btn-default" onclick="Cancelar()" type="button">
+                        <i class="fa fa-arrow-circle-left"></i> Cancelar
+                    </button>
+                </div>
             </div>
             <!--Fin body -->
         </div><!-- /.box -->
@@ -272,6 +272,8 @@
     }
 
 </script>
+
+
 
 
 
