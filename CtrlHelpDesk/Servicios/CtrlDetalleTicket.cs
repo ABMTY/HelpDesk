@@ -26,6 +26,10 @@ namespace CtrlHelpDesk.Servicios
         {
             return (detalle_ticket)new PerDetalleTicket().Obtener(id_detalle_ticket);
         }
+        public detalle_ticket ObtenerPorTicket(int id_ticket)
+        {
+            return (detalle_ticket)new PerDetalleTicket().ObtenerPorTicket(id_ticket);
+        }
 
         public bool Insertar(detalle_ticket Entidad)
         {

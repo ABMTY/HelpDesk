@@ -117,6 +117,58 @@ namespace PerHelpDesk.Sevicios
             }
             return entidad;
         }
+        public detalle_ticket ObtenerPorTicket(int id)
+        {
+            detalle_ticket entidad = new detalle_ticket();
+            try
+            {
+                AbrirConexion();
+                StringBuilder CadenaSql = new StringBuilder();
+
+                SqlCommand comandoSelect = new SqlCommand();
+
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_detalle_ticket";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@id_ticket", id);
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
+                        entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
+                        entidad.id_area = int.Parse(dr["id_area"].ToString());
+                        entidad.area = dr["area"].ToString();
+                        entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.prioridad = dr["prioridad"].ToString();
+                        entidad.id_estado = int.Parse(dr["id_estado"].ToString());
+                        entidad.estado = dr["estado"].ToString();
+                        entidad.id_agente = int.Parse(dr["id_agente"].ToString());
+                        entidad.fechahora_inicioticket = DateTime.Parse(dr["fechahora_inicioticket"].ToString());
+                        entidad.fechahora_cerroticket = DateTime.Parse(dr["fechahora_cerroticket"].ToString());
+                        entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
+                    }
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar detalle_ticket";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar detalle_ticket";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+            return entidad;
+        }
         public bool Insertar(detalle_ticket entidad)
         {
             SqlCommand cmd = new SqlCommand();
