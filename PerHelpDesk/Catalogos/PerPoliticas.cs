@@ -123,7 +123,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
+                cmd.Parameters.AddWithValue("@IdPrioridad", entidad.id_prioridad);
                 cmd.Parameters.AddWithValue("@responder_en", entidad.responder_en);
                 cmd.Parameters.AddWithValue("@resolver_en", entidad.resolver_en);
                 cmd.ExecuteNonQuery();
@@ -162,7 +162,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
+                cmd.Parameters.AddWithValue("@IdPrioridad", entidad.id_prioridad);
                 cmd.Parameters.AddWithValue("@responder_en", entidad.responder_en);
                 cmd.Parameters.AddWithValue("@resolver_en", entidad.resolver_en);
                 cmd.ExecuteNonQuery();
