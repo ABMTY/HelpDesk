@@ -36,7 +36,7 @@ namespace HelpDesk.Controllers.Proceso
                     int id_ticket = control.ObtenerTodos().ToList().Max(p => p.id_ticket);
                     int id_prioridad = (ctrlPrioridad.ObtenerTodos().Find(x => x.nombre.ToUpper() == "BAJA") as prioridad).id_prioridad;
                     int id_estado = (ctrlEstado.ObtenerTodos().Find(x => x.nombre.ToUpper() == "ABIERTO") as estado).id_estado;
-                    ctrlDetalle.Insertar(new detalle_ticket
+                    ctrlDetalle.InsertarPorSucursal(new detalle_ticket
                         {
                             id_ticket = id_ticket,
                             id_prioridad = id_prioridad,

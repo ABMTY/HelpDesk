@@ -35,6 +35,10 @@ namespace CtrlHelpDesk.Servicios
         {
             return PerDetalleTicket.Insertar(Entidad);
         }
+        public bool InsertarPorSucursal(detalle_ticket Entidad)
+        {
+            return PerDetalleTicket.InsertarPorSucursal(Entidad);
+        }
 
         public bool Actualizar(detalle_ticket Entidad)
         {
