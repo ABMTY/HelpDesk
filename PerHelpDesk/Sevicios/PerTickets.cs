@@ -35,6 +35,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
+                        entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
@@ -84,6 +85,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
+                        entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
