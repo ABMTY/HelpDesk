@@ -31,6 +31,7 @@ namespace PerHelpDesk.Sevicios
                 {
                     while (dr.Read())
                     {
+                        entidad = new detalle_ticket();
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_area = int.Parse(dr["id_area"].ToString());
@@ -40,8 +41,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_estado = int.Parse(dr["id_estado"].ToString());
                         entidad.estado = dr["estado"].ToString();
                         entidad.id_agente = int.Parse(dr["id_agente"].ToString());
-                        entidad.fechahora_inicioticket = DateTime.Parse(dr["fechahora_inicioticket"].ToString());
-                        entidad.fechahora_cerroticket = DateTime.Parse(dr["fechahora_cerroticket"].ToString());
+                        entidad.fechahora_inicioticket = dr["fechahora_inicioticket"].ToString();
+                        entidad.fechahora_cerroticket = dr["fechahora_cerroticket"].ToString();
                         entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
                         lista.Add(entidad);
                     }
@@ -93,8 +94,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_estado = int.Parse(dr["id_estado"].ToString());
                         entidad.estado = dr["estado"].ToString();
                         entidad.id_agente = int.Parse(dr["id_agente"].ToString());
-                        entidad.fechahora_inicioticket = DateTime.Parse(dr["fechahora_inicioticket"].ToString());
-                        entidad.fechahora_cerroticket = DateTime.Parse(dr["fechahora_cerroticket"].ToString());
+                        entidad.fechahora_inicioticket = dr["fechahora_inicioticket"].ToString();
+                        entidad.fechahora_cerroticket = dr["fechahora_cerroticket"].ToString();
                         entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
                     }
                 }
@@ -145,8 +146,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_estado = int.Parse(dr["id_estado"].ToString());
                         entidad.estado = dr["estado"].ToString();
                         entidad.id_agente = int.Parse(dr["id_agente"].ToString());
-                        entidad.fechahora_inicioticket = DateTime.Parse(dr["fechahora_inicioticket"].ToString());
-                        entidad.fechahora_cerroticket = DateTime.Parse(dr["fechahora_cerroticket"].ToString());
+                        entidad.fechahora_inicioticket = dr["fechahora_inicioticket"].ToString();
+                        entidad.fechahora_cerroticket = dr["fechahora_cerroticket"].ToString();
                         entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
                     }
                 }

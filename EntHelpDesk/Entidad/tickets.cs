@@ -14,6 +14,6 @@ namespace EntHelpDesk.Entidad
         public string asunto { get; set; }
         public string descripcion { get; set; }
         public string imagen { get; set; }
-        public DateTime fechahora_creacion { get; set; }
+        public string fechahora_creacion { get; set; }
     }
 }

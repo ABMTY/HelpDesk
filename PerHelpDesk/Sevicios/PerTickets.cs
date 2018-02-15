@@ -31,13 +31,14 @@ namespace PerHelpDesk.Sevicios
                 {
                     while (dr.Read())
                     {
+                        entidad = new tickets();
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
-                        entidad.fechahora_creacion = DateTime.Parse(dr["fechahora_creacion"].ToString());
+                        entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -85,7 +86,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
-                        entidad.fechahora_creacion = DateTime.Parse(dr["fechahora_creacion"].ToString());
+                        entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                     }
                 }
             }
