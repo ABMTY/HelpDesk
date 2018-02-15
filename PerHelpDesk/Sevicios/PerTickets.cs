@@ -39,6 +39,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
+                        entidad.estado = dr["estado"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -87,6 +88,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.imagen = dr["imagen"].ToString();
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
+                        entidad.estado = dr["estado"].ToString();
                     }
                 }
             }
