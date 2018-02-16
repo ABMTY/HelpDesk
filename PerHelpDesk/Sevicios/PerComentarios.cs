@@ -35,7 +35,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.comentario = dr["comentario"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
-                        entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());                        
+                        entidad.fechahora_comentario = dr["fechahora_comentario"].ToString();
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
@@ -84,7 +84,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.comentario = dr["comentario"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
-                        entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());                        
+                        entidad.fechahora_comentario = dr["fechahora_comentario"].ToString();
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
@@ -133,7 +133,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.comentario = dr["comentario"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
-                        entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());
+                        entidad.fechahora_comentario = dr["fechahora_comentario"].ToString();
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
