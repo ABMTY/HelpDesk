@@ -39,7 +39,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
-                        entidad.imagen = dr["imagen"].ToString();
+                        if (dr["imagen"].ToString() != string.Empty)
+                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.estado = dr["estado"].ToString();
                         lista.Add(entidad);
@@ -90,9 +91,14 @@ namespace PerHelpDesk.Sevicios
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
-                        entidad.imagen = dr["imagen"].ToString();
+                        if (dr["imagen"].ToString() != string.Empty)
+                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
+                        
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.estado = dr["estado"].ToString();
+                        entidad.agente = dr["agente"].ToString();
+                        if (dr["foto"].ToString() != string.Empty)
+                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
                     }
                 }
             }
@@ -140,10 +146,14 @@ namespace PerHelpDesk.Sevicios
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
-                        entidad.imagen = dr["imagen"].ToString();
+                        if (dr["imagen"].ToString() != string.Empty)
+                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
+
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.estado = dr["estado"].ToString();
                         entidad.agente = dr["agente"].ToString();
+                        if (dr["foto"].ToString() != string.Empty)
+                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
                     }
                 }
             }

@@ -19,6 +19,7 @@ namespace EntHelpDesk.Entidad
         public string fechahora_creacion { get; set; }
         public string estado { get; set; }
         public string agente { get; set; }
+        public string foto { get; set; }
 
     }
 }
