@@ -21,6 +21,10 @@ namespace HelpDesk.Controllers.Proceso
         {
             return View();
         }
+        public ActionResult SeguimientoTicket()
+        {
+            return View();
+        }
         public ActionResult Guardar(tickets entidad)
         {
             var r = false;

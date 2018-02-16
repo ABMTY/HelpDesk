@@ -79,31 +79,6 @@
 
     <script>
 
-    $(function () {
-        //Cargar_Empresas();
-    });
-
-    //function Cargar_Empresas() {
-    //    $("#ddl_Empresa").html("");
-    //    $.ajax({
-    //        url: "/Empresa/GetEmpresas/",
-    //        async: true,
-    //        dataType: "json",
-    //        type: "POST",
-    //        contentType: "application/json; charset=utf-8",
-    //        success: function (data) {
-    //            $("#ddl_Empresa").append("<option value='0'>Seleccione la empresa</option>");
-    //            $.each(data.data, function (i, Item) {
-    //                $("#ddl_Empresa").append("<option value='" + Item.id_empresa + "'>" + Item.razon_social + "</option>");
-    //            });
-    //            $('#ddl_Empresa').selectpicker('refresh');
-    //        },
-    //        error: function (request, status, error) {
-    //            console.log("error" + error);
-    //        }
-    //    });
-    //}
-
     //EJECUTAR EL ENTER
     $(document).keypress(function (e) {
         e = e || window.event;
@@ -115,12 +90,9 @@
     });
 
 
-    //$("#ddl_Empresa").change(function () {
-    //    var color = $("#ddl_Empresa").val();
-    //});
-
+    
     </script>
-    @Scripts.Render("~/Content/js/bootstrap-select.min.js")
+    
 </body>
 </html>
 
