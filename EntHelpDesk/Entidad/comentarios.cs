@@ -13,5 +13,7 @@ namespace EntHelpDesk.Entidad
         public string imagen { get; set; }
         public DateTime fechahora_comentario { get; set; }        
         public int id_detalle_ticket { get; set; }
+        public int id_usuario { get; set; }
+        public string usuario { get; set; }
     }
 }

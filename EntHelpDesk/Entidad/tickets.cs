@@ -10,6 +10,7 @@ namespace EntHelpDesk.Entidad
     {
         public int id_ticket { get; set; }
         public int id_usuario { get; set; }
+        public string usuario { get; set; }
         public int id_sucursal { get; set; }
         public string sucursal { get; set; }
         public string asunto { get; set; }

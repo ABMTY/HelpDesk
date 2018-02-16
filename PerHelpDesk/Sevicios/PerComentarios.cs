@@ -37,6 +37,8 @@ namespace PerHelpDesk.Sevicios
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());                        
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
+                        entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.usuario = dr["usuario"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -84,6 +86,56 @@ namespace PerHelpDesk.Sevicios
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());                        
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
+                        entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.usuario = dr["usuario"].ToString();
+                    }
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar comentarios";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar comentarios";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+            return entidad;
+        }
+        public comentarios ObtenerPorDetalle(int id)
+        {
+            comentarios entidad = new comentarios();
+            try
+            {
+                AbrirConexion();
+                StringBuilder CadenaSql = new StringBuilder();
+
+                SqlCommand comandoSelect = new SqlCommand();
+
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Comentarios";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@id_detalle_ticket", id);
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        entidad.id_comentario = int.Parse(dr["id_comentario"].ToString());
+                        entidad.comentario = dr["comentario"].ToString();
+                        if (dr["imagen"].ToString() != string.Empty)
+                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
+                        entidad.fechahora_comentario = DateTime.Parse(dr["fechahora_comentario"].ToString());
+                        entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
+                        entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.usuario = dr["usuario"].ToString();
                     }
                 }
             }
@@ -120,7 +172,8 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@comentario", entidad.comentario);
                 cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                 cmd.Parameters.AddWithValue("@fechahora_comentario", entidad.fechahora_comentario);                
-                cmd.Parameters.AddWithValue("@id_detalle_ticket", entidad.id_detalle_ticket);                
+                cmd.Parameters.AddWithValue("@id_detalle_ticket", entidad.id_detalle_ticket);
+                cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
@@ -159,6 +212,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                 cmd.Parameters.AddWithValue("@fechahora_comentario", entidad.fechahora_comentario);                
                 cmd.Parameters.AddWithValue("@id_detalle_ticket", entidad.id_detalle_ticket);
+                cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }

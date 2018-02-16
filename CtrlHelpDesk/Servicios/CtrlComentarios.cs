@@ -26,7 +26,10 @@ namespace CtrlHelpDesk.Servicios
         {
             return (comentarios)new PerComentarios().Obtener(id_comentario);
         }
-
+        public comentarios ObtenerPorDetalle(int id_detalle_ticket)
+        {
+            return (comentarios)new PerComentarios().ObtenerPorDetalle(id_detalle_ticket);
+        }
         public bool Insertar(comentarios Entidad)
         {
             return PerComentarios.Insertar(Entidad);
