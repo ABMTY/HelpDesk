@@ -17,5 +17,6 @@ namespace EntHelpDesk.Entidad
         public string usuario { get; set; }
         public int id_tipo_usuario { get; set; }
         public string tipo_usuario { get; set; }
+        public string foto { get; set; }
     }
 }

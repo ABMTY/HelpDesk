@@ -39,6 +39,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
+                        if(dr["foto"].ToString() != string.Empty)
+                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
                         lista.Add(entidad);
                     }
                 }
@@ -88,6 +90,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
+                        if(dr["foto"].ToString() != string.Empty)
+                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
                     }
                 }
             }
@@ -139,6 +143,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.usuario = dr["usuario"].ToString();
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
                         entidad.tipo_usuario = dr["tipo_usuario"].ToString();
+                        if(dr["foto"].ToString() != string.Empty)
+                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
                         lista.Add(entidad);
                     }
                 }
