@@ -15,6 +15,7 @@ namespace HelpDesk.Controllers.Proceso
         CtrlDetalleTicket ctrlDetalle = new CtrlDetalleTicket();
         CtrlPrioridad ctrlPrioridad = new CtrlPrioridad();
         CtrlEstado ctrlEstado = new CtrlEstado();
+        CtrlComentarios ctrlComentario = new CtrlComentarios();
 
         // GET: TicketsSucursal
         public ActionResult Index()
@@ -75,6 +76,15 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
+        public ActionResult GetTicketPorUsuario(int id)
+        {
+            var Listado = control.ObtenerPorUsuario(id);
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
         public ActionResult Eliminar(int id)
         {
             try
@@ -100,6 +110,16 @@ namespace HelpDesk.Controllers.Proceso
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
             var json = Json(new { data = Detalle }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
+        public ActionResult GetComentarioPorDetalle(int id)
+        {
+            var Comentarios = ctrlComentario.ObtenerPorDetalle(id);
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Comentarios }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
             return json;
         }

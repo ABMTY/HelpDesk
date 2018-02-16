@@ -34,6 +34,7 @@ namespace PerHelpDesk.Sevicios
                         entidad = new tickets();
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.usuario = dr["usuario"].ToString();
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
@@ -84,6 +85,57 @@ namespace PerHelpDesk.Sevicios
                     {
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.usuario = dr["usuario"].ToString();
+                        entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
+                        entidad.sucursal = dr["sucursal"].ToString();
+                        entidad.asunto = dr["asunto"].ToString();
+                        entidad.descripcion = dr["descripcion"].ToString();
+                        entidad.imagen = dr["imagen"].ToString();
+                        entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
+                        entidad.estado = dr["estado"].ToString();
+                    }
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+            return entidad;
+        }
+        public tickets ObtenerPorUsuario(int id)
+        {
+            tickets entidad = new tickets();
+            try
+            {
+                AbrirConexion();
+                StringBuilder CadenaSql = new StringBuilder();
+
+                SqlCommand comandoSelect = new SqlCommand();
+
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Tickets";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                comandoSelect.Parameters.AddWithValue("@IdUsuario", id);
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
+                        entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.usuario = dr["usuario"].ToString();
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
