@@ -20,6 +20,7 @@ namespace EntHelpDesk.Entidad
         public string estado { get; set; }
         public string agente { get; set; }
         public string foto { get; set; }
+        public int id_detalle_ticket { get; set; }
 
     }
 }

@@ -15,5 +15,7 @@ namespace EntHelpDesk.Entidad
         public int id_detalle_ticket { get; set; }
         public int id_usuario { get; set; }
         public string usuario { get; set; }
+        public int id_tipo_usuario { get; set; }
+        public string tipo_usuario { get; set; }
     }
 }
