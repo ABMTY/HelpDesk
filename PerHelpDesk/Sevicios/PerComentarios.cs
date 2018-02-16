@@ -109,9 +109,9 @@ namespace PerHelpDesk.Sevicios
             }
             return entidad;
         }
-        public comentarios ObtenerPorDetalle(int id)
+        public List<comentarios> ObtenerPorDetalle(int id)
         {
-            comentarios entidad = new comentarios();
+            List<comentarios> lista = new List<comentarios>();
             try
             {
                 AbrirConexion();
@@ -126,8 +126,9 @@ namespace PerHelpDesk.Sevicios
                 comandoSelect.Parameters.AddWithValue("@id_detalle_ticket", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
-                    if (dr.Read())
+                    while (dr.Read())
                     {
+                        comentarios entidad = new comentarios();
                         entidad.id_comentario = int.Parse(dr["id_comentario"].ToString());
                         entidad.comentario = dr["comentario"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
@@ -138,6 +139,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.usuario = dr["usuario"].ToString();
                         entidad.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
                         entidad.tipo_usuario = dr["tipo_usuario"].ToString();
+                        lista.Add(entidad);
                     }
                 }
             }
@@ -157,8 +159,9 @@ namespace PerHelpDesk.Sevicios
             {
                 CerrarConexion();
             }
-            return entidad;
+            return lista;
         }
+        
         public bool Insertar(comentarios entidad)
         {
             SqlCommand cmd = new SqlCommand();
