@@ -181,8 +181,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@Sentencia", "Insert");
                 cmd.Parameters.AddWithValue("@IdComentario", entidad.id_comentario);
                 cmd.Parameters.AddWithValue("@comentario", entidad.comentario);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
-                cmd.Parameters.AddWithValue("@fechahora_comentario", entidad.fechahora_comentario);                
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));                
                 cmd.Parameters.AddWithValue("@id_detalle_ticket", entidad.id_detalle_ticket);
                 cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
                 cmd.ExecuteNonQuery();
@@ -220,8 +219,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@Sentencia", "Update");
                 cmd.Parameters.AddWithValue("@IdComentario", entidad.id_comentario);
                 cmd.Parameters.AddWithValue("@comentario", entidad.comentario);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
-                cmd.Parameters.AddWithValue("@fechahora_comentario", entidad.fechahora_comentario);                
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));                
                 cmd.Parameters.AddWithValue("@id_detalle_ticket", entidad.id_detalle_ticket);
                 cmd.Parameters.AddWithValue("@id_usuario", entidad.id_usuario);
                 cmd.ExecuteNonQuery();
