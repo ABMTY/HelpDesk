@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "SeguimientoTicket";
+}
+
+<ol class="breadcrumb">
+    <li><a ><i class="fa fa-ticket"></i> Tickets</a></li>
+    <li class="active"><a href='@Url.Action("Index", "TicketsSucursal")'>Sucursal</a></li>
+    <li class="active">Seguimiento</li>   
+</ol>
+
+<input type="text" id="id" value="" hidden />       
+<div class="row">
+    <div class="col-md-3">
+        <!-- About Me Box -->
+        <div class="box box-primary">
+            <div class="box-header with-border"><i class="fa fa-ticket margin-r-5"></i>
+                <h3 class="box-title" id="asunto_ticket"></h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <strong  id="descripcion_ticket"></strong>
+                <p class="text-muted" id="fecha_ticket">                    
+                </p>
+                <hr>
+                <h3 class="profile-username text-center"><span class="label label-warning" id="estado_ticket"></span></h3>               
+                @*<hr>*@
+                @*<strong><i class="fa fa-map-marker margin-r-5"></i> Estado</strong>
+                <p class="text-muted">En Proceso</p>
+                <hr>
+                <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>*@
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <!-- Profile Image -->
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+                @*<h3 class="profile-username text-center">Estatus en Proceso</h3>*@
+                <p class="text-muted text-center">Asignado al agente</p>                
+                <img class="profile-user-img img-responsive img-circle" id="foto_agente" src="~/Content/img/IconUser.png" alt="User profile picture">
+                <h3 class="profile-username text-center" id="nombre_agente">Daniel Alvarado</h3>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+       
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#activity" data-toggle="tab">Seguimiento</a></li>       
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                    <!-- Post -->
+                    <div class="post">
+                        <div class="user-block">
+                            <img class="img-circle img-bordered-sm" src="~/Content/img/IconUser.png" alt="user image">
+                            <span class="username">
+                                <a href="#">Daniel alvarado</a>
+                                @*<a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>*@
+                            </span>
+                            <span class="description">Detalle Fecha y Hora Respuesta</span>
+                        </div>
+                        <!-- /.user-block -->
+                        <p>
+                            Detalle de la Solución
+                        </p>                       
+                    </div>
+                    <!-- /.post -->
+                    <!-- Post -->
+                    <div class="post clearfix">                       
+                        <form class="form-horizontal">
+                            <div class="form-group margin-bottom-none">
+                                <div class="col-sm-10">
+                                    @*<input class="form-control input-sm" placeholder="Responder">*@
+                                    <textarea id="txt_Respuesta" class="form-control" rows="5" placeholder="Responder"></textarea>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="btn btn-default btn-file">
+                                        <i class="fa fa-paperclip"></i> Foto Evidencia
+                                        <input type="file" name="attachment">
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </form>
+                        <br />
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Enviar</button>
+                        </div>
+                    </div>
+                    <!-- /.post -->                    
+                </div>                
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<script>
+    $(document).ready(function () {
+
+        function $_GET(param) {
+            url = document.URL;
+            url = String(url.match(/\?+.+/));
+            url = url.replace("?", "");
+            url = url.split("&");
+            x = 0;
+            while (x < url.length) {
+                p = url[x].split("=");
+                if (p[0] == param) {
+                    return decodeURIComponent(p[1]);
+                }
+                x++;
+            }          
+        }
+        var id_ticket = ($_GET("id_ticket"));
+
+        $.ajax({
+            url: "/TicketsSucursal/GetTicket/",
+            async: true,
+            dataType: "json",
+            data: '{ id:' + id_ticket + '}',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {              
+                Limpiar();               
+                $("#id").val(id_ticket);
+                $("#asunto_ticket").text(data.data.asunto);
+                $("#descripcion_ticket").text(data.data.descripcion);
+                $("#fecha_ticket").text("Creado el "+ data.data.fechahora_creacion);
+                $("#estado_ticket").text(data.data.estado);
+                
+               
+                if (data.data.imagen != "") {
+                    $('#imagen').css({ 'width': '0%', 'height': '0%' });
+                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
+                }
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
+
+    });
+
+    function Limpiar() {
+        $("#id").val("");
+        $("#txt_Asunto").val("");
+        $("#txt_Descripcion").val("");
+        //$("#ddl_Sucursal").html("");
+    }
+    
+
+</script>

@@ -797,6 +797,7 @@
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\TicketsSucursal\Index.cshtml" />
     <Content Include="Views\TicketsMA\Index.cshtml" />
+    <Content Include="Views\TicketsSucursal\SeguimientoTicket.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
