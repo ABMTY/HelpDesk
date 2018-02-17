@@ -127,5 +127,25 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
-    }
+
+        public ActionResult GuardarComentario(comentarios entidad)
+        {
+            var r = false;
+            try
+            {
+                r = ctrlComentario.Insertar(entidad);
+
+                if (!r)
+                {
+                    return Json("Error al realizar la operacion", JsonRequestBehavior.AllowGet);
+                }
+
+                return Json("Realizado", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "TipoUsuario", "Create"));
+            }
+        }
+   }
 }
