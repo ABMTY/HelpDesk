@@ -10,9 +10,10 @@
 </ol>
 
 <input type="text" id="id" value="" hidden />       
+<input type="text" id="id_detalle_ticket" value="" hidden />     
 <div class="row">
     <div class="col-md-3">
-        <!-- About Me Box -->
+        <!-- Box Ticket-->
         <div class="box box-primary">
             <div class="box-header with-border"><i class="fa fa-ticket margin-r-5"></i>
                 <h3 class="box-title" id="asunto_ticket"></h3>
@@ -23,29 +24,21 @@
                 <p class="text-muted" id="fecha_ticket">                    
                 </p>
                 <hr>
-                <h3 class="profile-username text-center"><span class="label label-warning" id="estado_ticket"></span></h3>               
-                @*<hr>*@
-                @*<strong><i class="fa fa-map-marker margin-r-5"></i> Estado</strong>
-                <p class="text-muted">En Proceso</p>
-                <hr>
-                <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>*@
+                <h3 class="profile-username text-center"><span class="label label-warning" id="estado_ticket"></span></h3>  
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-        <!-- Profile Image -->
+        <!-- Profile Agent -->
         <div class="box box-primary">
-            <div class="box-body box-profile">
-                @*<h3 class="profile-username text-center">Estatus en Proceso</h3>*@
+            <div class="box-body box-profile">                
                 <p class="text-muted text-center">Asignado al agente</p>                
-                <img class="profile-user-img img-responsive img-circle" id="foto_agente" src="~/Content/img/IconUser.png" alt="User profile picture">
-                <h3 class="profile-username text-center" id="nombre_agente">Daniel Alvarado</h3>
+                <img class="profile-user-img img-responsive img-circle" id="foto_agente" >
+                <h3 class="profile-username text-center" id="nombre_agente"></h3>
             </div>
             <!-- /.box-body -->
         </div>
-        <!-- /.box -->
-       
+        <!-- /.box -->       
     </div>
     <!-- /.col -->
     <div class="col-md-9">
@@ -53,47 +46,47 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#activity" data-toggle="tab">Seguimiento</a></li>       
             </ul>
-            <div class="tab-content">
+            <div class="tab-content" >
                 <div class="active tab-pane" id="activity">
-                    <!-- Post -->
-                    <div class="post">
-                        <div class="user-block">
-                            <img class="img-circle img-bordered-sm" src="~/Content/img/IconUser.png" alt="user image">
-                            <span class="username">
-                                <a href="#">Daniel alvarado</a>
-                                @*<a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>*@
-                            </span>
-                            <span class="description">Detalle Fecha y Hora Respuesta</span>
-                        </div>
-                        <!-- /.user-block -->
-                        <p>
-                            Detalle de la Solución
-                        </p>                       
-                    </div>
+                    <!-- Post Comentarios-->
+                    <div class="post" id="seguimiento">   
+                    </div>                    
                     <!-- /.post -->
-                    <!-- Post -->
-                    <div class="post clearfix">                       
-                        <form class="form-horizontal">
+                    <!-- Post Responder -->
+                    <div class="post clearfix">
+                        <div class="form-horizontal">
                             <div class="form-group margin-bottom-none">
                                 <div class="col-sm-10">
-                                    @*<input class="form-control input-sm" placeholder="Responder">*@
-                                    <textarea id="txt_Respuesta" class="form-control" rows="5" placeholder="Responder"></textarea>
+                                    <textarea id="txt_Respuesta" class="form-control" rows="5" placeholder="Responder" required></textarea>
                                 </div>
                                 <div class="col-sm-2">
-                                    <div class="btn btn-default btn-file">
-                                        <i class="fa fa-paperclip"></i> Foto Evidencia
-                                        <input type="file" name="attachment">
+                                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                        <p id="imgBase64" style="display: none;"></p>
+                                        <img src="" alt="" id="imagen" width="170" height="100" class="fa-border" />
                                     </div>
                                 </div>
-                               
                             </div>
-                        </form>
-                        <br />
-                        <div class="col-sm-12">
-                            <button type="submit" class="btn btn-danger pull-right btn-block btn-sm">Enviar</button>
                         </div>
-                    </div>
-                    <!-- /.post -->                    
+                        <ul class="list-inline">
+                            <li>
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <button type="submit" class="btn btn-primary" onclick="Guardar()">
+                                        <i class="fa fa-save"></i>
+                                        Enviar
+                                    </button>
+                                </div>
+                            </li>
+                            <li class="pull-right" style="padding-right:20px;">
+                                <a href="#" class="link-black text-sm">
+                                    <div class="btn btn-primary btn-file">
+                                        <i class="fa fa-paperclip"></i> Adjuntar foto
+                                        <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.post -->
+                    </div>                
                 </div>                
             </div>
             <!-- /.tab-content -->
@@ -105,23 +98,28 @@
 <!-- /.row -->
 <script>
     $(document).ready(function () {
+        var id_ticket = ($_GET("id_ticket"));        
+        Detalle_Ticket(id_ticket);       
+    });
 
-        function $_GET(param) {
-            url = document.URL;
-            url = String(url.match(/\?+.+/));
-            url = url.replace("?", "");
-            url = url.split("&");
-            x = 0;
-            while (x < url.length) {
-                p = url[x].split("=");
-                if (p[0] == param) {
-                    return decodeURIComponent(p[1]);
-                }
-                x++;
-            }          
-        }
-        var id_ticket = ($_GET("id_ticket"));
+    function $_GET(param) {
+        url = document.URL;
+        url = String(url.match(/\?+.+/));
+        url = url.replace("?", "");
+        url = url.split("&");
+        x = 0;
+        while (x < url.length) {
+            p = url[x].split("=");
+            if (p[0] == param) {
+                return decodeURIComponent(p[1]);
+            }
+            x++;
+        }          
+    }
 
+    //OBTENER DETALLE DEL TICKET
+    function Detalle_Ticket(id_ticket)
+    {
         $.ajax({
             url: "/TicketsSucursal/GetTicket/",
             async: true,
@@ -129,32 +127,142 @@
             data: '{ id:' + id_ticket + '}',
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            success: function (data) {              
+            success: function (data) {                  
                 Limpiar();               
                 $("#id").val(id_ticket);
+                $("#id_detalle_ticket").val(data.data.id_detalle_ticket);
                 $("#asunto_ticket").text(data.data.asunto);
                 $("#descripcion_ticket").text(data.data.descripcion);
                 $("#fecha_ticket").text("Creado el "+ data.data.fechahora_creacion);
                 $("#estado_ticket").text(data.data.estado);
+
+                $("#nombre_agente").text(data.data.agente);
                 
-               
-                if (data.data.imagen != "") {
-                    $('#imagen').css({ 'width': '0%', 'height': '0%' });
-                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
+                if (data.data.imagen != "") {                    
+                    $('#foto_agente').attr('src', data.data.foto);
                 }
+
+                ObtenerComentarios(data.data.id_detalle_ticket);
             },
             error: function (request, status, error) {
                 console.log("error" + error);
             }
         });
+    }
 
-    });
+    // OBTENER COMENTARIOS
+    function ObtenerComentarios(id_detalle_ticket) {       
+        $.ajax({
+            url: "/TicketsSucursal/GetComentarioPorDetalle/",
+            async: true,
+            dataType: "json",
+            data: '{ id:' + id_detalle_ticket + '}',
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {              
+                Visualizar_Comentarios(data);
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });       
+    }
+
+    function Visualizar_Comentarios(data) {
+        try {   
+            $.each(data.data, function (i, entComentario) {             
+                    comentario = "<ul class='timeline timeline-inverse'>" +
+                                    "<li>" +                                        
+                                        "<img class='img-circle img-bordered-sm' width='50' height='50' src='" + entComentario.foto + "'>" +
+                                        "<div class='timeline-item'>" +
+                                            "<span class='time'><i class='fa fa-clock-o'></i> " + entComentario.fechahora_comentario + "</span>" +
+                                            "<h3 class='timeline-header'><a href='#'>" + entComentario.tipo_usuario + "</a> " + entComentario.usuario + "</h3>" +
+                                            "<div class='timeline-body'>" +
+                                               entComentario.comentario +
+                                            "</div>" +
+                                            "<div class='timeline-footer'>" +
+                                                "<a class='btn btn-primary btn-xs'>Ver Evidencia</a>" +
+                                            "</div>" +
+                                        "</div>" +
+                                    "</li>" +
+                                "</ul>"
+                    $("#seguimiento").append(comentario);             
+            });
+           
+        }
+        catch (err) {
+            mostrar_aviso("error", "Error al procesar los comentarios");
+        }
+    }
 
     function Limpiar() {
         $("#id").val("");
-        $("#txt_Asunto").val("");
-        $("#txt_Descripcion").val("");
-        //$("#ddl_Sucursal").html("");
+        $("#id_detalle_ticket").val("");
+        $("#asunto_ticket").text("");
+        $("#descripcion_ticket").text("");
+        $("#fecha_ticket").text("");
+        $("#estado_ticket").text("");
+        $("#nombre_agente").text("");        
+        $('#foto_agente').attr("");        
+    }
+
+    function Guardar() {
+        
+        if($("#txt_Respuesta").val() != "")
+        {
+            Comentario = {            
+                "comentario": $("#txt_Respuesta").val(),            
+                "id_detalle_ticket": $("#id_detalle_ticket").val(),
+                "imagen": $("#imgBase64").text(),
+                "id_usuario": @Session["id_usuario"],            
+            };
+            $.ajax(
+            {
+                url: "/TicketsSucursal/GuardarComentario/",
+                async: true,
+                dataType: "json",
+                data: JSON.stringify(Comentario),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    var id_detalle_ticket=$("#id_detalle_ticket").val();
+                    swal({ title: "Comentarios", text: "Guardada Correctamente", type: "success" }, function () { LimpiarComentarios(); ObtenerComentarios(id_detalle_ticket); });
+                },
+                error: function (request, status, error) {
+                    swal("Error al Guardar el Ticket");
+                    console.log("error" + error);
+                }
+            });
+        }
+        else
+        {
+            swal({ title: "Comentarios", text: "Introduzca el comentario", type: "warning" }, function () { });              
+        }
+    }
+
+    function LimpiarComentarios() {
+        $("#seguimiento").html("");  
+        $("#txt_Respuesta").val("");
+        $('#imagen').attr('src', '');                
+    }
+
+    function ConvertirImagen() {
+        var archivoImagen = document.getElementById("subirImagen").files;
+        if (archivoImagen.length > 0) {
+            var archivoCargar = archivoImagen[0];
+            var archivoLeer = new FileReader();
+
+            archivoLeer.onload = function (eventoCargarArchivo) {
+                var srcData = eventoCargarArchivo.target.result; //Imagen base64
+                //alert(srcData);
+                var Logo = srcData.split(',')[1];
+                //alert(Logo)
+                document.getElementById("imagen").src = srcData;
+                document.getElementById("imgBase64").textContent = Logo;
+
+            }
+            archivoLeer.readAsDataURL(archivoCargar);
+        }
     }
     
 

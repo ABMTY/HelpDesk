@@ -201,6 +201,7 @@
         $("#ddl_TipoUsuario").html();
         $("#ddl_Areas").html();
         $("#ddl_Sucursales").html();
+        $('#imagen').attr('src', '');
     }
 
     function Cargar_TipoUsuario() {
@@ -309,8 +310,7 @@
         });
     }
 
-    function Guardar() {
-        debugger;
+    function Guardar() {      
         Usuario = {
             "id_usuario": $("#id").val() == "" ? 0 : $("#id").val(),
             "user_name": $("#txt_Usuario").val(),

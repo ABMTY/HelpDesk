@@ -21,9 +21,7 @@
                     Soluciones de Tickets
                 </h1>
                 <div class="box-tools pull-right">
-                    @*<button class="btn btn-primary" onclick="Agregar()" id="btnAgregar">
-                        <i class="fa fa-ticket"></i> Crear Ticket
-                    </button>*@
+                  
                 </div>
             </div>
             <!-- Fin header -->
@@ -44,7 +42,7 @@
                 </div>
             </div>
             <div class="panel-body" id="secc_add" style="display:none;">
-                <input type="text" id="id" value="" hidden />               
+                <input type="text" id="id" value="" hidden  />               
                 <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
                     <label>Asunto *</label>
                     <input type="text" class="form-control" id="txt_Asunto" placeholder="Asunto del Tiket">
@@ -53,27 +51,23 @@
                     <label>Descripcion *</label>
                     <textarea id="txt_Descripcion" class="form-control" rows="10" placeholder="Describe el Problema"></textarea>
                 </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Adjuntar una foto de evidencia</label>
-                    <input type="file" id="subirImagen" onchange="ConvertirImagen()" value="" />
-                    <p id="imgBase64" style="display: none;"></p>
-                    <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />
-                    <img src="" alt="" id="imagenOriginal" width="30%;" height="30%;" />
-                </div>
-
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
                         <i class="fa fa-save"></i> Guardar
                     </button>
+                    <div class="btn btn-primary btn-file">
+                        <i class="fa fa-paperclip"></i> Adjuntar foto
+                        <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
+                    </div>
                     <button class="btn btn-default" onclick="Cancelar()" type="button">
                         <i class="fa fa-arrow-circle-left"></i> Cancelar
                     </button>
                 </div>
-            </div>
-
-
-          
-
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">        
+                    <p id="imgBase64" style="display: none;"></p>
+                    <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />                
+                </div>               
+            </div>   
             <!--Fin body -->
         </div><!-- /.box -->
         <!-- Modal Eliminar -->
@@ -163,8 +157,7 @@
         $("#secc_add").show();
         $("#btnAgregar").hide();
         Limpiar();
-        $("#titulovista").text("Crear Ticket");
-        //Cargar_Sucursales();
+        $("#titulovista").text("Crear Ticket");     
     }
 
     function Cancelar() {
@@ -178,61 +171,58 @@
         $("#id").val("");
         $("#txt_Asunto").val("");
         $("#txt_Descripcion").val("");
-        //$("#ddl_Sucursal").html("");
+        $('#imagen').attr('src', ''); 
     }
 
-    //function Cargar_Sucursales() {
-    //    $("#ddl_Sucursal").html("");
+   
+    //function Editar(id_ticket) {
     //    $.ajax({
-    //        url: "/Sucursal/GetSucursales/",
+    //        url: "/Tickets/GetTicket/",
     //        async: true,
-    //        beforeSend: function () { },
     //        dataType: "json",
-    //        data: '{ }',
+    //        data: '{ id:' + id_ticket + '}',
     //        type: "POST",
     //        contentType: "application/json; charset=utf-8",
     //        success: function (data) {
-    //            console.log(data);
-    //            $.each(data.data, function (i, Item) {
-    //                $("#ddl_Sucursal").append("<option value='" + Item.id_sucursal + "'>" + Item.nombre + "</option>")
-    //            });
-    //            $('#ddl_Sucursal').selectpicker('refresh');
+    //            Limpiar();
+    //            $("#secc_lista").hide();
+    //            $("#secc_add").show();
+    //            $("#btnAgregar").hide();
+    //            $("#id").val(id_ticket);
+    //            $("#txt_Asunto").val(data.data.nombre);
+    //            $("#txt_Descripcion").val(data.data.nombre);
+    //            $("#imgBase64").text(data.data.imagen);
+    //            //Cargar_Sucursales();
+    //            //$("#ddl_Sucursal").append("<option value=" + data.data.id_sucursal + ">" + data.data.desc_sucursal + "</option>");
+    //            //$("#ddl_Sucursal").selectpicker('refresh');
+    //            if (data.data.imagen != "") {
+    //                $('#imagen').css({ 'width': '0%', 'height': '0%' });
+    //                //$('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
+    //            }
     //        },
     //        error: function (request, status, error) {
-    //            console.log("Error => " + error);
+    //            console.log("error" + error);
     //        }
-    //    })
+    //    });
     //}
 
-    function Editar(id_ticket) {
-        $.ajax({
-            url: "/Tickets/GetTicket/",
-            async: true,
-            dataType: "json",
-            data: '{ id:' + id_ticket + '}',
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                Limpiar();
-                $("#secc_lista").hide();
-                $("#secc_add").show();
-                $("#btnAgregar").hide();
-                $("#id").val(id_ticket);
-                $("#txt_Asunto").val(data.data.nombre);
-                $("#txt_Descripcion").val(data.data.nombre);
-                $("#imgBase64").text(data.data.imagen);
-                //Cargar_Sucursales();
-                //$("#ddl_Sucursal").append("<option value=" + data.data.id_sucursal + ">" + data.data.desc_sucursal + "</option>");
-                //$("#ddl_Sucursal").selectpicker('refresh');
-                if (data.data.imagen != "") {
-                    $('#imagen').css({ 'width': '0%', 'height': '0%' });
-                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
-                }
-            },
-            error: function (request, status, error) {
-                console.log("error" + error);
+    function ConvertirImagen() {
+        var archivoImagen = document.getElementById("subirImagen").files;
+        if (archivoImagen.length > 0) {
+            var archivoCargar = archivoImagen[0];
+            var archivoLeer = new FileReader();
+
+            archivoLeer.onload = function (eventoCargarArchivo) {
+                var srcData = eventoCargarArchivo.target.result; //Imagen base64
+                //alert(srcData);
+                var Logo = srcData.split(',')[1];
+                //alert(Logo)
+                document.getElementById("imagen").src = srcData;
+                document.getElementById("imgBase64").textContent = Logo;
+
             }
-        });
+            archivoLeer.readAsDataURL(archivoCargar);
+        }
     }
 
     function Seguimiento(id_ticket) {  
@@ -241,30 +231,37 @@
     }
 
     function Guardar() {
-        Ticket = {
-            "id_ticket": $("#id").val() == "" ? 0 : $("#id").val(),
-            "id_usuario": @Session["id_usuario"],
-            "id_sucursal": @Session["id_sucursal"],
-            "asunto": $("#txt_Asunto").val(),
-            "descripcion": $("#txt_Descripcion").val(),
-            "imagen": $("#imgBase64").text(),            
-        };
-        $.ajax(
+        if($("#txt_Asunto").val() != "" &&  $("#txt_Descripcion").val() != "")
         {
-            url: "/TicketsSucursal/Guardar/",
-            async: true,
-            dataType: "json",
-            data: JSON.stringify(Ticket),
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                swal({ title: "Tickets", text: "Guardada Correctamente", type: "success" }, function () { Cargar_Tickets(); Cancelar(); });
-            },
-            error: function (request, status, error) {
-                swal("Error al Guardar el Ticket");
-                console.log("error" + error);
-            }
-        });
+            Ticket = {
+                "id_ticket": $("#id").val() == "" ? 0 : $("#id").val(),
+                "id_usuario": @Session["id_usuario"],
+                "id_sucursal": @Session["id_sucursal"],
+                "asunto": $("#txt_Asunto").val(),
+                "descripcion": $("#txt_Descripcion").val(),
+                "imagen": $("#imgBase64").text(),            
+            };
+            $.ajax(
+            {
+                url: "/TicketsSucursal/Guardar/",
+                async: true,
+                dataType: "json",
+                data: JSON.stringify(Ticket),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    swal({ title: "Tickets", text: "Guardada Correctamente", type: "success" }, function () { Cargar_Tickets(); Cancelar(); });
+                },
+                error: function (request, status, error) {
+                    swal("Error al Guardar el Ticket");
+                    console.log("error" + error);
+                }
+            });
+        }
+        else
+        {
+            swal({ title: "Ticket", text: "Introduzca los datos requeridos (*)", type: "warning" }, function () { });   
+        }
     }
 
     function Confirma_Eliminar(id_ticket) {
