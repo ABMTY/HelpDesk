@@ -35,6 +35,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
+                        if (dr["foto_usuario"].ToString() != string.Empty)
+                            entidad.foto_usuario = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_usuario"]);
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
@@ -43,6 +45,9 @@ namespace PerHelpDesk.Sevicios
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.estado = dr["estado"].ToString();
+                        entidad.agente = dr["agente"].ToString();
+                        if (dr["foto_agente"].ToString() != string.Empty)
+                            entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         lista.Add(entidad);
                     }
@@ -88,6 +93,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
+                        if (dr["foto_usuario"].ToString() != string.Empty)
+                            entidad.foto_usuario = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_usuario"]);
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
@@ -98,8 +105,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.estado = dr["estado"].ToString();
                         entidad.agente = dr["agente"].ToString();
-                        if (dr["foto"].ToString() != string.Empty)
-                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
+                        if (dr["foto_agente"].ToString() != string.Empty)
+                            entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                     }
                 }
@@ -144,6 +151,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
+                        if (dr["foto_usuario"].ToString() != string.Empty)
+                            entidad.foto_usuario = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_usuario"]);
                         entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
                         entidad.sucursal = dr["sucursal"].ToString();
                         entidad.asunto = dr["asunto"].ToString();
@@ -154,8 +163,8 @@ namespace PerHelpDesk.Sevicios
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.estado = dr["estado"].ToString();
                         entidad.agente = dr["agente"].ToString();
-                        if (dr["foto"].ToString() != string.Empty)
-                            entidad.foto = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto"]);
+                        if (dr["foto_agente"].ToString() != string.Empty)
+                            entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                     }
                 }

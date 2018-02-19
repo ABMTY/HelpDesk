@@ -11,6 +11,7 @@ namespace EntHelpDesk.Entidad
         public int id_ticket { get; set; }
         public int id_usuario { get; set; }
         public string usuario { get; set; }
+        public string foto_usuario { get; set; }
         public int id_sucursal { get; set; }
         public string sucursal { get; set; }
         public string asunto { get; set; }
@@ -19,8 +20,10 @@ namespace EntHelpDesk.Entidad
         public string fechahora_creacion { get; set; }
         public string estado { get; set; }
         public string agente { get; set; }
-        public string foto { get; set; }
-        public int id_detalle_ticket { get; set; }
+        public string foto_agente { get; set; }
+        public int id_detalle_ticket { get; set; }        
+        
+        
 
     }
 }
