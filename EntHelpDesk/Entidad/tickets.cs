@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EntHelpDesk.Entidad
 {
-    public class tickets
+    public class tickets : detalle_ticket
     {
-        public int id_ticket { get; set; }
+        
         public int id_usuario { get; set; }
         public string usuario { get; set; }
         public string foto_usuario { get; set; }
@@ -17,11 +17,9 @@ namespace EntHelpDesk.Entidad
         public string asunto { get; set; }
         public string descripcion { get; set; }
         public string imagen { get; set; }
-        public string fechahora_creacion { get; set; }
-        public string estado { get; set; }
-        public string agente { get; set; }
-        public string foto_agente { get; set; }
-        public int id_detalle_ticket { get; set; }        
+        public string fechahora_creacion { get; set; }                
+        
+            
         
         
 

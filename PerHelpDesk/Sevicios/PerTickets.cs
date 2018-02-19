@@ -49,6 +49,8 @@ namespace PerHelpDesk.Sevicios
                         if (dr["foto_agente"].ToString() != string.Empty)
                             entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
+                        entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.prioridad = dr["prioridad"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -108,6 +110,9 @@ namespace PerHelpDesk.Sevicios
                         if (dr["foto_agente"].ToString() != string.Empty)
                             entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
+                        entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.prioridad = dr["prioridad"].ToString();
+                        
                     }
                 }
             }
@@ -166,6 +171,8 @@ namespace PerHelpDesk.Sevicios
                         if (dr["foto_agente"].ToString() != string.Empty)
                             entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
+                        entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                        entidad.prioridad = dr["prioridad"].ToString();
                     }
                 }
             }
