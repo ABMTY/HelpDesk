@@ -299,7 +299,7 @@
                 $("#ddl_Sucursales").append("<option value=" + data.data.id_sucursal + ">" + data.data.sucursal + "</option>");
                 $("#ddl_Sucursales").selectpicker('refresh');
                 $("#imgBase64").text(data.data.foto)
-                if (data.data.imagen != "") {
+                if (data.data.foto != "") {
                     $('#imagen').css({ 'width': '0%', 'height': '0%' });
                     $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.foto);
                 }

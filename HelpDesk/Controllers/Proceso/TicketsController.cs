@@ -89,7 +89,9 @@ namespace HelpDesk.Controllers.Proceso
             {
                 if (entidad.id_ticket > 0)
                 {
+                    entidad.id_sucursal = ctrlUsuarios.Obtener(entidad.id_usuario).id_sucursal;
                     r = control.Actualizar(entidad);
+                    r = ctrlDetalle.Actualizar(entidad);
                 }
                 else
                 {

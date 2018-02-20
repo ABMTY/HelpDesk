@@ -112,7 +112,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.asunto = dr["asunto"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
-                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
+                            entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
                         
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.id_estado = int.Parse(dr["id_estado"].ToString());
@@ -277,7 +277,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@IdSucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@asunto", entidad.asunto);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen.Substring(0,22)));                
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));                
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
