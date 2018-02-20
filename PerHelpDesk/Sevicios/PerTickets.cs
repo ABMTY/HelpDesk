@@ -48,18 +48,19 @@ namespace PerHelpDesk.Sevicios
                         entidad.estado = dr["estado"].ToString();
                         if (dr["id_detalle_ticket"].ToString() != string.Empty)
                         {
-                            entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
-                            entidad.id_agente = int.Parse(dr["id_agente"].ToString());
+                            entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());                            
+                            entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                            entidad.prioridad = dr["prioridad"].ToString();
+                            entidad.id_agente = dr["id_agente"].ToString() == string.Empty ? 0 : int.Parse(dr["id_agente"].ToString());
                             entidad.agente = dr["agente"].ToString() == "" ? "Sin Asignar" : dr["agente"].ToString();
                             if (dr["foto_agente"].ToString() != string.Empty)
                                 entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
-                            entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
-                            entidad.prioridad = dr["prioridad"].ToString();
-                            entidad.id_area = int.Parse(dr["id_area"].ToString());
+                            entidad.id_area = dr["id_area"].ToString() == string.Empty ? 0 : int.Parse(dr["id_area"].ToString());
                             entidad.area = dr["area"].ToString();
-                            entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
+                            entidad.id_tipo_soporte = dr["id_tipo_soporte"].ToString() == string.Empty ? 0 : int.Parse(dr["id_tipo_soporte"].ToString());
                             entidad.tipo_soporte = dr["tipo_soporte"].ToString();
                         }
+                        
                         lista.Add(entidad);
                     }
                 }
@@ -119,15 +120,15 @@ namespace PerHelpDesk.Sevicios
                         if (dr["id_detalle_ticket"].ToString() != string.Empty)
                         {
                             entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
-                            entidad.id_agente = int.Parse(dr["id_agente"].ToString());
+                            entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                            entidad.prioridad = dr["prioridad"].ToString();
+                            entidad.id_agente = dr["id_agente"].ToString() == string.Empty ? 0 : int.Parse(dr["id_agente"].ToString());
                             entidad.agente = dr["agente"].ToString() == "" ? "Sin Asignar" : dr["agente"].ToString();
                             if (dr["foto_agente"].ToString() != string.Empty)
                                 entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
-                            entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
-                            entidad.prioridad = dr["prioridad"].ToString();
-                            entidad.id_area = int.Parse(dr["id_area"].ToString());
+                            entidad.id_area = dr["id_area"].ToString() == string.Empty ? 0 : int.Parse(dr["id_area"].ToString());
                             entidad.area = dr["area"].ToString();
-                            entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
+                            entidad.id_tipo_soporte = dr["id_tipo_soporte"].ToString() == string.Empty ? 0 : int.Parse(dr["id_tipo_soporte"].ToString());
                             entidad.tipo_soporte = dr["tipo_soporte"].ToString();
                         }
 
@@ -189,15 +190,15 @@ namespace PerHelpDesk.Sevicios
                         if (dr["id_detalle_ticket"].ToString() != string.Empty)
                         {
                             entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
-                            entidad.id_agente = int.Parse(dr["id_agente"].ToString());
+                            entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
+                            entidad.prioridad = dr["prioridad"].ToString();
+                            entidad.id_agente = dr["id_agente"].ToString() == string.Empty ? 0 : int.Parse(dr["id_agente"].ToString());
                             entidad.agente = dr["agente"].ToString() == "" ? "Sin Asignar" : dr["agente"].ToString();
                             if (dr["foto_agente"].ToString() != string.Empty)
                                 entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
-                            entidad.id_prioridad = int.Parse(dr["id_prioridad"].ToString());
-                            entidad.prioridad = dr["prioridad"].ToString();
-                            entidad.id_area = int.Parse(dr["id_area"].ToString());
+                            entidad.id_area = dr["id_area"].ToString() == string.Empty ? 0 : int.Parse(dr["id_area"].ToString());
                             entidad.area = dr["area"].ToString();
-                            entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
+                            entidad.id_tipo_soporte = dr["id_tipo_soporte"].ToString() == string.Empty ? 0 : int.Parse(dr["id_tipo_soporte"].ToString());
                             entidad.tipo_soporte = dr["tipo_soporte"].ToString();
                         }
                     }
