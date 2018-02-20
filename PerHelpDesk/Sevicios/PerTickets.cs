@@ -44,9 +44,8 @@ namespace PerHelpDesk.Sevicios
                         if (dr["imagen"].ToString() != string.Empty)
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
-                        entidad.id_estado = int.Parse(dr["estado"].ToString());
+                        entidad.id_estado = int.Parse(dr["id_estado"].ToString());
                         entidad.estado = dr["estado"].ToString();
-                        
                         if (dr["id_detalle_ticket"].ToString() != string.Empty)
                         {
                             entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
@@ -58,6 +57,8 @@ namespace PerHelpDesk.Sevicios
                             entidad.prioridad = dr["prioridad"].ToString();
                             entidad.id_area = int.Parse(dr["id_area"].ToString());
                             entidad.area = dr["area"].ToString();
+                            entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
+                            entidad.tipo_soporte = dr["tipo_soporte"].ToString();
                         }
                         lista.Add(entidad);
                     }
@@ -113,6 +114,7 @@ namespace PerHelpDesk.Sevicios
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
+                        entidad.id_estado = int.Parse(dr["id_estado"].ToString());
                         entidad.estado = dr["estado"].ToString();
                         if (dr["id_detalle_ticket"].ToString() != string.Empty)
                         {
@@ -125,6 +127,8 @@ namespace PerHelpDesk.Sevicios
                             entidad.prioridad = dr["prioridad"].ToString();
                             entidad.id_area = int.Parse(dr["id_area"].ToString());
                             entidad.area = dr["area"].ToString();
+                            entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
+                            entidad.tipo_soporte = dr["tipo_soporte"].ToString();
                         }
 
                     }
@@ -180,6 +184,7 @@ namespace PerHelpDesk.Sevicios
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
 
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
+                        entidad.id_estado = int.Parse(dr["id_estado"].ToString());
                         entidad.estado = dr["estado"].ToString();
                         if (dr["id_detalle_ticket"].ToString() != string.Empty)
                         {
@@ -192,6 +197,8 @@ namespace PerHelpDesk.Sevicios
                             entidad.prioridad = dr["prioridad"].ToString();
                             entidad.id_area = int.Parse(dr["id_area"].ToString());
                             entidad.area = dr["area"].ToString();
+                            entidad.id_tipo_soporte = int.Parse(dr["id_tipo_soporte"].ToString());
+                            entidad.tipo_soporte = dr["tipo_soporte"].ToString();
                         }
                     }
                 }

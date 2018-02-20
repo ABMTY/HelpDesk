@@ -19,6 +19,7 @@ namespace EntHelpDesk.Entidad
         public string fechahora_inicioticket { get; set; }
         public string fechahora_cerroticket { get; set; }
         public int id_tipo_soporte { get; set; }
+        public string tipo_soporte { get; set; }
         public string area { get; set; }
         public string prioridad { get; set; }
         public string estado { get; set; }
