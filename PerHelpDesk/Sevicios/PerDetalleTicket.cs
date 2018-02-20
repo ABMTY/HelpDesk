@@ -187,8 +187,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
                 cmd.Parameters.AddWithValue("@id_estado", entidad.id_estado);
                 cmd.Parameters.AddWithValue("@id_agente", entidad.id_agente);
-                cmd.Parameters.AddWithValue("@fechahora_inicioticket", entidad.fechahora_inicioticket);
-                cmd.Parameters.AddWithValue("@fechahora_cerroticket", entidad.fechahora_cerroticket);
+                cmd.Parameters.AddWithValue("@fechahora_inicioticket", System.DateTime.Now);                
                 cmd.Parameters.AddWithValue("@id_tipo_soporte", entidad.id_tipo_soporte);
                 cmd.ExecuteNonQuery();
                 respuesta = true;
@@ -264,8 +263,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@id_area", entidad.id_area);
                 cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
                 cmd.Parameters.AddWithValue("@id_estado", entidad.id_estado);
-                cmd.Parameters.AddWithValue("@id_agente", entidad.id_agente);
-                cmd.Parameters.AddWithValue("@fechahora_inicioticket", entidad.fechahora_inicioticket);
+                cmd.Parameters.AddWithValue("@id_agente", entidad.id_agente);                
                 cmd.Parameters.AddWithValue("@fechahora_cerroticket", entidad.fechahora_cerroticket);
                 cmd.Parameters.AddWithValue("@id_tipo_soporte", entidad.id_tipo_soporte);
                 cmd.ExecuteNonQuery();

@@ -45,6 +45,26 @@ namespace HelpDesk.Controllers.Administracion
             json.MaxJsonLength = 500000000;
             return json;
         }
+        public ActionResult GetSupervisores()
+        {
+            var Lista = control.ObtenerTodos().Where(s => s.tipo_usuario.ToUpper()=="SUPERVISOR").ToList();
+            
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Lista }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
+        public ActionResult GetAgentes()
+        {
+            var Lista = control.ObtenerTodos().Where(s => s.tipo_usuario.ToUpper() == "AGENTE").ToList();
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Lista }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
         public ActionResult GetUsuario(int id)
         {
             var Turno = control.Obtener(id);
