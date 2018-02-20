@@ -277,7 +277,7 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@IdSucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@asunto", entidad.asunto);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));                
+                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen.Substring(0,22)));                
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
