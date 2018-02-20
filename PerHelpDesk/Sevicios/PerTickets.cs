@@ -45,7 +45,7 @@ namespace PerHelpDesk.Sevicios
                             entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_creacion = dr["fechahora_creacion"].ToString();
                         entidad.estado = dr["estado"].ToString();
-                        entidad.agente = dr["agente"].ToString();
+                        entidad.agente = dr["agente"].ToString()==""?"Sin Asignar": dr["agente"].ToString();
                         if (dr["foto_agente"].ToString() != string.Empty)
                             entidad.foto_agente = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["foto_agente"]);
                         if (dr["id_detalle_ticket"].ToString() != string.Empty)

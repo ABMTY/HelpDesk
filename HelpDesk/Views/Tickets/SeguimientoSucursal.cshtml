@@ -1,56 +1,58 @@
 ﻿
 @{
-    ViewBag.Title = "SeguimientoTicket";
+    ViewBag.Title = "SeguimientoSucursal";
 }
 
+
 <ol class="breadcrumb">
-    <li><a ><i class="fa fa-ticket"></i> Tickets</a></li>
-    <li class="active"><a href='@Url.Action("Index", "TicketsSucursal")'>Sucursal</a></li>
-    <li class="active">Seguimiento</li>   
+    <li><a><i class="fa fa-ticket"></i> Tickets</a></li>
+    <li class="active"><a href='@Url.Action("IndexSucursal", "Tickets")'>Sucursal</a></li>
+    <li class="active">Seguimiento</li>
 </ol>
 
-<input type="text" id="id" value="" hidden />       
-<input type="text" id="id_detalle_ticket" value="" hidden />     
+<input type="text" id="id" value="" hidden />
+<input type="text" id="id_detalle_ticket" value="" hidden />
 <div class="row">
     <div class="col-md-3">
         <!-- Box Ticket-->
         <div class="box box-primary">
-            <div class="box-header with-border"><i class="fa fa-ticket margin-r-5"></i>
+            <div class="box-header with-border">
+                <i class="fa fa-ticket margin-r-5"></i>
                 <h3 class="box-title" id="asunto_ticket"></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <strong  id="descripcion_ticket"></strong>
-                <p class="text-muted" id="fecha_ticket">                    
+                <strong id="descripcion_ticket"></strong>
+                <p class="text-muted" id="fecha_ticket">
                 </p>
                 <hr>
-                <h3 class="profile-username text-center"><span class="label label-warning" id="estado_ticket"></span></h3>  
+                <h3 class="profile-username text-center"><span class="label label-warning" id="estado_ticket"></span></h3>
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
         <!-- Profile Agent -->
         <div class="box box-primary">
-            <div class="box-body box-profile">                
-                <p class="text-muted text-center">Asignado al agente</p>                
-                <img class="profile-user-img img-responsive img-circle" id="foto_agente" >
+            <div class="box-body box-profile">
+                <p class="text-muted text-center">Asignado al agente</p>
+                <img class="profile-user-img img-responsive img-circle" id="foto_agente">
                 <h3 class="profile-username text-center" id="nombre_agente"></h3>
             </div>
             <!-- /.box-body -->
         </div>
-        <!-- /.box -->       
+        <!-- /.box -->
     </div>
     <!-- /.col -->
     <div class="col-md-9">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#activity" data-toggle="tab">Seguimiento</a></li>       
+                <li class="active"><a href="#activity" data-toggle="tab">Seguimiento</a></li>
             </ul>
-            <div class="tab-content" >
+            <div class="tab-content">
                 <div class="active tab-pane" id="activity">
                     <!-- Post Comentarios-->
-                    <div class="post" id="seguimiento">   
-                    </div>                    
+                    <div class="post" id="seguimiento">
+                    </div>
                     <!-- /.post -->
                     <!-- Post Responder -->
                     <div class="post clearfix">
@@ -86,8 +88,8 @@
                             </li>
                         </ul>
                         <!-- /.post -->
-                    </div>                
-                </div>                
+                    </div>
+                </div>
             </div>
             <!-- /.tab-content -->
         </div>
@@ -98,8 +100,8 @@
 <!-- /.row -->
 <script>
     $(document).ready(function () {
-        var id_ticket = ($_GET("id_ticket"));        
-        Detalle_Ticket(id_ticket);       
+        var id_ticket = ($_GET("id_ticket"));
+        Detalle_Ticket(id_ticket);
     });
 
     function $_GET(param) {
@@ -114,7 +116,7 @@
                 return decodeURIComponent(p[1]);
             }
             x++;
-        }          
+        }
     }
 
     //OBTENER DETALLE DEL TICKET
@@ -127,8 +129,8 @@
             data: '{ id:' + id_ticket + '}',
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            success: function (data) {                  
-                Limpiar();               
+            success: function (data) {
+                Limpiar();
                 $("#id").val(id_ticket);
                 $("#id_detalle_ticket").val(data.data.id_detalle_ticket);
                 $("#asunto_ticket").text(data.data.asunto);
@@ -137,9 +139,9 @@
                 $("#estado_ticket").text(data.data.estado);
 
                 $("#nombre_agente").text(data.data.agente);
-                
-                if (data.data.imagen != "") {                    
-                    $('#foto_agente').attr('src', data.data.foto);
+
+                if (data.data.foto_agente != "") {
+                    $('#foto_agente').attr('src', data.data.foto_agente);
                 }
 
                 ObtenerComentarios(data.data.id_detalle_ticket);
@@ -151,7 +153,7 @@
     }
 
     // OBTENER COMENTARIOS
-    function ObtenerComentarios(id_detalle_ticket) {       
+    function ObtenerComentarios(id_detalle_ticket) {
         $.ajax({
             url: "/TicketsSucursal/GetComentarioPorDetalle/",
             async: true,
@@ -159,20 +161,24 @@
             data: '{ id:' + id_detalle_ticket + '}',
             type: "POST",
             contentType: "application/json; charset=utf-8",
-            success: function (data) {              
-                Visualizar_Comentarios(data);
+            success: function (data) {
+            
+                if(data.data.length>0)
+                {
+                    Visualizar_Comentarios(data);
+                }
             },
             error: function (request, status, error) {
                 console.log("error" + error);
             }
-        });       
+        });
     }
 
     function Visualizar_Comentarios(data) {
-        try {   
-            $.each(data.data, function (i, entComentario) {             
+        try {
+            $.each(data.data, function (i, entComentario) {
                     comentario = "<ul class='timeline timeline-inverse'>" +
-                                    "<li>" +                                        
+                                    "<li>" +
                                         "<img class='img-circle img-bordered-sm' width='50' height='50' src='" + entComentario.foto + "'>" +
                                         "<div class='timeline-item'>" +
                                             "<span class='time'><i class='fa fa-clock-o'></i> " + entComentario.fechahora_comentario + "</span>" +
@@ -186,9 +192,9 @@
                                         "</div>" +
                                     "</li>" +
                                 "</ul>"
-                    $("#seguimiento").append(comentario);             
+                    $("#seguimiento").append(comentario);
             });
-           
+
         }
         catch (err) {
             mostrar_aviso("error", "Error al procesar los comentarios");
@@ -202,19 +208,19 @@
         $("#descripcion_ticket").text("");
         $("#fecha_ticket").text("");
         $("#estado_ticket").text("");
-        $("#nombre_agente").text("");        
-        $('#foto_agente').attr("");        
+        $("#nombre_agente").text("");
+        $('#foto_agente').attr("");
     }
 
     function Guardar() {
-        
+
         if($("#txt_Respuesta").val() != "")
         {
-            Comentario = {            
-                "comentario": $("#txt_Respuesta").val(),            
+            Comentario = {
+                "comentario": $("#txt_Respuesta").val(),
                 "id_detalle_ticket": $("#id_detalle_ticket").val(),
                 "imagen": $("#imgBase64").text(),
-                "id_usuario": @Session["id_usuario"],            
+                "id_usuario": @Session["id_usuario"],
             };
             $.ajax(
             {
@@ -236,14 +242,14 @@
         }
         else
         {
-            swal({ title: "Comentarios", text: "Introduzca el comentario", type: "warning" }, function () { });              
+            swal({ title: "Comentarios", text: "Introduzca el comentario", type: "warning" }, function () { });
         }
     }
 
     function LimpiarComentarios() {
-        $("#seguimiento").html("");  
+        $("#seguimiento").html("");
         $("#txt_Respuesta").val("");
-        $('#imagen').attr('src', '');                
+        $('#imagen').attr('src', '');
     }
 
     function ConvertirImagen() {
@@ -264,6 +270,7 @@
             archivoLeer.readAsDataURL(archivoCargar);
         }
     }
-    
+
 
 </script>
+
