@@ -4,28 +4,47 @@ using EntHelpDesk.Entidad;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+
 
 namespace HelpDesk.Controllers.Proceso
 {
-    public class TicketsSucursalController : Controller
+    public class TicketsController : Controller
     {
         CtrlTickets control = new CtrlTickets();
         CtrlDetalleTicket ctrlDetalle = new CtrlDetalleTicket();
         CtrlPrioridad ctrlPrioridad = new CtrlPrioridad();
         CtrlEstado ctrlEstado = new CtrlEstado();
         CtrlComentarios ctrlComentario = new CtrlComentarios();
+        CtrlUsuarios ctrlUsuarios = new CtrlUsuarios();
 
-        // GET: TicketsSucursal
+        // GET: Tickets
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult SeguimientoTicket()
+
+        public ActionResult IndexSucursal()
+        {
+            return View();
+        }        
+
+        public ActionResult SeguimientoSucursal()
         {
             return View();
         }
+
+        public ActionResult IndexMesaAyuda()
+        {
+            return View();
+        }
+
+        public ActionResult SeguimientoMesaAyuda()
+        {
+            return View();
+        }
+        
+
         public ActionResult Guardar(tickets entidad)
         {
             var r = false;
@@ -33,7 +52,7 @@ namespace HelpDesk.Controllers.Proceso
             {
                 if (entidad.id_ticket > 0)
                 {
-                    r = control.Actualizar(entidad);                   
+                    r = control.Actualizar(entidad);
                 }
                 else
                 {
@@ -42,12 +61,12 @@ namespace HelpDesk.Controllers.Proceso
                     int id_prioridad = (ctrlPrioridad.ObtenerTodos().Find(x => x.nombre.ToUpper() == "BAJA") as prioridad).id_prioridad;
                     int id_estado = (ctrlEstado.ObtenerTodos().Find(x => x.nombre.ToUpper() == "ABIERTO") as estado).id_estado;
                     ctrlDetalle.InsertarPorSucursal(new detalle_ticket
-                        {
-                            id_ticket = id_ticket,
-                            id_prioridad = id_prioridad,
-                            id_estado = id_estado
+                    {
+                        id_ticket = id_ticket,
+                        id_prioridad = id_prioridad,
+                        id_estado = id_estado
                     });
-                   
+
                 }
 
                 if (!r)
@@ -62,6 +81,46 @@ namespace HelpDesk.Controllers.Proceso
                 return View("Error", new HandleErrorInfo(ex, "TipoUsuario", "Create"));
             }
         }
+
+        public ActionResult Guardar_EnMA(tickets entidad)
+        {
+            var r = false;
+            try
+            {
+                if (entidad.id_ticket > 0)
+                {
+                    r = control.Actualizar(entidad);
+                }
+                else
+                {
+                    entidad.id_sucursal = ctrlUsuarios.Obtener(entidad.id_usuario).id_sucursal;                    
+                    r = control.Insertar(entidad);
+                    int id_ticket = control.ObtenerTodos().ToList().Max(p => p.id_ticket);                    
+                    ctrlDetalle.Insertar(new detalle_ticket
+                    {
+                        id_ticket = id_ticket,
+                        id_area = entidad.id_area,
+                        id_prioridad = entidad.id_prioridad,
+                        id_estado = entidad.id_estado,
+                        id_agente= entidad.id_agente,                        
+                        id_tipo_soporte = entidad.id_tipo_soporte,
+                    });
+
+                }
+
+                if (!r)
+                {
+                    return Json("Error al realizar la operacion", JsonRequestBehavior.AllowGet);
+                }
+
+                return Json("Realizado", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "TipoUsuario", "Create"));
+            }
+        }
+
         public ActionResult GetTickets()
         {
             var Listado = control.ObtenerTodos();
@@ -109,7 +168,7 @@ namespace HelpDesk.Controllers.Proceso
         }
         public ActionResult GetDetalleTicket(int id)
         {
-            var Detalle = ctrlDetalle.Obtener(id);                       
+            var Detalle = ctrlDetalle.Obtener(id);
 
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
@@ -127,7 +186,6 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
-
         public ActionResult GuardarComentario(comentarios entidad)
         {
             var r = false;
@@ -147,5 +205,5 @@ namespace HelpDesk.Controllers.Proceso
                 return View("Error", new HandleErrorInfo(ex, "TipoUsuario", "Create"));
             }
         }
-   }
+    }
 }

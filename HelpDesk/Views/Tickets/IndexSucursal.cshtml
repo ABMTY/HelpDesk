@@ -1,14 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IndexSucursal";
 }
+
 
 
 <ol class="breadcrumb">
     <li><a class="box-title"><i class="fa fa-ticket"></i>Tickets</a></li>
     <li class="active">Sucursal</li>
-    <li class="pull-right" >        
-        <a id="btnAgregar" onclick="Agregar()" style="color:#000" >Nuevo Ticket para Mesa de Ayuda</a>        
+    <li class="pull-right">
+        <a id="btnAgregar" onclick="Agregar()" style="color:#000">Nuevo Ticket para Mesa de Ayuda</a>
     </li>
 </ol>
 <!--Contenido-->
@@ -21,7 +22,7 @@
                     Soluciones de Tickets
                 </h1>
                 <div class="box-tools pull-right">
-                  
+
                 </div>
             </div>
             <!-- Fin header -->
@@ -35,20 +36,20 @@
                                 <th>Sucursal</th>
                                 <th>Asunto</th>
                                 <th>Fecha Creacion</th>
-                                <th>Estatus</th>                                                              
+                                <th>Estatus</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
             <div class="panel-body" id="secc_add" style="display:none;">
-                <input type="text" id="id" value="" hidden  />               
+                <input type="text" id="id" value="" hidden />
                 <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                    <label>Asunto *</label>
+                    <label>Asunto <span class="description-percentage text-red">*</span></label>
                     <input type="text" class="form-control" id="txt_Asunto" placeholder="Asunto del Tiket">
                 </div>
                 <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12">
-                    <label>Descripcion *</label>
+                    <label>Descripcion <span class="description-percentage text-red">*</span></label>
                     <textarea id="txt_Descripcion" class="form-control" rows="10" placeholder="Describe el Problema"></textarea>
                 </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -63,11 +64,11 @@
                         <i class="fa fa-arrow-circle-left"></i> Cancelar
                     </button>
                 </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">        
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <p id="imgBase64" style="display: none;"></p>
-                    <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />                
-                </div>               
-            </div>   
+                    <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />
+                </div>
+            </div>
             <!--Fin body -->
         </div><!-- /.box -->
         <!-- Modal Eliminar -->
@@ -104,28 +105,28 @@
 
     $(document).ready(function () {
         $('#Lista_Tickets').DataTable();
-        Cargar_Tickets();      
+        Cargar_Tickets();
     });
 
-    
+
     function Cargar_Tickets() {
         $('#Lista_Tickets').DataTable({
             destroy: true,
             searching: true,
             "ajax": {
-                "url": "/TicketsSucursal/GetTickets/",
+                "url": "/Tickets/GetTickets/",
                 "type": "GET"
             },
             "columns": [
                 { "defaultContent": "<i>..</i>" },
                 { "data": "sucursal" },
                 { "data": "asunto" },
-                { "data": "fechahora_creacion" },                                
+                { "data": "fechahora_creacion" },
                 { "data": "estado","render": function ( data, type, row ) {
                     if(data === 'Abierto'){
-                        return '<span class="label label-warning">'+data+'</span>';                    
+                        return '<span class="label label-warning">'+data+'</span>';
                     }else if(data === 'Pendiente'){
-                        return '<span class="label label-default">'+data+'</span>';                    
+                        return '<span class="label label-default">'+data+'</span>';
                     }else if(data === 'Resuelto'){
                         return '<span class="label label-success">'+data+'</span>';
                     }else if(data === 'Cancelado'){
@@ -138,7 +139,7 @@
                         return '<span class="label label-info">'+data+'</span>';
                     }
                 }},
-                
+
             ],
             "columnDefs": [
                 {
@@ -150,14 +151,13 @@
         });
     }
 
-    //<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-primary' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-primary' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> 
 
     function Agregar() {
         $("#secc_lista").hide();
         $("#secc_add").show();
         $("#btnAgregar").hide();
         Limpiar();
-        $("#titulovista").text("Crear Ticket");     
+        $("#titulovista").text("Crear Ticket");
     }
 
     function Cancelar() {
@@ -171,40 +171,8 @@
         $("#id").val("");
         $("#txt_Asunto").val("");
         $("#txt_Descripcion").val("");
-        $('#imagen').attr('src', ''); 
+        $('#imagen').attr('src', '');
     }
-
-   
-    //function Editar(id_ticket) {
-    //    $.ajax({
-    //        url: "/Tickets/GetTicket/",
-    //        async: true,
-    //        dataType: "json",
-    //        data: '{ id:' + id_ticket + '}',
-    //        type: "POST",
-    //        contentType: "application/json; charset=utf-8",
-    //        success: function (data) {
-    //            Limpiar();
-    //            $("#secc_lista").hide();
-    //            $("#secc_add").show();
-    //            $("#btnAgregar").hide();
-    //            $("#id").val(id_ticket);
-    //            $("#txt_Asunto").val(data.data.nombre);
-    //            $("#txt_Descripcion").val(data.data.nombre);
-    //            $("#imgBase64").text(data.data.imagen);
-    //            //Cargar_Sucursales();
-    //            //$("#ddl_Sucursal").append("<option value=" + data.data.id_sucursal + ">" + data.data.desc_sucursal + "</option>");
-    //            //$("#ddl_Sucursal").selectpicker('refresh');
-    //            if (data.data.imagen != "") {
-    //                $('#imagen').css({ 'width': '0%', 'height': '0%' });
-    //                //$('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.imagen);
-    //            }
-    //        },
-    //        error: function (request, status, error) {
-    //            console.log("error" + error);
-    //        }
-    //    });
-    //}
 
     function ConvertirImagen() {
         var archivoImagen = document.getElementById("subirImagen").files;
@@ -225,9 +193,8 @@
         }
     }
 
-    function Seguimiento(id_ticket) {  
-        '<%Session["id_ticket"] = "' + id_ticket + '"; %>'        
-        window.location = "/TicketsSucursal/SeguimientoTicket?id_ticket=" + id_ticket;       
+    function Seguimiento(id_ticket) {        
+        window.location = "/Tickets/SeguimientoSucursal?id_ticket=" + id_ticket;
     }
 
     function Guardar() {
@@ -239,11 +206,11 @@
                 "id_sucursal": @Session["id_sucursal"],
                 "asunto": $("#txt_Asunto").val(),
                 "descripcion": $("#txt_Descripcion").val(),
-                "imagen": $("#imgBase64").text(),            
+                "imagen": $("#imgBase64").text(),
             };
             $.ajax(
             {
-                url: "/TicketsSucursal/Guardar/",
+                url: "/Tickets/Guardar/",
                 async: true,
                 dataType: "json",
                 data: JSON.stringify(Ticket),
@@ -260,36 +227,15 @@
         }
         else
         {
-            swal({ title: "Ticket", text: "Introduzca los datos requeridos (*)", type: "warning" }, function () { });   
+            swal({ title: "Ticket", text: "Introduzca los datos requeridos (*)", type: "warning" }, function () { });
         }
     }
 
-    function Confirma_Eliminar(id_ticket) {
-        $('#Form_DeleteTipo').modal('show');
-        $("#lbl_msjborrar").html("Se va a eliminar el Ticket No. " + id_ticket + ". <br/>¿Desea Continuar?");
-        $("#txt_idborrar").text(id_ticket);
-    }
 
-    function Eliminar() {
-        id_ticket = $("#txt_idborrar").text();
-        $.ajax({
-            url: "/Tickets/Eliminar/",
-            async: true,
-            dataType: "json",
-            data: '{id:' + id_ticket + '}',
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $('#Form_DeleteTipo').modal('hide');
-                swal({ title: "Tickets", text: "Se elimino Correctamente", type: "success" }, function () { Cargar_Tickets(); });
-            },
-            error: function (request, status, error) {
-                console.log("error" + error);
-            }
-        });
-    }
 
 </script>
+
+
 
 
 

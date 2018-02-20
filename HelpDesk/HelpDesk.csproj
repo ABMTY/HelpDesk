@@ -224,8 +224,7 @@
     <Compile Include="Controllers\Administracion\ZonasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\Proceso\TicketsMAController.cs" />
-    <Compile Include="Controllers\Proceso\TicketsSucursalController.cs" />
+    <Compile Include="Controllers\Proceso\TicketsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -795,9 +794,10 @@
     <Content Include="Views\Sucursales\Index.cshtml" />
     <Content Include="Views\Permisos\Index.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
-    <Content Include="Views\TicketsSucursal\Index.cshtml" />
-    <Content Include="Views\TicketsMA\Index.cshtml" />
-    <Content Include="Views\TicketsSucursal\SeguimientoTicket.cshtml" />
+    <Content Include="Views\Tickets\IndexSucursal.cshtml" />
+    <Content Include="Views\Tickets\SeguimientoSucursal.cshtml" />
+    <Content Include="Views\Tickets\IndexMesaAyuda.cshtml" />
+    <Content Include="Views\Tickets\SeguimientoMesaAyuda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
