@@ -98,6 +98,11 @@ namespace PerHelpDesk.Catalogos
                         permiso.id_tipo_usuario = int.Parse(dr["id_tipo_usuario"].ToString());
                         permiso.id_menu_principal = int.Parse(dr["id_menu_principal"].ToString());
                         permiso.menu_principal = dr["menu_principal"].ToString();
+                        permiso.descripcion = dr["descripcion"].ToString();
+                        permiso.url_net = dr["url_net"].ToString();
+                        permiso.icono_net = dr["icono_net"].ToString();
+                        permiso.isactive = bool.Parse(dr["isactive"].ToString());
+
                         entidad.permisos_tipo_usuario.Add(permiso);
                     }
                 }

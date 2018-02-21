@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace EntHelpDesk.Entidad
 {
-    public class detalle_permiso
+    public class detalle_permiso : menu_principal
     {
         public int id_detalle_permiso { get; set; }
         public int id_tipo_usuario { get; set; }
         public int id_permiso { get; set; }
-        public string permiso { get; set; }
-        public int id_menu_principal { get; set; }
+        public string permiso { get; set; }        
         public string menu_principal { get; set; }
     }
 }
