@@ -13,5 +13,6 @@ namespace EntHelpDesk.Entidad
         public string descripcion { get; set; }
         public string selected { get; set; }
         public string url { get; set; }
+        public int id_menu_principal { get; set; }
     }
 }
