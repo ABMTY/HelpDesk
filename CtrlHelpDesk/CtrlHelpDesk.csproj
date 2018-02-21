@@ -43,6 +43,7 @@
     <Compile Include="Catalogos\CtrlAreas.cs" />
     <Compile Include="Catalogos\CtrlDetallePermiso.cs" />
     <Compile Include="Catalogos\CtrlDetallePoliticas.cs" />
+    <Compile Include="Catalogos\CtrlMenuPrincipal.cs" />
     <Compile Include="Catalogos\CtrlPermisos.cs" />
     <Compile Include="Catalogos\CtrlPoliticaSucursales.cs" />
     <Compile Include="Servicios\CtrlComentarios.cs" />

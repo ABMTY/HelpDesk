@@ -47,6 +47,7 @@
     <Compile Include="Entidad\detalle_politicas.cs" />
     <Compile Include="Entidad\detalle_ticket.cs" />
     <Compile Include="Entidad\estado.cs" />
+    <Compile Include="Entidad\menu_principal.cs" />
     <Compile Include="Entidad\permisos.cs" />
     <Compile Include="Entidad\politicas.cs" />
     <Compile Include="Entidad\politica_sucursales.cs" />

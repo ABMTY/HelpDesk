@@ -45,6 +45,7 @@
     <Compile Include="Catalogos\PerDetallePermiso.cs" />
     <Compile Include="Catalogos\PerDetallePoliticas.cs" />
     <Compile Include="Catalogos\PerEstado.cs" />
+    <Compile Include="Catalogos\PerMenuPrincipal.cs" />
     <Compile Include="Catalogos\PerPermisos.cs" />
     <Compile Include="Catalogos\PerPoliticaSucursales.cs" />
     <Compile Include="Catalogos\PerPoliticas.cs" />
