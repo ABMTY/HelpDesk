@@ -25,5 +25,6 @@ namespace EntHelpDesk.Entidad
         public string password { get; set; }
         public string nombre_completo { get { return nombre +" "+ apellidos; } }
         public List<detalle_permiso> permisos_usuario { get; set; }
+        public tipo_usuario ent_tipo_usuario { get; set; }
     }
 }

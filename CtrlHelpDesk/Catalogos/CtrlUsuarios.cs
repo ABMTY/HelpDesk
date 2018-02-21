@@ -11,6 +11,7 @@ namespace CtrlHelpDesk.Catalogos
     public class CtrlUsuarios
     {
         PerUsuarios PerUsuarios;
+        PerTipoUsuario PerTipoUsuario;
 
         public List<usuarios> Lista;
 
@@ -24,7 +25,12 @@ namespace CtrlHelpDesk.Catalogos
         }
         public usuarios Obtener(int id_usuario)
         {
-            return (usuarios)new PerUsuarios().Obtener(id_usuario);
+            usuarios entidad = new usuarios();
+            entidad = (usuarios)new PerUsuarios().Obtener(id_usuario);
+            PerTipoUsuario = new PerTipoUsuario();
+            entidad.ent_tipo_usuario = PerTipoUsuario.Obtener(entidad.id_tipo_usuario);
+                        
+            return entidad;
         }
 
         public bool Insertar(usuarios Entidad)
