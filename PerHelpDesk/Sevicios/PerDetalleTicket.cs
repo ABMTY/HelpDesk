@@ -287,6 +287,45 @@ namespace PerHelpDesk.Sevicios
             }
             return respuesta;
         }
+
+        public bool UpdatePorMA(detalle_ticket entidad)
+        {
+            SqlCommand cmd = new SqlCommand();
+            bool respuesta = false;
+            try
+            {
+                AbrirConexion();
+                cmd.Connection = Conexion;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "DML_detalle_ticket";
+                cmd.Parameters.AddWithValue("@Sentencia", "UpdateMA");
+                cmd.Parameters.AddWithValue("@IdDetalleTicket", entidad.id_detalle_ticket);
+                cmd.Parameters.AddWithValue("@id_ticket", entidad.id_ticket);                
+                cmd.Parameters.AddWithValue("@id_prioridad", entidad.id_prioridad);
+                cmd.Parameters.AddWithValue("@id_estado", entidad.id_estado);
+                cmd.Parameters.AddWithValue("@id_agente", entidad.id_agente);                
+                cmd.ExecuteNonQuery();
+                respuesta = true;
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Update detalle_ticket";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Update detalle_ticket";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+                cmd = null;
+            }
+            return respuesta;
+        }
         public bool Delete(int id)
         {
             SqlCommand cmd = new SqlCommand();

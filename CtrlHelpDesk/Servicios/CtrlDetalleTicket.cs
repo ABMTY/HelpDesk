@@ -45,6 +45,11 @@ namespace CtrlHelpDesk.Servicios
             return PerDetalleTicket.Update(Entidad);
         }
 
+        public bool ActualizarPorMA(detalle_ticket Entidad)
+        {
+            return PerDetalleTicket.UpdatePorMA(Entidad);
+        }
+
         public bool Eliminar(int id_detalle_ticket)
         {
             return PerDetalleTicket.Delete(id_detalle_ticket);

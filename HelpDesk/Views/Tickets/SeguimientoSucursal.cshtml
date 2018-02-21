@@ -123,7 +123,7 @@
     function Detalle_Ticket(id_ticket)
     {
         $.ajax({
-            url: "/TicketsSucursal/GetTicket/",
+            url: "/Tickets/GetTicket/",
             async: true,
             dataType: "json",
             data: '{ id:' + id_ticket + '}',
@@ -155,7 +155,7 @@
     // OBTENER COMENTARIOS
     function ObtenerComentarios(id_detalle_ticket) {
         $.ajax({
-            url: "/TicketsSucursal/GetComentarioPorDetalle/",
+            url: "/Tickets/GetComentarioPorDetalle/",
             async: true,
             dataType: "json",
             data: '{ id:' + id_detalle_ticket + '}',
