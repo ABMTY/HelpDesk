@@ -37,6 +37,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.url = dr["url"].ToString();
                         entidad.id_menu_principal = int.Parse(dr["id_menu_principal"].ToString());
+                        entidad.menu = dr["menu"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -83,6 +84,7 @@ namespace PerHelpDesk.Catalogos
                         entidad.descripcion = dr["descripcion"].ToString();
                         entidad.url = dr["url"].ToString();
                         entidad.id_menu_principal = int.Parse(dr["id_menu_principal"].ToString());
+                        entidad.menu = dr["menu"].ToString();
                     }
                 }
             }
