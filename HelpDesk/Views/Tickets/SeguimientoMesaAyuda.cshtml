@@ -26,21 +26,45 @@
                 <p class="text-muted" id="fecha_ticket">
                 </p>
                 <hr>
-                <h3 class="profile-username text-center"><span class="label label-warning" id="estado_ticket"></span></h3>
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label>Estado <span class="description-percentage text-red">*</span></label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_Estados" required data-live-search="true"></select>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label>Prioridad <span class="description-percentage text-red">*</span></label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_Prioridades" required data-live-search="true"></select>
+                    </div>
+                </div>                
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label>Agente <span class="description-percentage text-red">*</span></label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_Agentes" required data-live-search="true"></select>
+                    </div>
+                </div>
+                
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <button class="btn btn-primary col-lg-12 col-md-12 col-sm-12 col-xs-12" type="submit" id="btnEditar" onclick="ActualizarTicket()">
+                        <i class="fa fa-save"></i> Actualizar
+                    </button>                    
+                </div>
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-        <!-- Profile Agent -->
+        <!-- Profile Supervisor -->
         <div class="box box-primary">
             <div class="box-body box-profile">
-                <p class="text-muted text-center">Asignado al agente</p>
-                <img class="profile-user-img img-responsive img-circle" id="foto_agente">
-                <h3 class="profile-username text-center" id="nombre_agente"></h3>
+                <p class="text-muted text-center">Solicitante</p>
+                <img class="profile-user-img img-responsive img-circle" id="foto_solicitante">
+                <h3 class="profile-username text-center" id="nombre_solicitante"></h3>
+                <center><p class="text-muted" id="sucursal"></p></center>                
             </div>
             <!-- /.box-body -->
         </div>
-        <!-- /.box -->
+        <!-- /.box -->       
     </div>
     <!-- /.col -->
     <div class="col-md-9">
@@ -100,7 +124,7 @@
 <!-- /.row -->
 <script>
     $(document).ready(function () {
-        var id_ticket = ($_GET("id_ticket"));
+        var id_ticket = ($_GET("id_ticket"));        
         Detalle_Ticket(id_ticket);
     });
 
@@ -117,6 +141,72 @@
             }
             x++;
         }
+    }
+
+    function Cargar_Prioridades() {
+
+        $("#ddl_Prioridades").html("");
+
+        $.ajax({
+            url: "/Prioridad/GetPrioridades/",
+            async: true,
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data.data, function (i, Item) {
+                    $("#ddl_Prioridades").append("<option value='" + Item.id_prioridad + "'>" + Item.nombre + "</option>");
+                });
+                $('#ddl_Prioridades').selectpicker('refresh');
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
+    }
+
+    function Cargar_Estados() {
+
+        $("#ddl_Estados").html("");
+
+        $.ajax({
+            url: "/Estados/GetEstados/",
+            async: true,
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data.data, function (i, Item) {
+                    $("#ddl_Estados").append("<option value='" + Item.id_estado + "'>" + Item.nombre + "</option>");
+                });
+                $('#ddl_Estados').selectpicker('refresh');
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
+    }
+
+    function Cargar_Agentes() {
+
+        $("#ddl_Agentes").html("");
+
+        $.ajax({
+            url: "/Usuarios/GetAgentes/",
+            async: true,
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data.data, function (i, Item) {
+                    $("#ddl_Agentes").append("<option value='" + Item.id_usuario + "'>" + Item.nombre_completo + "</option>");
+                });
+                $('#ddl_Agentes').selectpicker('refresh');
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
     }
 
     //OBTENER DETALLE DEL TICKET
@@ -138,11 +228,23 @@
                 $("#fecha_ticket").text("Creado el "+ data.data.fechahora_creacion);
                 $("#estado_ticket").text(data.data.estado);
 
-                $("#nombre_agente").text(data.data.agente);
+                $("#nombre_solicitante").text(data.data.usuario);
 
-                if (data.data.foto_agente != "") {
-                    $('#foto_agente').attr('src', data.data.foto_agente);
+                if (data.data.foto_usuario != "") {
+                    $('#foto_solicitante').attr('src', data.data.foto_usuario);
                 }
+                $("#sucursal").text(data.data.sucursal);
+
+                Cargar_Prioridades();
+                $("#ddl_Prioridades").append("<option value=" + data.data.id_prioridad + ">" + data.data.prioridad + "</option>");
+                $("#ddl_Prioridades").selectpicker('refresh');
+                Cargar_Estados();
+                $("#ddl_Estados").append("<option value=" + data.data.id_estado + ">" + data.data.estado + "</option>");
+                $("#ddl_Estados").selectpicker('refresh');
+                Cargar_Agentes();
+                $("#ddl_Agentes").append("<option value=" + data.data.id_agente + ">" + data.data.agente + "</option>");               
+                $("#ddl_Agentes").selectpicker('refresh');   
+                
 
                 ObtenerComentarios(data.data.id_detalle_ticket);
             },
@@ -150,6 +252,34 @@
                 console.log("error" + error);
             }
         });
+    }
+
+    function ActualizarTicket() {        
+            Ticket = {
+                "id_ticket": $("#id").val() == "" ? 0 : $("#id").val(),
+                "id_detalle_ticket": $("#id_detalle_ticket").val() == "" ? 0 : $("#id_detalle_ticket").val(),
+                
+                "id_prioridad": $("#ddl_Prioridades").val(),
+                "id_estado": $("#ddl_Estados").val(),
+                "id_agente":$("#ddl_Agentes").val(),
+                
+            };
+            $.ajax(
+            {
+                url: "/Tickets/ActualizarPorMA/",
+                async: true,
+                dataType: "json",
+                data: JSON.stringify(Ticket),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    swal({ title: "Tickets", text: "Actualizado Correctamente", type: "success" }, function () { });
+                },
+                error: function (request, status, error) {
+                    swal("Error al Actualizar el Ticket");
+                    console.log("error" + error);
+                }
+            });        
     }
 
     // OBTENER COMENTARIOS

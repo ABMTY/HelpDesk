@@ -42,8 +42,7 @@ namespace HelpDesk.Controllers.Proceso
         public ActionResult SeguimientoMesaAyuda()
         {
             return View();
-        }
-        
+        }        
 
         public ActionResult Guardar(tickets entidad)
         {
@@ -123,6 +122,34 @@ namespace HelpDesk.Controllers.Proceso
             }
         }
 
+        public ActionResult ActualizarPorMA(tickets entidad)
+        {
+            var r = false;
+            try
+            {
+
+                ctrlDetalle.ActualizarPorMA(new detalle_ticket
+                {
+                    id_detalle_ticket=entidad.id_detalle_ticket,
+                    id_ticket = entidad.id_ticket,                    
+                    id_prioridad = entidad.id_prioridad,
+                    id_estado = entidad.id_estado,
+                    id_agente = entidad.id_agente,                    
+                });
+
+                if (!r)
+                {
+                    return Json("Error al realizar la operacion", JsonRequestBehavior.AllowGet);
+                }
+
+                return Json("Realizado", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new HandleErrorInfo(ex, "Detalle_Ticket", "Update por MA"));
+            }
+        }
+
         public ActionResult GetTickets()
         {
             var Listado = control.ObtenerTodos();
@@ -132,6 +159,7 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
+
         public ActionResult GetTicket(int id)
         {
             var Listado = control.Obtener(id);
@@ -141,6 +169,7 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
+
         public ActionResult GetTicketPorUsuario(int id)
         {
             var Listado = control.ObtenerPorUsuario(id);
@@ -150,6 +179,7 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
+
         public ActionResult Eliminar(int id)
         {
             try
@@ -168,6 +198,7 @@ namespace HelpDesk.Controllers.Proceso
                 return View("Error", new HandleErrorInfo(ex, "TipoUsuario", "Eliminar"));
             }
         }
+
         public ActionResult GetDetalleTicket(int id)
         {
             var Detalle = ctrlDetalle.Obtener(id);
@@ -178,6 +209,7 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
+
         public ActionResult GetComentarioPorDetalle(int id)
         {
             var Comentarios = ctrlComentario.ObtenerPorDetalle(id);
@@ -188,6 +220,7 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
+
         public ActionResult GuardarComentario(comentarios entidad)
         {
             var r = false;
