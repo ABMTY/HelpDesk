@@ -213,7 +213,7 @@
     }
 
     function Guardar() {
-
+        debugger;
         if($("#txt_Respuesta").val() != "")
         {
             Comentario = {
@@ -224,7 +224,7 @@
             };
             $.ajax(
             {
-                url: "/TicketsSucursal/GuardarComentario/",
+                url: "/Tickets/GuardarComentario/",
                 async: true,
                 dataType: "json",
                 data: JSON.stringify(Comentario),
