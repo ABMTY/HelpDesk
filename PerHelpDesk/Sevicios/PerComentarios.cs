@@ -136,7 +136,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_comentario = int.Parse(dr["id_comentario"].ToString());
                         entidad.comentario = dr["comentario"].ToString();
                         if (dr["imagen"].ToString() != string.Empty)
-                            entidad.imagen = "data:image/png;base64," + Convert.ToBase64String((byte[])dr["imagen"]);
+                            entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
                         entidad.fechahora_comentario = dr["fechahora_comentario"].ToString();
                         entidad.id_detalle_ticket = int.Parse(dr["id_detalle_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
