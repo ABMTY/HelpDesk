@@ -153,8 +153,9 @@ namespace PerHelpDesk.Sevicios
             }
             return entidad;
         }
-        public tickets ObtenerPorUsuario(int id)
+        public List<tickets> ObtenerPorUsuario(int id)
         {
+            List<tickets> lista = new List<tickets>();
             tickets entidad = new tickets();
             try
             {
@@ -170,8 +171,9 @@ namespace PerHelpDesk.Sevicios
                 comandoSelect.Parameters.AddWithValue("@IdUsuario", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
-                    if (dr.Read())
+                    while (dr.Read())
                     {
+                        entidad = new tickets();
                         entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         entidad.usuario = dr["usuario"].ToString();
@@ -201,6 +203,7 @@ namespace PerHelpDesk.Sevicios
                             entidad.id_tipo_soporte = dr["id_tipo_soporte"].ToString() == string.Empty ? 0 : int.Parse(dr["id_tipo_soporte"].ToString());
                             entidad.tipo_soporte = dr["tipo_soporte"].ToString();
                         }
+                        lista.Add(entidad);
                     }
                 }
             }
@@ -220,7 +223,7 @@ namespace PerHelpDesk.Sevicios
             {
                 CerrarConexion();
             }
-            return entidad;
+            return lista;
         }
         public bool Insertar(tickets entidad)
         {

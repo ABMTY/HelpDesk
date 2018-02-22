@@ -152,8 +152,22 @@ namespace HelpDesk.Controllers.Proceso
 
         public ActionResult GetTickets()
         {
-            var Listado = control.ObtenerTodos();
-            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<tickets> Listado = new List<tickets>();
+            int id_usuario = int.Parse(Session["id_usuario"].ToString());
+            usuarios usuario = new usuarios();
+            usuario = ctrlUsuarios.Obtener(id_usuario);
+
+            switch (usuario.tipo_usuario.ToUpper())
+            {
+                    case "SUPERVISOR" :  Listado = control.ObtenerPorUsuario(id_usuario);
+                        break;
+                    case "AGENTE":
+                        Listado = control.ObtenerTodos().Where(p=> p.id_agente==id_usuario).ToList();
+                        break;
+                default : Listado = control.ObtenerTodos();
+                        break;
+            }        
+        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
             var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
@@ -161,7 +175,7 @@ namespace HelpDesk.Controllers.Proceso
         }
 
         public ActionResult GetTicket(int id)
-        {
+        {            
             var Listado = control.Obtener(id);
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;

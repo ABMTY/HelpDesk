@@ -231,10 +231,12 @@
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    debugger;
                     var id_detalle_ticket=$("#id_detalle_ticket").val();
                     swal({ title: "Comentarios", text: "Guardada Correctamente", type: "success" }, function () { LimpiarComentarios(); ObtenerComentarios(id_detalle_ticket); });
                 },
                 error: function (request, status, error) {
+                    debugger;
                     swal("Error al Guardar el Ticket");
                     console.log("error" + error);
                 }
