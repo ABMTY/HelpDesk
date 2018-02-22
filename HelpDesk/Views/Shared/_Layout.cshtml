@@ -43,6 +43,121 @@
     @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
 
+    <script>
+
+
+        $(function () {
+                Cargar_MenuPrincipal(); 
+        });
+
+
+        function Cargar_MenuPrincipal() {
+            $.ajax({
+                url: "/MenuPrincipal/GetMenuPrincipal/",
+                async: true,
+                dataType: "json",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    Cargar_Permios(data.data);
+                },
+                error: function (request, status, error) {
+                    console.log("error" + error);
+                }
+            });
+        }
+
+        function Cargar_Permios(ListaMenu) {
+            $.ajax({
+                url: "/Usuarios/GetUsuario/",
+                async: true,
+                dataType: "json",
+                data: '{ id:' + @Session["id_usuario"] + '}',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    Visualizar_MenuPrincipal(ListaMenu,data.data.ent_tipo_usuario.permisos_tipo_usuario)
+                },
+                error: function (request, status, error) {
+                    console.log("error" + error);
+                }
+            });
+        }
+
+        function Visualizar_MenuPrincipal(ListaMenu, Permisos_Usuarios) {
+            //var menu_desplegable=[];
+            try {
+                $.each(ListaMenu, function (x, entMenu) {
+                    contador = 1;
+                    $.each(Permisos_Usuarios, function (i, entPermisos) {
+                        if (entPermisos.id_menu_principal==entMenu.id_menu_principal) {
+                            if (entPermisos.url == entMenu.url_net) {
+                                menu = "<li>" +
+                                            "<a href='" + entMenu.url_net + "'>" +
+                                                "<i class='" + entMenu.icono_net + "'></i>" +
+                                                "<span>" + entMenu.nombre + "</span>" +
+                                            "</a>" +
+                                        "</li>"
+                                $("#menu_principal").append(menu);
+                            }
+                            else {
+                                if (entPermisos.menu_principal == entMenu.nombre) {
+                                    if (contador == 1) {
+                                        menu = " <li class='treeview'>" +
+                                           "<a href='#'>" +
+                                               "<i class='" + entMenu.icono_net + "'></i>" +
+                                               "<span>" + entMenu.nombre + "</span>" +
+                                               "<i class='fa fa-angle-left pull-right'></i>" +
+                                           "</a>" +
+                                           "<ul class='treeview-menu' id='submenu" + entMenu.id_menu_principal + "'>" +
+                                           "</ul>" +
+                                       "</li>"
+                                        $("#menu_principal").append(menu);
+                                        contador++;
+                                        //menu_desplegable.push({ id_menu_principal: entMenu.id_menu_principal });
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+                Visualizar_SubMenu(Permisos_Usuarios);
+                Visualizar_Ayuda_AcecaDe();       
+            }
+            catch (err) {
+                mostrar_aviso("error", "Error al procesar los comentarios");
+            }
+        }
+
+        function Visualizar_SubMenu(Permisos_Usuarios)
+        {
+            $.each(Permisos_Usuarios, function (i, entPermisos) {
+                sub_menu = "<li><a href='"+entPermisos.url+"'><i class='fa fa-circle-o'></i>"+entPermisos.permiso+"</a></li>"
+                $("#submenu"+entPermisos.id_menu_principal).append(sub_menu);
+            });
+        }
+
+        function Visualizar_Ayuda_AcecaDe()
+        {
+            //PINTAR AYUDA Y ACERCA DE...
+            menu = "<li>"+
+                        "<a href='#'>"+
+                            "<i class='fa fa-question-circle'></i> <span>Ayuda</span>"+
+                            "<small class='label pull-right bg-red'>PDF</small>"+
+                        "</a>"+
+                    "</li>"+
+                    "<li>"+
+                        "<a href='#'>"+
+                            "<i class='fa fa-info-circle'></i> <span>Acerca De...</span>"+
+                            "<small class='label pull-right bg-yellow'>IT</small>"+
+                        "</a>"+
+                    "</li>"
+
+            $("#menu_principal").append(menu);
+        }
+        
+    </script>
+
 </head>
 <body class="hold-transition skin-blue-light sidebar-mini">
     <div class="wrapper">
@@ -269,9 +384,9 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">               
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
-                    <li class="header"></li>
-                    <li>
+                <ul class="sidebar-menu" id="menu_principal">
+                    @*<li class="header"></li>*@
+                    @*<li>
                         <a href="/Home/">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                         </a>
@@ -327,7 +442,7 @@
                             <i class="fa fa-info-circle"></i> <span>Acerca De...</span>
                             <small class="label pull-right bg-yellow">IT</small>
                         </a>
-                    </li>
+                    </li>*@
 
                 </ul>
             </section>

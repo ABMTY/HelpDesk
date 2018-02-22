@@ -213,6 +213,7 @@
     <Compile Include="Controllers\Administracion\AreasController.cs" />
     <Compile Include="Controllers\Administracion\DetallePolitcasController.cs" />
     <Compile Include="Controllers\Administracion\EstadosController.cs" />
+    <Compile Include="Controllers\Administracion\MenuPrincipalController.cs" />
     <Compile Include="Controllers\Administracion\PermisosController.cs" />
     <Compile Include="Controllers\Administracion\PoliticasController.cs" />
     <Compile Include="Controllers\Administracion\PoliticaSucursalesController.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Controllers\Administracion\ZonasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Proceso\DashboardController.cs" />
     <Compile Include="Controllers\Proceso\TicketsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -798,11 +800,13 @@
     <Content Include="Views\Tickets\SeguimientoSucursal.cshtml" />
     <Content Include="Views\Tickets\IndexMesaAyuda.cshtml" />
     <Content Include="Views\Tickets\SeguimientoMesaAyuda.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\plugins\datatables\css\" />
     <Folder Include="Content\plugins\datatables\swf\" />
+    <Folder Include="Views\MenuPrincipal\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

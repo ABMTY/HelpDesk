@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI;
 
 namespace HelpDesk.Controllers
 {
@@ -13,6 +14,7 @@ namespace HelpDesk.Controllers
     {
         // GET: Acceso
         CtrlUsuarios ctrlUsuario = new CtrlUsuarios();
+        string controlador;
         public ActionResult Index()
         {
             return View();
@@ -24,6 +26,8 @@ namespace HelpDesk.Controllers
             List<usuarios> ListaUsuarios = new List<usuarios>();
             ListaUsuarios = ctrlUsuario.ObtenerTodos();
             usuarios entUsuario = new usuarios();
+
+            
 
             bool AccesoAutorizado = false;
 
@@ -44,13 +48,26 @@ namespace HelpDesk.Controllers
                 Session["nombre_completo"] = entUsuario.nombre_completo;
                 Session["id_sucursal"] = entUsuario.id_sucursal;
                 Session["sucursal"] = entUsuario.sucursal;
-                Session["foto"] = "data:image/png;base64,"+entUsuario.foto;
-
+                Session["id_tipo_usuario"] = entUsuario.id_tipo_usuario;
+                Session["foto"] = "data:image/png;base64,"+entUsuario.foto;                
                 var cookie = new HttpCookie("id_usuario");
                 cookie.Value = entUsuario.id_usuario.ToString();
                 Response.Cookies.Add(cookie);
 
-                return RedirectToAction("Index", "Home");
+                if (entUsuario.tipo_usuario == "Gerente" || entUsuario.tipo_usuario == "Administrador")
+                {
+                    controlador = "Dashboard";
+                }                
+                if (entUsuario.tipo_usuario == "Agente")
+                {
+                    controlador = "Tickets/IndexMesaAyuda";
+                }
+                if (entUsuario.tipo_usuario == "Supervisor")
+                {
+                    controlador = "Tickets/IndexSucursal";
+                }
+
+                return RedirectToAction("Index", controlador);
             }
             else
             {
@@ -74,10 +91,12 @@ namespace HelpDesk.Controllers
             Session["id_sucursal"] = "";
             Session["sucursal"] = "";
             Session["foto"] = "";
+            Session["id_tipo_usuario"] = "";            
             Response.Cookies.Clear();
             Session.Clear();
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Acceso");
         }
+        
     }
 }

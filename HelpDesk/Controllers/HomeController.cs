@@ -11,7 +11,7 @@ namespace HelpDesk.Controllers
         public ActionResult Index()
         {
             return View();
-        }
+        }       
 
         public JsonResult GetNotificationContacts()
         {

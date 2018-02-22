@@ -26,9 +26,8 @@
                         <thead>
                             <tr>
                                 <th>Opciones</th>
-                                <th>Nombre</th>
-                                <th>Descripcion</th>
-                                <th>Url</th>
+                                <th>Nombre</th>                                                               
+                                <th>Menu Principal</th>
                             </tr>
                         </thead>
                     </table>
@@ -48,7 +47,13 @@
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Url *</label>
                     <input type="text" class="form-control" id="txt_Url" maxlength="100" required>
-                </div>                
+                </div>  
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <label>Menu Principal *</label>
+                    <div>
+                        <select class="form-control selectpicker" id="ddl_MenuPrincipal" required data-live-search="true"></select>
+                    </div>
+                </div>              
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
                         <i class="fa fa-save"></i> Guardar
@@ -105,10 +110,9 @@
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },                
-                { "data": "nombre" },
-                { "data": "descripcion" },
-                { "data": "url" },
+                { "defaultContent": "<i>..</i>" },
+                { "data": "nombre" },                
+                { "data": "menu" },
             ],
             "columnDefs": [
                 {
@@ -124,6 +128,7 @@
         $("#secc_add").show();
         $("#btnAgregar").hide();
         Limpiar();        
+        Cargar_MenuPrincipal();
     }
 
     function Cancelar() {
@@ -136,7 +141,30 @@
         $("#id").val("");
         $("#txt_Nombre").val("");
         $("#txt_Descripcion").val("");
-        $("#txt_Url").val("");        
+        $("#txt_Url").val("");
+        $("#ddl_MenuPrincipal").html("");
+    }
+
+    function Cargar_MenuPrincipal() {
+
+        $("#ddl_MenuPrincipal").html("");
+
+        $.ajax({
+            url: "/MenuPrincipal/GetMenuPrincipal/",
+            async: true,
+            dataType: "json",
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $.each(data.data, function (i, Item) {
+                    $("#ddl_MenuPrincipal").append("<option value='" + Item.id_menu_principal + "'>" + Item.nombre + "</option>");
+                });
+                $('#ddl_MenuPrincipal').selectpicker('refresh');
+            },
+            error: function (request, status, error) {
+                console.log("error" + error);
+            }
+        });
     }
     
     function Editar(id_permiso) {
@@ -156,6 +184,9 @@
                 $("#txt_Nombre").val(data.data.nombre);
                 $("#txt_Descripcion").val(data.data.descripcion);
                 $("#txt_Url").val(data.data.url);
+                Cargar_MenuPrincipal();
+                $("#ddl_MenuPrincipal").append("<option value=" + data.data.id_menu_principal + ">" + data.data.menu + "</option>");
+                $("#ddl_MenuPrincipal").selectpicker('refresh');
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -169,6 +200,7 @@
             "nombre": $("#txt_Nombre").val(),
             "descripcion": $("#txt_Descripcion").val(),
             "url": $("#txt_Url").val(),
+            "id_menu_principal":$("#ddl_MenuPrincipal").val(),
         };
         $.ajax(
         {
