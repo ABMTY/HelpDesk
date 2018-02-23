@@ -124,7 +124,7 @@ namespace PerHelpDesk.Sevicios
             {
                 CerrarConexion();
             }
-            return lista.Count();
+            return lista.Max(p => p.id_ticket); ;
         }
         public SqlCommand ObtenerCommand()
         {

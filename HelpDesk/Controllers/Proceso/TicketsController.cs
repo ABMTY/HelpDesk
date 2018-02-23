@@ -1,6 +1,7 @@
 ﻿using CtrlHelpDesk.Catalogos;
 using CtrlHelpDesk.Servicios;
 using EntHelpDesk.Entidad;
+using HelpDesk.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -97,7 +98,7 @@ namespace HelpDesk.Controllers.Proceso
                 {
                     entidad.id_sucursal = ctrlUsuarios.Obtener(entidad.id_usuario).id_sucursal;                    
                     r = control.Insertar(entidad);
-                    int id_ticket = control.ObtenerTodos().ToList().Max(p => p.id_ticket);                    
+                    int id_ticket = control.ObtenerMax();
                     ctrlDetalle.Insertar(new detalle_ticket
                     {
                         id_ticket = id_ticket,
@@ -167,8 +168,9 @@ namespace HelpDesk.Controllers.Proceso
                         break;
                 default : Listado = control.ObtenerTodos();
                         break;
-            }        
-        var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            }
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
             var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
             json.MaxJsonLength = 500000000;
