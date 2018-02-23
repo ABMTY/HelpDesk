@@ -145,7 +145,7 @@
     //OBTENER DETALLE DEL TICKET
     function Detalle_Ticket(id_ticket)
     {
-        $.ajax({
+        $.ajax({         
             url: "/Tickets/GetTicket/",
             async: true,
             dataType: "json",
@@ -178,6 +178,7 @@
     // OBTENER COMENTARIOS
     function ObtenerComentarios(id_detalle_ticket) {
         $.ajax({
+            cache: false,
             url: "/Tickets/GetComentarioPorDetalle/",
             async: true,
             dataType: "json",
@@ -188,6 +189,7 @@
             
                 if(data.data.length>0)
                 {
+                    
                     Visualizar_Comentarios(data);
                 }
             },
@@ -309,6 +311,29 @@
         }
     }
 
+    $(function () {
+        // Declare a proxy to reference the hub.
+        var notificationHub = $.connection.notificationHub;
+               
+        // Create a function that the hub can call to broadcast messages.
+        //signalr method for push server message to client
+        notificationHub.client.notify = function (message) {       
+            if (message && message.toLowerCase() == "added") {
+                debugger;
+                $("#seguimiento").html("");
+                ObtenerComentarios(@Session["id_detalle_ticket"]);
+                console.log(@Session["id_detalle_ticket"]);
+                console.log('Notification Update');
+            }
+        }
 
+        // Start the connection.
+        $.connection.hub.start().done(function () {
+            alert("connection started")            
+        }).fail(function (e) {
+            alert(e);
+        });
+    });
+   
 </script>
 
