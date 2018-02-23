@@ -19,14 +19,11 @@ namespace HelpDesk.Notifications
         {
 
             string conStr = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-            string sqlCommand = "DML_Tickets";
-
+            string sqlCommand = @"SELECT [MessageID],[Message],[EmptyMessage],[Date] FROM [dbo].[Messages] where [Date] > @AddedOn";
             using (SqlConnection con = new SqlConnection(conStr))
             {
                 SqlCommand cmd = new SqlCommand(sqlCommand, con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Sentencia", "Select");
-
+                cmd.Parameters.AddWithValue("@AddedOn", currentTime);
                 if (con.State != System.Data.ConnectionState.Open)
                 {
                     con.Open();
@@ -41,7 +38,7 @@ namespace HelpDesk.Notifications
                     //
                 }
             }
-                      
+
         }
         private void sqlDep_OnChange(object sender, SqlNotificationEventArgs e)
         {

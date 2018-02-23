@@ -476,7 +476,29 @@
     <script>
         function CerrarSesion() {
             return window.location.href = "@Url.Action("CerrarSesion", "Acceso")";
-        }      
+        }
+    </script>
+       
+
+        @* Add jquery code for Get Notification & setup signalr *@
+        <script type="text/javascript">
+        $(function () {
+            // Click on notification icon for show notification
+            $("#notificaciones").click(function (e) {
+                e.stopPropagation();
+                $("#contenidoNotificaciones").show();
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                //only load notification if not already loaded
+                if (count > 0) {
+                    updateNotification();
+                }
+                $("#notificaciones", this).html('&nbsp;');
+            })
+            // hide notifications
+            $('html').click(function () {
+                $("#contenidoNotificaciones").hide();
+            })
 
         // update notification
         function Obtener_Tickets() {
@@ -555,6 +577,7 @@
             });
             //signalr method for push server message to client
             notificationHub.client.notify = function (message) {
+                debugger;
                 if (message && message.toLowerCase() == "added") {
                     updateNotificationCount();
                     console.log('Notification Update');
