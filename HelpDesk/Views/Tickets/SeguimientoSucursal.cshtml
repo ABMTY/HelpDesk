@@ -145,7 +145,7 @@
     //OBTENER DETALLE DEL TICKET
     function Detalle_Ticket(id_ticket)
     {
-        $.ajax({         
+        $.ajax({
             url: "/Tickets/GetTicket/",
             async: true,
             dataType: "json",
@@ -186,10 +186,10 @@
             type: "POST",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-            
+
                 if(data.data.length>0)
                 {
-                    
+
                     Visualizar_Comentarios(data);
                 }
             },
@@ -201,7 +201,7 @@
 
     function Visualizar_Comentarios(data) {
         var evidencia="";
-        try {           
+        try {
             $.each(data.data, function (i, entComentario) {
                 if(entComentario.imagen!=null)
                 {
@@ -234,9 +234,9 @@
         }
     }
 
-    function Ver_Evidencia(imagen) {        
+    function Ver_Evidencia(imagen) {
         $('#imgevidencia').attr('src', 'data:image/png;base64,' + imagen);
-        $('#Modal_Evidencia').modal('show');        
+        $('#Modal_Evidencia').modal('show');
     }
 
     function Limpiar() {
@@ -251,7 +251,6 @@
     }
 
     function Guardar() {
-        debugger;
         if($("#txt_Respuesta").val() != "")
         {
             Comentario = {
@@ -269,7 +268,6 @@
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    debugger;
                     var id_detalle_ticket=$("#id_detalle_ticket").val();
                     swal({ title: "Comentarios", text: "Guardada Correctamente", type: "success" }, function () { LimpiarComentarios(); ObtenerComentarios(id_detalle_ticket); });
                 },
@@ -311,29 +309,35 @@
         }
     }
 
-    $(function () {
-        // Declare a proxy to reference the hub.
-        var notificationHub = $.connection.notificationHub;
-               
-        // Create a function that the hub can call to broadcast messages.
-        //signalr method for push server message to client
-        notificationHub.client.notify = function (message) {       
-            if (message && message.toLowerCase() == "added") {
-                debugger;
-                $("#seguimiento").html("");
-                ObtenerComentarios(@Session["id_detalle_ticket"]);
-                console.log(@Session["id_detalle_ticket"]);
-                console.log('Notification Update');
-            }
-        }
+    //$(function () {
+    //    // Declare a proxy to reference the hub.
+    //    var notificationHub = $.connection.notificationHub;
+    //    var contador = 1;
+    //    // Create a function that the hub can call to broadcast messages.
+    //    //signalr method for push server message to client
+    //    notificationHub.client.notify = function (message) {
+    //        if (message && message.toLowerCase() == "added") {
+    //            debugger;                                
+    //            ObtenerComentarios($("#id_detalle_ticket").val());
+    //            console.log($("#id_detalle_ticket").val());
+    //            console.log('Notification Update');
+    //            contador++;
+    //    }
 
-        // Start the connection.
-        $.connection.hub.start().done(function () {
-            alert("connection started")            
-        }).fail(function (e) {
-            alert(e);
-        });
-    });
-   
+    //        if(contador==2)
+    //        {
+    //            LimpiarComentarios(); 
+    //            ObtenerComentarios($("#id_detalle_ticket").val());
+    //        }
+    //    }
+
+    //    // Start the connection.
+    //    $.connection.hub.start().done(function () {
+    //        alert("connection started")
+    //    }).fail(function (e) {
+    //        alert(e);
+    //    });
+    //});
+
 </script>
 

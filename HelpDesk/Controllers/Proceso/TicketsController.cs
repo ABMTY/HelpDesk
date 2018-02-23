@@ -177,7 +177,7 @@ namespace HelpDesk.Controllers.Proceso
         public ActionResult GetTicket(int id)
         {            
             var Listado = control.Obtener(id);
-            Session["id_detalle_ticket"] = ((tickets)Listado).id_detalle_ticket;
+            //Session["id_detalle_ticket"] = ((tickets)Listado).id_detalle_ticket;
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
             var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);

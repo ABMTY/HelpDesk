@@ -198,6 +198,7 @@
     }
 
     function Guardar() {
+        debugger;
         if($("#txt_Asunto").val() != "" &&  $("#txt_Descripcion").val() != "")
         {
             Ticket = {
@@ -220,6 +221,7 @@
                     swal({ title: "Tickets", text: "Guardada Correctamente", type: "success" }, function () { Cargar_Tickets(); Cancelar(); });
                 },
                 error: function (request, status, error) {
+                    debugger;
                     swal("Error al Guardar el Ticket");
                     console.log("error" + error);
                 }
