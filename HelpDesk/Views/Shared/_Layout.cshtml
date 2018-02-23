@@ -259,7 +259,7 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning" id="numNotificaciones"></span>
+                                <span class="label label-warning" id="notificaciones"><span  id="numNotificaciones"></span></span>
                             </a>
                             <ul class="dropdown-menu" id="contenidoNotificaciones">
                                 <li class="header" id="tituloNotificaciones">You have 10 notifications</li>
@@ -517,22 +517,22 @@
         @* Add jquery code for Get Notification & setup signalr *@
         <script type="text/javascript">
         $(function () {
-            //// Click on notification icon for show notification
-            //$('span.noti').click(function (e) {
-            //    e.stopPropagation();
-            //    $("#contenidoNotificaciones").show();
-            //    var count = 0;
-            //    count = parseInt($('span.count').html()) || 0;
-            //    //only load notification if not already loaded
-            //    if (count > 0) {
-            //        updateNotification();
-            //    }
-            //    $('span.count', this).html('&nbsp;');
-            //})
-            //// hide notifications
-            //$('html').click(function () {
-            //    $("#contenidoNotificaciones").hide();
-            //})
+            // Click on notification icon for show notification
+            $("#notificaciones").click(function (e) {
+                e.stopPropagation();
+                $("#contenidoNotificaciones").show();
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                //only load notification if not already loaded
+                if (count > 0) {
+                    updateNotification();
+                }
+                $("#notificaciones", this).html('&nbsp;');
+            })
+            // hide notifications
+            $('html').click(function () {
+                $("#contenidoNotificaciones").hide();
+            })
 
 
             // update notification
