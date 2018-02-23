@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 
-namespace HelpDesk
+namespace HelpDesk.Notifications
 {
     public class NotificationHub : Hub
     {

@@ -2,6 +2,7 @@
 using PerHelpDesk.Sevicios;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,11 @@ namespace CtrlHelpDesk.Servicios
         public bool Eliminar(int id_tickets)
         {
             return PerTickets.Delete(id_tickets);
+        }
+
+        public SqlCommand ObtenerCommand()
+        {
+            return PerTickets.ObtenerCommand();
         }
     }
 }

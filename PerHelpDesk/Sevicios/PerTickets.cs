@@ -83,6 +83,23 @@ namespace PerHelpDesk.Sevicios
             }
             return lista;
         }
+        public SqlCommand ObtenerCommand()
+        {
+            SqlCommand comandoSelect = new SqlCommand();
+            try
+            {                
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Tickets";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return comandoSelect;
+        }
         public tickets Obtener(int id)
         {
             tickets entidad = new tickets();
