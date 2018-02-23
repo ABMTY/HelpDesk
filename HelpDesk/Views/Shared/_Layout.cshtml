@@ -153,7 +153,8 @@
 
             $("#menu_principal").append(menu);
         }
-        
+
+
     </script>
 
 </head>
@@ -257,44 +258,18 @@
                         <!-- Notifications: style can be found in dropdown.less -->
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="Obtener_Tickets()" >
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning" id="notificaciones"><span  id="numNotificaciones"></span></span>
+                                <span class="label label-warning" id="notificaciones"></span>
                             </a>
-                            <ul class="dropdown-menu" id="contenidoNotificaciones">
+                            <ul class="dropdown-menu" >
                                 <li class="header" id="tituloNotificaciones">You have 10 notifications</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
-                                    <ul class="menu" id="menuNotificaciones">
-                                        @*<li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                            </a>
-                                        </li>*@
-                                        @*<li>
-                                            <a href="#">
-                                                <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-                                                page and may cause design problems
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-red"></i> 5 new members joined
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-user text-red"></i> You changed your username
-                                            </a>
-                                        </li>*@
+                                    <ul class="menu" id="menuNotificaciones">                                       
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">View all</a></li>
+                                <li class="footer"><a href="#">Ver todo</a></li>
                             </ul>
                         </li>
                         <!-- Tasks: style can be found in dropdown.less -->
@@ -499,67 +474,72 @@
 
 
     <script>
-        @*$(document).ready(function () {           
-            //AsignarFotoUsuario();
-        });
-
-        function AsignarFotoUsuario()
-        {
-            $('#foto_user').attr('src', 'data:image/png;base64,' + @Session["foto"]);
-        }*@
-
         function CerrarSesion() {
             return window.location.href = "@Url.Action("CerrarSesion", "Acceso")";
+        }      
+
+        // update notification
+        function Obtener_Tickets() {
+            $('#menuNotificaciones').empty();
+            $('#menuNotificaciones').append($('<li>Cargando...</li>'));
+            $.ajax({
+                destroy: true,
+                searching: true,
+                dataType: "json",                             
+                url: '/Tickets/GetTickets/',
+                contentType: "application/json; charset=utf-8",
+                type: 'POST',
+                success: function (datos) {                
+                    $('#menuNotificaciones').empty();
+                    if (datos.data.length == 0) {
+                        $('#menuNotificaciones').append($('<li>Sin notificaciones</li>'));
+                    }                    
+                    $.each(datos.data, function (index, value) {
+                        $('#menuNotificaciones').append($('<li><a href="#" onclick="Seguimiento(' + datos.data[index].id_ticket + ')"><i class="fa fa-ticket text-aqua"></i> ' + datos.data[index].asunto + '</a></li></li>'));
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
         }
+
+        function Seguimiento(id_ticket) {                
+            if ("@Session["tipo_usuario"]" == "Supervisor") {
+                window.location = "/Tickets/SeguimientoSucursal?id_ticket=" + id_ticket;
+            }
+        else {
+                window.location = "/Tickets/SeguimientoMesaAyuda?id_ticket=" + id_ticket;
+            }
+        }
+        
+
     </script>
        
 
         @* Add jquery code for Get Notification & setup signalr *@
         <script type="text/javascript">
+
+       
+
         $(function () {
-            // Click on notification icon for show notification
-            $("#notificaciones").click(function (e) {
-                e.stopPropagation();
-                $("#contenidoNotificaciones").show();
-                var count = 0;
-                count = parseInt($('span.count').html()) || 0;
-                //only load notification if not already loaded
-                if (count > 0) {
-                    updateNotification();
-                }
-                $("#notificaciones", this).html('&nbsp;');
-            })
-            // hide notifications
-            $('html').click(function () {
-                $("#contenidoNotificaciones").hide();
-            })
-
-
-            // update notification
-            function updateNotification() {
-                debugger;
-                $('#menuNotificaciones').empty();
-                $('#menuNotificaciones').append($('<li>Loading...</li>'));
-                $.ajax({
-                    type: 'GET',
-                    url: '/Tickets/GetTickets/',
-                    success: function (data) {
-                        debugger;
-                        $('#menuNotificaciones').empty();
-                        if (data.data.length == 0) {
-                            $('#menuNotificaciones').append($('<li>Sin notificaciones</li>'));
-                        }
-                        $.each(data.data, function (index, value) {
-                            $('#menuNotificaciones').append($('<li><a href="#"><i class="fa fa-users text-aqua"></i> '+ data.data.asunto +'</a></li></li>'));
-                        });
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                })
-
-                
-            }
+            //// Click on notification icon for show notification
+            //$("#notificaciones").click(function (e) {
+            //    debugger;
+            //    e.stopPropagation();
+            //    $('dropdown-menu').show();
+            //    var count = 0;
+            //    count = parseInt($('span.count').html()) || 0;
+            //    //only load notification if not already loaded
+            //    if (count > 0) {
+            //        updateNotification();
+            //    }
+            //    $('dropdown-menu', this).html('&nbsp;');
+            //})
+            //// hide notifications
+            //$('html').click(function () {
+            //    $("#contenidoNotificaciones").hide();
+            //})
             // update notification count
             function updateNotificationCount() {
                 debugger;
