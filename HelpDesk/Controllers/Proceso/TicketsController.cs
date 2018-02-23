@@ -21,6 +21,7 @@ namespace HelpDesk.Controllers.Proceso
         // GET: Tickets
         public ActionResult Index()
         {
+            Session["id_detalle_ticket"] = 0;
             return View();
         }
 

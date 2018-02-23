@@ -1,28 +1,32 @@
-﻿using CtrlHelpDesk.Catalogos;
+﻿using CtrlHelpDesk.Servicios;
 using EntHelpDesk.Entidad;
 using HelpDesk;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace HelpDesk
+namespace HelpDesk.Notifications
 {
     public class NotificationComponent
     {
-        CtrlZonas control = new CtrlZonas();
+        CtrlTickets control = new CtrlTickets();
         public void RegisterNotification(DateTime currentTime)
         {
 
             string conStr = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-            string sqlCommand = @"SELECT [ContactID],[ContactName],[ContactNo] from [dbo].[Contacts] where [AddedOn] > @AddedOn";
+            string sqlCommand = "DML_Tickets";
+
             using (SqlConnection con = new SqlConnection(conStr))
             {
                 SqlCommand cmd = new SqlCommand(sqlCommand, con);
-                cmd.Parameters.AddWithValue("@AddedOn", currentTime);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Sentencia", "Select");
+
                 if (con.State != System.Data.ConnectionState.Open)
                 {
                     con.Open();
@@ -52,12 +56,9 @@ namespace HelpDesk
             }
         }
 
-        public List<Contacts> GetContacts(DateTime afterDate)
+        public List<tickets> GetTickets(DateTime afterDate)
         {
-            using (db_ticketsEntities dc = new db_ticketsEntities())
-            {
-                return dc.Contacts.Where(a => a.AddedOn > afterDate).OrderByDescending(a => a.AddedOn).ToList();
-            }
+            return control.ObtenerTodos().Where(p=>DateTime.Parse(p.fechahora_creacion)> afterDate).OrderByDescending(a => a.fechahora_creacion).ToList();           
 
         }
 

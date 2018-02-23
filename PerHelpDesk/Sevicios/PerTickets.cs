@@ -83,6 +83,66 @@ namespace PerHelpDesk.Sevicios
             }
             return lista;
         }
+        public int ObtenerMax()
+        {
+            List<tickets> lista = new List<tickets>();
+            tickets entidad = new tickets();
+            try
+            {
+                AbrirConexion();
+                StringBuilder CadenaSql = new StringBuilder();
+
+                SqlCommand comandoSelect = new SqlCommand();
+
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Tickets";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        entidad = new tickets();
+                        entidad.id_ticket = int.Parse(dr["id_ticket"].ToString());                        
+                        lista.Add(entidad);
+                    }
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+            return lista.Count();
+        }
+        public SqlCommand ObtenerCommand()
+        {
+            SqlCommand comandoSelect = new SqlCommand();
+            try
+            {                
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Tickets";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return comandoSelect;
+        }
         public tickets Obtener(int id)
         {
             tickets entidad = new tickets();
@@ -241,7 +301,8 @@ namespace PerHelpDesk.Sevicios
                 cmd.Parameters.AddWithValue("@IdSucursal", entidad.id_sucursal);
                 cmd.Parameters.AddWithValue("@asunto", entidad.asunto);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));                
+                if(entidad.imagen!=string.Empty)
+                    cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));                
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
