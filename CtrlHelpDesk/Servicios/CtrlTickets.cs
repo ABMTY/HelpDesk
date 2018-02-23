@@ -23,6 +23,10 @@ namespace CtrlHelpDesk.Servicios
         {
             return (List<tickets>)new PerTickets().ObtenerTodos();
         }
+        public int ObtenerMax()
+        {
+            return (int)new PerTickets().ObtenerMax();
+        }
         public tickets Obtener(int id_tickets)
         {
             return (tickets)new PerTickets().Obtener(id_tickets);
