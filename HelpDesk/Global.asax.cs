@@ -28,7 +28,7 @@ namespace HelpDesk
             var currentTime = DateTime.Now;
             HttpContext.Current.Session["LastUpdated"] = currentTime;
             NC.RegisterNotification(currentTime);
-            NC.RegisterComments(currentTime);
+            //NC.RegisterComments(currentTime);
         }
 
 

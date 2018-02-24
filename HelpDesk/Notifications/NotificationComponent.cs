@@ -19,11 +19,11 @@ namespace HelpDesk.Notifications
         {
 
             string conStr = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
-            string sqlCommand = @"SELECT [MessageID],[Message],[EmptyMessage],[Date] FROM [dbo].[Messages] where [Date] > @AddedOn";
+            string sqlCommand = @"SELECT [id_notificacion],[id_ticket],[fecha] FROM [dbo].[notificaciones] where [fecha] > @Fecha";
             using (SqlConnection con = new SqlConnection(conStr))
             {
                 SqlCommand cmd = new SqlCommand(sqlCommand, con);
-                cmd.Parameters.AddWithValue("@AddedOn", currentTime);
+                cmd.Parameters.AddWithValue("@Fecha", currentTime);
                 if (con.State != System.Data.ConnectionState.Open)
                 {
                     con.Open();
