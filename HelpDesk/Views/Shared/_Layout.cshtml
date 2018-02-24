@@ -154,7 +154,6 @@
             $("#menu_principal").append(menu);
         }
 
-
     </script>
 
 </head>
@@ -471,36 +470,14 @@
         @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 
+    <script type="text/javascript">
 
-
-    <script>
+        //CERRAR SESION DEL SISTEMA
         function CerrarSesion() {
             return window.location.href = "@Url.Action("CerrarSesion", "Acceso")";
         }
-    </script>
-       
-
-        @* Add jquery code for Get Notification & setup signalr *@
-        <script type="text/javascript">
-        $(function () {
-            // Click on notification icon for show notification
-            $("#notificaciones").click(function (e) {
-                e.stopPropagation();
-                $("#contenidoNotificaciones").show();
-                var count = 0;
-                count = parseInt($('span.count').html()) || 0;
-                //only load notification if not already loaded
-                if (count > 0) {
-                    updateNotification();
-                }
-                $("#notificaciones", this).html('&nbsp;');
-            })
-            // hide notifications
-            $('html').click(function () {
-                $("#contenidoNotificaciones").hide();
-            })
-
-        // update notification
+      
+        //OBTIENES LOS TICKETS DE ACUERDO AL USUARIO AUTENTICADO
         function Obtener_Tickets() {
             $('#menuNotificaciones').empty();
             $('#menuNotificaciones').append($('<li>Cargando...</li>'));
@@ -526,6 +503,7 @@
             })
         }
 
+        //DETALLE DEL TICKET PARA EL SEGUIMIENTO
         function Seguimiento(id_ticket) {                
             if ("@Session["tipo_usuario"]" == "Supervisor") {
                 window.location = "/Tickets/SeguimientoSucursal?id_ticket=" + id_ticket;
@@ -535,33 +513,9 @@
             }
         }
         
-
-    </script>
-       
-
-        @* Add jquery code for Get Notification & setup signalr *@
-        <script type="text/javascript">
-
-       
-
+        //EJECUTAR EL CONTADOR DE LAS NOTIFICACIONES
         $(function () {
-            //// Click on notification icon for show notification
-            //$("#notificaciones").click(function (e) {
-            //    debugger;
-            //    e.stopPropagation();
-            //    $('dropdown-menu').show();
-            //    var count = 0;
-            //    count = parseInt($('span.count').html()) || 0;
-            //    //only load notification if not already loaded
-            //    if (count > 0) {
-            //        updateNotification();
-            //    }
-            //    $('dropdown-menu', this).html('&nbsp;');
-            //})
-            //// hide notifications
-            //$('html').click(function () {
-            //    $("#contenidoNotificaciones").hide();
-            //})
+
             // update notification count
             function updateNotificationCount() {
                 debugger;
@@ -584,7 +538,11 @@
                 }
             }
         })
-        </script>
+
+    </script>
+       
+
+     
 
 
 </body>
