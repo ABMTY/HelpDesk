@@ -159,12 +159,12 @@
                 "type": "GET"
             },
             "columns": [
-                { "defaultContent": "<i>..</i>" },      
+                { "defaultContent": "<i>..</i>" },
                 { "data": "sucursal" },
                 { "data": "foto_usuario", "render": function ( data, type, row ) {
                     return "<img class='img-circle img-bordered-sm' width='50' height='50' src='" + data + "'>";
                 }},
-                { "data": "usuario" },                
+                { "data": "usuario" },
                 { "data": "asunto" },
                 { "data": "agente","render": function (data,type,row){
                     if (data == "Sin Asignar") {
@@ -209,7 +209,12 @@
             "columnDefs": [
                 {
                     "targets": 0, "data": "id_ticket", "render": function (data, type, full, meta) {
-                        return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-primary' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button> <button type='button' title='Seguimiento' id='btn_mas" + data + "' class='btn btn-primary' onclick='Seguimiento(" + data + ")'  ><i class='fa fa-tags'></i></button> "
+                        if ("@Session["tipo_usuario"]" != "Agente") {
+                            return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-primary' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button> <button type='button' title='Seguimiento' id='btn_mas" + data + "' class='btn btn-primary' onclick='Seguimiento(" + data + ")'  ><i class='fa fa-tags'></i></button> "
+                        }
+                        else {
+                            return "<button type='button' title='Seguimiento' id='btn_mas" + data + "' class='btn btn-primary' onclick='Seguimiento(" + data + ")'  ><i class='fa fa-tags'></i></button> "
+                        }
                     }
                 }
             ]
@@ -371,10 +376,10 @@
 
     function Limpiar() {
         $("#id").val("");
-        $("#id_detalle_ticket").val("");        
+        $("#id_detalle_ticket").val("");
         $("#ddl_Solicitantes").html();
-        $("#ddl_Areas").html();        
-        $("#txt_Asunto").val("");        
+        $("#ddl_Areas").html();
+        $("#txt_Asunto").val("");
         $("#ddl_TiposSoporte").html();
         $("#ddl_Prioridades").html();
         $("#ddl_Estados").html();
@@ -402,7 +407,7 @@
         }
     }
 
-    function Seguimiento(id_ticket) {        
+    function Seguimiento(id_ticket) {
         window.location = "/Tickets/SeguimientoMesaAyuda?id_ticket=" + id_ticket;
     }
 
@@ -440,10 +445,10 @@
                 $("#ddl_Estados").append("<option value=" + data.data.id_estado + ">" + data.data.estado + "</option>");
                 $("#ddl_Estados").selectpicker('refresh');
                 Cargar_Agentes();
-                $("#ddl_Agentes").append("<option value=" + data.data.id_agente + ">" + data.data.agente + "</option>");               
-                $("#ddl_Agentes").selectpicker('refresh');                
+                $("#ddl_Agentes").append("<option value=" + data.data.id_agente + ">" + data.data.agente + "</option>");
+                $("#ddl_Agentes").selectpicker('refresh');
                 $("#imgBase64").text(data.data.imagen)
-                if (data.data.imagen != "") {                    
+                if (data.data.imagen != "") {
                     $('#imagen').attr('src', 'data:image/png;base64,' + data.data.imagen);
                 }
             },

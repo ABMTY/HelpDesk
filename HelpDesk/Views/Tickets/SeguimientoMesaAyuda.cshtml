@@ -96,14 +96,14 @@
                         <ul class="list-inline">
                             <li>
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <button type="submit" class="btn btn-primary" onclick="Guardar()">
+                                    <button id="btnEnviar" type="submit" class="btn btn-primary" onclick="Guardar()">
                                         <i class="fa fa-save"></i>
                                         Enviar
                                     </button>
                                 </div>
                             </li>
                             <li class="pull-right" style="padding-right:20px;">
-                                <a href="#" class="link-black text-sm">
+                                <a href="#" class="link-black text-sm" >
                                     <div class="btn btn-primary btn-file">
                                         <i class="fa fa-paperclip"></i> Adjuntar foto
                                         <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
@@ -256,14 +256,33 @@
                     $('#foto_solicitante').attr('src', data.data.foto_usuario);
                 }
                 $("#sucursal").text(data.data.sucursal);
-
-                Cargar_Prioridades();
-                $("#ddl_Prioridades").append("<option value=" + data.data.id_prioridad + ">" + data.data.prioridad + "</option>");
-                $("#ddl_Prioridades").selectpicker('refresh');
                 Cargar_Estados();
                 $("#ddl_Estados").append("<option value=" + data.data.id_estado + ">" + data.data.estado + "</option>");
                 $("#ddl_Estados").selectpicker('refresh');
-                Cargar_Agentes();
+
+                if(data.data.estado=="Asignado" || data.data.agente=="Sin Asignar")
+                {
+                    $("#btnEnviar").attr('disabled', true);
+                    $("#subirImagen").attr('disabled', true);
+                }
+                
+                if("@Session["tipo_usuario"]" != "Agente")
+                {
+                    Cargar_Prioridades();
+                    Cargar_Agentes();
+                    $("#ddl_Prioridades").attr('disabled', false);
+                    $("#ddl_Agentes").attr('disabled', false);
+                }
+                else
+                {
+                    $("#ddl_Prioridades").attr('disabled', true);
+                    $("#ddl_Agentes").attr('disabled', true);
+                }
+
+
+                $("#ddl_Prioridades").append("<option value=" + data.data.id_prioridad + ">" + data.data.prioridad + "</option>");
+                $("#ddl_Prioridades").selectpicker('refresh');               
+                
                 $("#ddl_Agentes").append("<option value=" + data.data.id_agente + ">" + data.data.agente + "</option>");               
                 $("#ddl_Agentes").selectpicker('refresh');   
                 
@@ -294,8 +313,13 @@
                 data: JSON.stringify(Ticket),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    swal({ title: "Tickets", text: "Actualizado Correctamente", type: "success" }, function () { });
+                success: function (data) {                        
+                    if($( "#ddl_Estados option:selected" ).text() =="En Proceso" || $( "#ddl_Agentes option:selected" ).text() =="Sin Asignar")
+                    {
+                        $("#btnEnviar").attr('disabled', false);
+                        $("#subirImagen").attr('disabled', false);
+                    }
+                    swal({ title: "Tickets", text: "Actualizado Correctamente, favor de iniciar el seguimiento a la solcitud.", type: "success" }, function () { });
                 },
                 error: function (request, status, error) {
                     swal("Error al Actualizar el Ticket");
