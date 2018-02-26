@@ -251,7 +251,6 @@
     <Content Include="Content\css\bootstrap-select.min.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.css" />
-    <Content Include="Content\css\ionicons.css" />
     <Content Include="Content\css\Jcrop.css" />
     <Content Include="Content\css\_all-skins.css" />
     <Content Include="Content\css\_all-skins.min.css" />
@@ -725,6 +724,7 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\plugins\datatables\json\scroller-demo.json" />
+    <None Include="Properties\PublishProfiles\Dperez.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
