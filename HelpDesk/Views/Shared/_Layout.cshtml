@@ -259,7 +259,7 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="Obtener_Tickets()" >
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning" id="notificaciones"></span>
+                                <span class="count label label-warning" ></span>
                             </a>
                             <ul class="dropdown-menu" >
                                 <li class="header" id="tituloNotificaciones">You have 10 notifications</li>
@@ -472,20 +472,47 @@
 
     <script type="text/javascript">
 
+        $(document).ready(function () {
+            
+            NotificationCount();
+        });
+
+        function NotificationCount() {
+            
+            debugger;
+            $.ajax({
+                cache: false,
+                destroy: true,
+                searching: true,
+                dataType: "json",
+                url: '/Tickets/GetNotificacion/',
+                contentType: "application/json; charset=utf-8",
+                type: 'GET',
+                success: function (datos) {
+                    if (datos.data.length > 0) {
+                        $('span.count').html(datos.data.length);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })            
+        }
         //CERRAR SESION DEL SISTEMA
         function CerrarSesion() {
             return window.location.href = "@Url.Action("CerrarSesion", "Acceso")";
         }
-      
+        
         //OBTIENES LOS TICKETS DE ACUERDO AL USUARIO AUTENTICADO
-        function Obtener_Tickets() {
+        function Obtener_Tickets() {            
             $('#menuNotificaciones').empty();
             $('#menuNotificaciones').append($('<li>Cargando...</li>'));
             $.ajax({
+                cache: false,
                 destroy: true,
                 searching: true,
                 dataType: "json",                             
-                url: '/Tickets/GetTickets/',
+                url: '/Tickets/GetNotificacion/',
                 contentType: "application/json; charset=utf-8",
                 type: 'POST',
                 success: function (datos) {                
@@ -515,14 +542,42 @@
         
         //EJECUTAR EL CONTADOR DE LAS NOTIFICACIONES
         $(function () {
+            // Click on notification icon for show notification
+            $('span.noti').click(function (e) {
+                e.stopPropagation();
+                $('.noti-content').show();
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                //only load notification if not already loaded
+                if (count > 0) {
+                    Obtener_Tickets();
+                }
+                $('span.count', this).html('&nbsp;');
+            })            
 
             // update notification count
             function updateNotificationCount() {
                 debugger;
-                var count = 0;
-                count = parseInt($("#numNotificaciones").html()) || 0;
-                count++;
-                $("#numNotificaciones").html(count);
+                $.ajax({
+                    cache: false,
+                    destroy: true,
+                    searching: true,
+                    dataType: "json",
+                    url: '/Tickets/GetNotificacion/',
+                    contentType: "application/json; charset=utf-8",
+                    type: 'GET',
+                    success: function (datos) {
+                        if (datos.data.length > 0) {
+                            $('span.count').html(datos.data.length);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                })
+                //count = parseInt($("span.count").html()) || 0;
+                //count++;                                                    
+                //$('span.count').html(count);
             }
             // signalr js code for start hub and send receive notification
             var notificationHub = $.connection.notificationHub;
@@ -537,8 +592,7 @@
                     console.log('Notification Update');
                 }
             }
-        })
-
+        })      
     </script>
        
 

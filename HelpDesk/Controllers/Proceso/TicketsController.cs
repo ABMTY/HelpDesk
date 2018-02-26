@@ -177,6 +177,33 @@ namespace HelpDesk.Controllers.Proceso
             return json;
         }
 
+        public ActionResult GetNotificacion()
+        {
+            List<notificaciones> Listado = new List<notificaciones>();
+            int id_usuario = int.Parse(Session["id_usuario"].ToString());
+            usuarios usuario = new usuarios();
+            usuario = ctrlUsuarios.Obtener(id_usuario);
+
+            switch (usuario.tipo_usuario.ToUpper())
+            {
+                case "SUPERVISOR":
+                    Listado = control.ObtenerNotifyUser(id_usuario);
+                    break;
+                case "AGENTE":
+                    Listado = control.ObtenerNotifyUser(id_usuario);
+                    break;
+                default:
+                    Listado = control.ObtenerNotify();
+                    break;
+            }
+
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
+
         public ActionResult GetTicket(int id)
         {            
             var Listado = control.Obtener(id);

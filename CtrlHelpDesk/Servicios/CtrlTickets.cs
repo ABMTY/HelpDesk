@@ -36,6 +36,15 @@ namespace CtrlHelpDesk.Servicios
             return (List<tickets>)new PerTickets().ObtenerPorUsuario(id_usuario);
         }
 
+        public List<notificaciones> ObtenerNotify()
+        {
+            return (List<notificaciones>)new PerNotificaciones().ObtenerTodos();
+        }
+        public List<notificaciones> ObtenerNotifyUser(int id)
+        {
+            return (List<notificaciones>)new PerNotificaciones().ObtenerPorUsuario(id);
+        }
+
         public bool Insertar(tickets Entidad)
         {
             return PerTickets.Insertar(Entidad);
