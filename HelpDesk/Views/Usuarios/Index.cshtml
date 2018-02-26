@@ -39,6 +39,18 @@
             <div class="panel-body" id="secc_add" style="display:none;">
                 <input type="text" id="id" value="" hidden />
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <center>
+                        <p id="imgBase64" style="display: none;"></p>                        
+                        <img class="img-circle fa-border" src="~/Content/img/IconUser.png" alt="" id="imagen" width="20%;" height="20%;" />
+                        <br />
+                        <br />
+                        <div class="btn btn-primary btn-file">
+                            <i class="fa fa-paperclip"></i> Seleccionar foto
+                            <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
+                        </div>
+                    </center>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                     <label>Usuario *</label>
                     <input type="text" class="form-control" id="txt_Usuario" maxlength="100" required>
                 </div>
@@ -83,22 +95,16 @@
                     <div>
                         <select class="form-control selectpicker" id="ddl_Sucursales" required data-live-search="true"></select>
                     </div>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Foto</label>
-                    <input type="file" id="subirImagen" onchange="ConvertirImagen()" value=""  />
-                    <p id="imgBase64" style="display: none;"></p>
-                    <img src="" alt="" id="imagen" width="30%;" height="30%;" /><br />
-                    <img src="" alt="" id="imagenOriginal" width="30%;" height="30%;" />
-                </div>
+                </div>                
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
                         <i class="fa fa-save"></i> Guardar
-                    </button>
+                    </button>                   
                     <button class="btn btn-default" onclick="Cancelar()" type="button">
                         <i class="fa fa-arrow-circle-left"></i> Cancelar
                     </button>
                 </div>
+               
             </div>
             <!--Fin body -->
         </div><!-- /.box -->
@@ -155,14 +161,14 @@
             "columnDefs": [
                 {
                     "targets": 0, "data": "id_usuario", "render": function (data, type, full, meta) {
-                        return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-warning' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-danger' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
+                        return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-primary' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-primary' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
                     }
                 },
                 {
                     "targets": 4, "data": "foto", "render": function (data, type, full, meta) {
                         if (data != null) {
                             var url = "data:image/png;base64,"+data;
-                            return "<img src=" + url + " width='60px;' height='50px;' />"
+                            return "<img class='fa-border' src=" + url + " width='60px;' height='50px;' />"
                         } else {
                             return "<p></p>"
                         }
@@ -299,9 +305,8 @@
                 $("#ddl_Sucursales").append("<option value=" + data.data.id_sucursal + ">" + data.data.sucursal + "</option>");
                 $("#ddl_Sucursales").selectpicker('refresh');
                 $("#imgBase64").text(data.data.foto)
-                if (data.data.foto != "") {
-                    $('#imagen').css({ 'width': '0%', 'height': '0%' });
-                    $('#imagenOriginal').attr('src', 'data:image/png;base64,' + data.data.foto);
+                if (data.data.foto != "") {                    
+                    $('#imagen').attr('src', 'data:image/png;base64,' + data.data.foto);
                 }
             },
             error: function (request, status, error) {
