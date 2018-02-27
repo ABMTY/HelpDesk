@@ -472,32 +472,7 @@
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
-        
-        //$(document).ready(function () {
-        //    updateNotificationCount()
-        //});
-        //    NotificationCount();
-        //});
-
-        //function NotificationCount() {                        
-        //    $.ajax({
-        //        cache: false,
-        //        destroy: true,
-        //        searching: true,
-        //        dataType: "json",
-        //        url: '/Tickets/GetNotificacion/',
-        //        contentType: "application/json; charset=utf-8",
-        //        type: 'GET',
-        //        success: function (datos) {
-        //            if (datos.data.length > 0) {
-        //                $('span.count').html(datos.data.length);
-        //            }
-        //        },
-        //        error: function (error) {
-        //            console.log(error);
-        //        }
-        //    })            
-        //}
+                
         //CERRAR SESION DEL SISTEMA
         function CerrarSesion() {
             return window.location.href = "@Url.Action("CerrarSesion", "Acceso")";
@@ -571,7 +546,7 @@
                     contentType: "application/json; charset=utf-8",
                     type: 'GET',
                     success: function (datos) {
-                        alert(datos.data.length);
+                        console.log(datos.data.length);
                         if (datos.data.length > 0) {
                             $('span.count').html(datos.data.length);
                         }
@@ -580,9 +555,7 @@
                         console.log(error);
                     }
                 })
-                //count = parseInt($("span.count").html()) || 0;
-                //count++;                                                    
-                //$('span.count').html(count);
+               
             }
             // signalr js code for start hub and send receive notification
             var notificationHub = $.connection.notificationHub;
