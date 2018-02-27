@@ -75,7 +75,7 @@ namespace PerHelpDesk.Sevicios
 
                 comandoSelect.Connection = Conexion;
                 comandoSelect.CommandType = CommandType.Text;
-                comandoSelect.CommandText = "SELECT [id_notificacion],[id_ticket],[fecha],[id_usuario],[notificado],[asunto] FROM [dbo].[notificaciones] where  notificado is null and  [id_usuario]=@IdUsuario ";
+                comandoSelect.CommandText = "SELECT [id_notificacion],[id_ticket],[fecha],[id_usuario],[notificado],[asunto],[estado] FROM [dbo].[notificaciones] where  notificado is null and  [id_usuario]=@IdUsuario ";
                 comandoSelect.Parameters.AddWithValue("@IdUsuario", id);
                 using (var dr = comandoSelect.ExecuteReader())
                 {
@@ -89,6 +89,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         if (dr["notificado"].ToString() != string.Empty)
                             entidad.notificado = int.Parse(dr["notificado"].ToString());
+                        entidad.estado = dr["estado"].ToString();
                         lista.Add(entidad);
                     }
                 }

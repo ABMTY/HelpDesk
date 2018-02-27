@@ -14,5 +14,6 @@ namespace EntHelpDesk.Entidad
         public int id_usuario { get; set; }
         public int notificado { get; set; }
         public DateTime fecha { get; set; }
+        public string estado { get; set; }
     }
 }

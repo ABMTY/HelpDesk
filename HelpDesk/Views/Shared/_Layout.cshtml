@@ -441,7 +441,7 @@
                 Response.Redirect("/Acceso/");
             }
         }
-        catch (Exception ex)
+        catch (Exception )
         {            
             Response.Redirect("/Acceso/");
         }
@@ -548,8 +548,10 @@
                     success: function (datos) {
                         console.log(datos.data.length);
                         if (datos.data.length > 0) {
-                            $('span.count').html(datos.data.length);
+                            $('span.count').html(datos.data.length);                        
                         }
+                        else
+                            $('span.count').html('');
                     },
                     error: function (error) {
                         console.log(error);
@@ -563,8 +565,7 @@
                 console.log('Notification hub started');
             });
             //signalr method for push server message to client
-            notificationHub.client.notify = function (message) {
-                debugger;
+            notificationHub.client.notify = function (message) {                
                 if (message && message.toLowerCase() == "added") {
                    
                     updateNotificationCount();
