@@ -176,40 +176,13 @@
                 </a>
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
-                    <ul class="nav navbar-nav">
-                        <!-- Messages: style can be found in dropdown.less-->
-                        <li class="dropdown messages-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-envelope-o"></i>
-                                <span class="label label-success">4</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 4 messages</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li>
-                                            <!-- start message -->
-                                            <a href="#">
-                                                <div class="pull-left">                                                    
-                                                    <img src="~/Content/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                                </div>
-                                                <h4>
-                                                    Support Team
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <!-- end message -->                                       
-                                        
-                                    </ul>
-                                </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
-                            </ul>
-                        </li>                        
+                    <ul class="nav navbar-nav">                                              
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>
+                        </li>
                         <!-- Notifications: style can be found in dropdown.less -->
-                        <li class="dropdown notifications-menu">
+                        <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="Obtener_Tickets()" >
                                 <i class="fa fa-bell-o"></i>
                                 <span class="count label label-warning" ></span>
@@ -219,94 +192,12 @@
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu" id="menuNotificaciones">                                       
-                                    </ul>
+                                    </ul>                                    
                                 </li>
                                 <li class="footer"><a href="#">Ver todo</a></li>
                             </ul>
                         </li>
-                        <!-- Tasks: style can be found in dropdown.less -->
-                        <li class="dropdown tasks-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-flag-o"></i>
-                                <span class="label label-danger">9</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 9 tasks</li>
-                                <li>
-                                    <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li>
-                                            <!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Design some buttons
-                                                    <small class="pull-right">20%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <!-- end task item -->
-                                        <li>
-                                            <!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Create a nice theme
-                                                    <small class="pull-right">40%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
-                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">40% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <!-- end task item -->
-                                        <li>
-                                            <!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Some task I need to do
-                                                    <small class="pull-right">60%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
-                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">60% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <!-- end task item -->
-                                        <li>
-                                            <!-- Task item -->
-                                            <a href="#">
-                                                <h3>
-                                                    Make beautiful transitions
-                                                    <small class="pull-right">80%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
-                                                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">80% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <!-- end task item -->
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">View all tasks</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!-- User Account: style can be found in dropdown.less -->
+                   
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="@Session["foto"]" class="user-image">
@@ -361,6 +252,107 @@
             </div>
             <strong>Copyright &copy; 2018 <a href="#">Abarrotes Monterrey S.A de C.V.</a></strong> Todos los Derechos Reservados.
         </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-light">            
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <br />
+                <!-- DIRECT CHAT PRIMARY -->
+                <div class="box box-primary direct-chat direct-chat-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Chat</h3>
+                        <div class="box-tools pull-right">
+                            <span data-toggle="tooltip" title="3 Nuevos Mensajes" class="badge bg-light-blue">3</span>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contactos" data-widget="chat-pane-toggle">
+                                <i class="fa fa-comments"></i>
+                            </button>
+                            @*<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <!-- Conversations are loaded here -->
+                        <div class="direct-chat-messages">
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-left">Sarah Bullock</span>
+                                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                                </div>
+                                <!-- /.direct-chat-info -->                                                 
+                                <img class="direct-chat-img" src="~/Content/img/user3-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                    Hola ayuda con cable de red
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-right">Alexander Pierce</span>
+                                    <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                                </div>
+                                <!-- /.direct-chat-info -->
+                                <img class="direct-chat-img" src="~/Content/img/user8-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
+                                <div class="direct-chat-text">
+                                   En un momento lo atiendo!!
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+                        </div>
+                        <!--/.direct-chat-messages-->
+                        <!-- Contacts are loaded here -->
+                        <div class="direct-chat-contacts">
+                            <ul class="contacts-list">
+                                <li>
+                                    <a href="#">                                        
+                                        <img class="contacts-list-img" src="~/Content/img/muser2-160x160.jpg" alt="User Image">
+                                        <div class="contacts-list-info">
+                                            <span class="contacts-list-name">
+                                               Luis Angel
+                                                <small class="contacts-list-date pull-right">2/28/2015</small>
+                                            </span>
+                                            <span class="contacts-list-msg">Me pueden ayudar con un problema de red</span>
+                                        </div>
+                                        <!-- /.contacts-list-info -->
+                                    </a>
+                                </li>
+                                <!-- End Contact Item -->
+                            </ul>
+                            <!-- /.contatcts-list -->
+                        </div>
+                        <!-- /.direct-chat-pane -->
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <form action="#" method="post">
+                            <div class="input-group">
+                                <input type="text" name="message" placeholder="Escriba el mensaje ..." class="form-control">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary btn-flat">Enviar</button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box-footer-->
+                </div>                
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+
+
+
+
+        
     </div>
 
     <div class="modal fade" id="Modal_Exit">
@@ -451,7 +443,13 @@
                         $("#tituloNotificaciones").html(datos.data.length + " Notificación");
                     }
                     $.each(datos.data, function (index, value) {                        
-                        $('#menuNotificaciones').append($('<li><a href="#" onclick="Seguimiento(' + datos.data[index].id_ticket + ')"><i class="fa fa-ticket text-aqua"></i> ' + datos.data[index].asunto + '<p style="font-size:12px; padding-left:25px;">Estado ' + datos.data[index].estado + '</p></a></li></li>'));
+                        if (datos.data[index].tipo_notificacion == "Ticket") {
+                            $('#menuNotificaciones').append($('<li><a href="#" onclick="Seguimiento(' + datos.data[index].id_ticket + ')"><div class="pull-left"><img src="../Content/img/Ticket.png" class="img-circle" alt="User Image"></div><h4>' + datos.data[index].asunto + '<small><i class="fa fa-clock-o"></i> 5 mins</small></h4><p>Estado ' + datos.data[index].estado + '</p></a></li>'));
+                        } else {
+                            if (datos.data[index].tipo_notificacion == "Comentario") {
+                                $('#menuNotificaciones').append($('<li><a href="#" onclick="Seguimiento(' + datos.data[index].id_ticket + ')"><div class="pull-left"><img src="data:image/png;base64,' + datos.data[index].foto + '" alt="User Image"></div><h4>' + datos.data[index].nombre + ' respondio <small><i class="fa fa-clock-o"></i> 5 mins</small></h4><p>el Ticket #' + datos.data[index].id_ticket + '</p><p>' + datos.data[index].asunto + '</p></a></li>'));
+                            }
+                        }                        
                     });
                 },
                 error: function (error) {
@@ -460,6 +458,7 @@
             })
         }
 
+       
         //DETALLE DEL TICKET PARA EL SEGUIMIENTO
         function Seguimiento(id_ticket) {                
             if ("@Session["tipo_usuario"]" == "Supervisor") {

@@ -183,7 +183,7 @@ namespace PerHelpDesk.Catalogos
             if (entidad.nombre != String.Empty && entidad.apellidos != String.Empty && entidad.correo != String.Empty && entidad.user_name != String.Empty && entidad.password != String.Empty)
                 valido = true;
 
-                return valido
+            return valido;
         }
 
         public bool Update(usuarios entidad)
