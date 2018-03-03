@@ -18,5 +18,6 @@ namespace EntHelpDesk.Entidad
         public string tipo_notificacion { get; set; }
         public string foto { get; set; }
         public int tiempo { get; set; }
+        public string nombre { get; set; }
     }
 }

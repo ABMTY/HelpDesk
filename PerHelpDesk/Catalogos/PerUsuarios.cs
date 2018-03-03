@@ -133,25 +133,28 @@ namespace PerHelpDesk.Catalogos
             bool respuesta = false;
             try
             {
-                AbrirConexion();
-                cmd.Connection = Conexion;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "DML_Usuarios";
-                cmd.Parameters.AddWithValue("@Sentencia", "Insert");
-                cmd.Parameters.AddWithValue("@IdUsuario", entidad.id_usuario);
-                cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
-                cmd.Parameters.AddWithValue("@apellidos", entidad.apellidos);                
-                cmd.Parameters.AddWithValue("@correo", entidad.correo);
-                cmd.Parameters.AddWithValue("@telefono", entidad.telefono);
-                cmd.Parameters.AddWithValue("@ext", entidad.ext);
-                cmd.Parameters.AddWithValue("@foto", Convert.FromBase64String(entidad.foto));
-                cmd.Parameters.AddWithValue("@id_area", entidad.id_area);
-                cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
-                cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
-                cmd.Parameters.AddWithValue("@user_name", entidad.user_name);
-                cmd.Parameters.AddWithValue("@password", entidad.password);
-                cmd.ExecuteNonQuery();
-                respuesta = true;
+                if (validar(entidad))
+                {
+                    AbrirConexion();
+                    cmd.Connection = Conexion;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "DML_Usuarios";
+                    cmd.Parameters.AddWithValue("@Sentencia", "Insert");
+                    cmd.Parameters.AddWithValue("@IdUsuario", entidad.id_usuario);
+                    cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
+                    cmd.Parameters.AddWithValue("@apellidos", entidad.apellidos);
+                    cmd.Parameters.AddWithValue("@correo", entidad.correo);
+                    cmd.Parameters.AddWithValue("@telefono", entidad.telefono);
+                    cmd.Parameters.AddWithValue("@ext", entidad.ext);
+                    cmd.Parameters.AddWithValue("@foto", Convert.FromBase64String(entidad.foto));
+                    cmd.Parameters.AddWithValue("@id_area", entidad.id_area);
+                    cmd.Parameters.AddWithValue("@id_sucursal", entidad.id_sucursal);
+                    cmd.Parameters.AddWithValue("@id_tipo_usuario", entidad.id_tipo_usuario);
+                    cmd.Parameters.AddWithValue("@user_name", entidad.user_name);
+                    cmd.Parameters.AddWithValue("@password", entidad.password);
+                    cmd.ExecuteNonQuery();
+                    respuesta = true;
+                }
             }
             catch (InvalidCastException ex)
             {
@@ -172,6 +175,17 @@ namespace PerHelpDesk.Catalogos
             } 
             return respuesta;
         }
+
+        private bool validar(usuarios entidad)
+        {
+            bool valido = false;
+
+            if (entidad.nombre != String.Empty && entidad.apellidos != String.Empty && entidad.correo != String.Empty && entidad.user_name != String.Empty && entidad.password != String.Empty)
+                valido = true;
+
+                return valido
+        }
+
         public bool Update(usuarios entidad)
         {
             SqlCommand cmd = new SqlCommand();

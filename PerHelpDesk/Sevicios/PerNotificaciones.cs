@@ -25,8 +25,8 @@ namespace PerHelpDesk.Sevicios
 
                 comandoSelect.Connection = Conexion;
                 comandoSelect.CommandType = CommandType.Text;
-                comandoSelect.CommandText = "  SELECT [id_notificacion],[id_ticket],[fecha],[dbo].[usuarios].[id_usuario],[notificado],[asunto],[estado],[tipo_notificacion],[foto]"
-                            + " FROM[dbo].[notificaciones] left join[dbo].[usuarios]"
+                comandoSelect.CommandText = "  SELECT [id_notificacion],[id_ticket],[fecha],[dbo].[usuarios].[id_usuario],[notificado],[asunto],[estado],[tipo_notificacion],[foto],"
+                            + " [dbo].[usuarios].[nombre]  FROM[dbo].[notificaciones] left join[dbo].[usuarios]"
                             + " on[dbo].[notificaciones].id_usuario= [dbo].[usuarios].id_usuario"
                             + " where  notificado is null ";
 
@@ -46,6 +46,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.tipo_notificacion = dr["tipo_notificacion"].ToString();
                         if (dr["foto"].ToString() != string.Empty)
                             entidad.foto = Convert.ToBase64String((byte[])dr["foto"]);
+                        entidad.nombre = dr["nombre"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -82,8 +83,8 @@ namespace PerHelpDesk.Sevicios
 
                 comandoSelect.Connection = Conexion;
                 comandoSelect.CommandType = CommandType.Text;
-                comandoSelect.CommandText = "  SELECT [id_notificacion],[id_ticket],[fecha],[dbo].[usuarios].[id_usuario],[notificado],[asunto],[estado],[tipo_notificacion],[foto]"
-                                            + " FROM[dbo].[notificaciones] left join[dbo].[usuarios]"
+                comandoSelect.CommandText = "  SELECT [id_notificacion],[id_ticket],[fecha],[dbo].[usuarios].[id_usuario],[notificado],[asunto],[estado],[tipo_notificacion],[foto],"
+                                            + " [dbo].[usuarios].[nombre]  FROM[dbo].[notificaciones] left join[dbo].[usuarios]"
                                             + " on[dbo].[notificaciones].id_usuario= [dbo].[usuarios].id_usuario"
                                             + " where  notificado is null and [dbo].[notificaciones].[id_usuario] =@IdUsuario ";
 
@@ -105,6 +106,7 @@ namespace PerHelpDesk.Sevicios
                         entidad.tipo_notificacion = dr["tipo_notificacion"].ToString();
                         if (dr["foto"].ToString() != string.Empty)
                             entidad.foto = Convert.ToBase64String((byte[])dr["foto"]);
+                        entidad.nombre = dr["nombre"].ToString();
                         lista.Add(entidad);
                     }
                 }
