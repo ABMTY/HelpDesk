@@ -25,8 +25,11 @@ namespace PerHelpDesk.Sevicios
 
                 comandoSelect.Connection = Conexion;
                 comandoSelect.CommandType = CommandType.Text;
-                comandoSelect.CommandText = "SELECT [id_notificacion],[id_ticket],[fecha],[id_usuario],[notificado],[asunto],[estado] FROM [dbo].[notificaciones] where notificado is null";                
-                
+                comandoSelect.CommandText = "  SELECT [id_notificacion],[id_ticket],[fecha],[dbo].[usuarios].[id_usuario],[notificado],[asunto],[estado],[tipo_notificacion],[foto],"
+                            + " [dbo].[usuarios].[nombre]  FROM[dbo].[notificaciones] left join[dbo].[usuarios]"
+                            + " on[dbo].[notificaciones].id_usuario= [dbo].[usuarios].id_usuario"
+                            + " where  notificado is null ";
+
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     while (dr.Read())
@@ -40,6 +43,10 @@ namespace PerHelpDesk.Sevicios
                         if(dr["notificado"].ToString()!=string.Empty)
                             entidad.notificado = int.Parse(dr["notificado"].ToString());
                         entidad.estado = dr["estado"].ToString();
+                        entidad.tipo_notificacion = dr["tipo_notificacion"].ToString();
+                        if (dr["foto"].ToString() != string.Empty)
+                            entidad.foto = Convert.ToBase64String((byte[])dr["foto"]);
+                        entidad.nombre = dr["nombre"].ToString();
                         lista.Add(entidad);
                     }
                 }
@@ -76,8 +83,13 @@ namespace PerHelpDesk.Sevicios
 
                 comandoSelect.Connection = Conexion;
                 comandoSelect.CommandType = CommandType.Text;
-                comandoSelect.CommandText = "SELECT [id_notificacion],[id_ticket],[fecha],[id_usuario],[notificado],[asunto],[estado] FROM [dbo].[notificaciones] where  notificado is null and  [id_usuario]=@IdUsuario ";
+                comandoSelect.CommandText = "  SELECT [id_notificacion],[id_ticket],[fecha],[dbo].[usuarios].[id_usuario],[notificado],[asunto],[estado],[tipo_notificacion],[foto],"
+                                            + " [dbo].[usuarios].[nombre]  FROM[dbo].[notificaciones] left join[dbo].[usuarios]"
+                                            + " on[dbo].[notificaciones].id_usuario= [dbo].[usuarios].id_usuario"
+                                            + " where  notificado is null and [dbo].[notificaciones].[id_usuario] =@IdUsuario ";
+
                 comandoSelect.Parameters.AddWithValue("@IdUsuario", id);
+
                 using (var dr = comandoSelect.ExecuteReader())
                 {
                     while (dr.Read())
@@ -91,6 +103,10 @@ namespace PerHelpDesk.Sevicios
                         if (dr["notificado"].ToString() != string.Empty)
                             entidad.notificado = int.Parse(dr["notificado"].ToString());
                         entidad.estado = dr["estado"].ToString();
+                        entidad.tipo_notificacion = dr["tipo_notificacion"].ToString();
+                        if (dr["foto"].ToString() != string.Empty)
+                            entidad.foto = Convert.ToBase64String((byte[])dr["foto"]);
+                        entidad.nombre = dr["nombre"].ToString();
                         lista.Add(entidad);
                     }
                 }

@@ -15,5 +15,6 @@ namespace EntHelpDesk.Entidad
         public string zona { get; set; }
         public int id_politica { get; set; }
         public string politica { get; set; }
+        public string imagen { get; set; }
     }
 }
