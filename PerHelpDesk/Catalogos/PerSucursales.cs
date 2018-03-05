@@ -118,19 +118,22 @@ namespace PerHelpDesk.Catalogos
             bool respuesta = false;
             try
             {
-                AbrirConexion();
-                cmd.Connection = Conexion;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "DML_sucursales";
-                cmd.Parameters.AddWithValue("@Sentencia", "Insert");
-                cmd.Parameters.AddWithValue("@IdSucursales", entidad.id_sucursal);
-                cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
-                cmd.Parameters.AddWithValue("@direccion", entidad.direccion);
-                cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
-                cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
-                cmd.ExecuteNonQuery();
-                respuesta = true;
+                if (validar(entidad))
+                {
+                    AbrirConexion();
+                    cmd.Connection = Conexion;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "DML_sucursales";
+                    cmd.Parameters.AddWithValue("@Sentencia", "Insert");
+                    cmd.Parameters.AddWithValue("@IdSucursales", entidad.id_sucursal);
+                    cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
+                    cmd.Parameters.AddWithValue("@direccion", entidad.direccion);
+                    cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
+                    cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
+                    cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
+                    cmd.ExecuteNonQuery();
+                    respuesta = true;
+                }
             }
             catch (InvalidCastException ex)
             {
@@ -151,6 +154,17 @@ namespace PerHelpDesk.Catalogos
             }
             return respuesta;
         }
+
+        private bool validar(sucursales entidad)
+        {
+            bool valido = false;
+
+            if (entidad.nombre != String.Empty && entidad.direccion != String.Empty)
+                valido = true;
+
+            return valido;
+        }
+
         public bool Update(sucursales entidad)
         {
             SqlCommand cmd = new SqlCommand();
