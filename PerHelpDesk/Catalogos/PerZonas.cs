@@ -148,10 +148,10 @@ namespace PerHelpDesk.Catalogos
 
         private bool validar(zonas entidad)
         {
-            bool valido = false;
+            bool valido = true;
 
-            if (entidad.nombre != null && entidad.descripcion != null)
-                valido = true;
+            if (entidad.nombre == null && entidad.descripcion == null)
+                valido = false;
 
             return valido;
         }

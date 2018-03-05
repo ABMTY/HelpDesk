@@ -35,7 +35,7 @@
                     </table>
                 </div>
             </div>
-            <form data-toggle="validator" role="form">
+            <form data-toggle="validator" role="form" id="form_usuario">
                 <div class="panel-body" id="secc_add" style="display:none;">
                     <input type="text" id="id" value="" hidden />
                     <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -98,8 +98,9 @@
                                 <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
                             </div>
                         </center>
-                    </div><div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-primary" type="submit" id="btnGuardar">
                             <i class="fa fa-save"></i> Guardar
                         </button>
                         <button class="btn btn-default" onclick="Cancelar()" type="button">
@@ -142,6 +143,13 @@
 <script>
 
     $(document).ready(function () {
+        $('#form_usuario').validator().on('submit', function (e) {
+            if (e.isDefaultPrevented()) {
+                console.log("Error en Formulario");
+            } else {
+                Guardar();
+            }
+        })
         $('#Lista_Usuarios').DataTable();
         Cargar_Usuarios();
     });
@@ -183,6 +191,7 @@
     }
 
     function Agregar() {
+        Limpiar();
         if ($("imgBase64").text() == '') {
             var elemento = document.getElementById("secc_imagen");
             elemento.style.display = 'none'
@@ -190,7 +199,6 @@
         $("#secc_lista").hide();
         $("#secc_add").show();
         $("#btnAgregar").hide();
-        Limpiar();
         Cargar_TipoUsuario();
         Cargar_Areas();
         Cargar_Sucursales();
@@ -199,7 +207,6 @@
     function Cancelar() {
         var elemento = document.getElementById("secc_imagen");
         elemento.style.display = 'block'
-        $("#imgBase64").text('');
         $("#secc_lista").show();
         $("#btnAgregar").show();
         $("#secc_add").hide();
@@ -217,6 +224,7 @@
         $("#ddl_TipoUsuario").html();
         $("#ddl_Areas").html();
         $("#ddl_Sucursales").html();
+        $("#imgBase64").text('');
         $('#imagen').attr('src', '');
     }
 
