@@ -28,48 +28,38 @@
                                 <th>Opciones</th>
                                 <th>Nombre</th>
                                 <th>Descripcion</th>
-                                <th>Foto</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
+            <form data-toggle="validator" role="form" id="form_zona">
+                <div class="panel-body" id="secc_add" style="display:none;">
+                    <input type="text" id="id" value="" hidden />
 
-            <div class="panel-body" id="secc_add" style="display:none;">
-                <input type="text" id="id" value="" hidden />
-                
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Nombre *</label>
-                    <input type="text" class="form-control" name="Zona" id="txt_Nombre" maxlength="100" required>
-                    <label>Descripción *</label>
-                    <input type="text" class="form-control" name="Zona" id="txt_Descripcion" maxlength="100" required>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Nombre *</label>
+                        <input type="text" class="form-control" name="Zona" id="txt_Nombre" maxlength="100" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Descripción *</label>
+                        <input type="text" class="form-control" name="Zona" id="txt_Descripcion" maxlength="100" required>
+                    </div>
+                    @*<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                </div>*@
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-primary" type="submit" id="btnGuardar">
+                            <i class="fa fa-save"></i> Guardar
+                        </button>
+                        <button class="btn btn-default" onclick="Cancelar()" type="button">
+                            <i class="fa fa-arrow-circle-left"></i> Cancelar
+                        </button>
+                    </div>
                 </div>
-                @*<div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                   
-                </div>*@     
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <center>
-                        <p id="imgBase64" style="display: none;"></p>
-                        <img class="img-circle fa-border" src="~/Content/img/IconUser.png" alt="" id="imagen" width="30%;" height="30%;" />
-                        <br />
-                        <br />
-                        <div class="btn btn-primary btn-file">
-                            <i class="fa fa-paperclip"></i> Seleccionar foto
-                            <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
-                        </div>
-                    </center>
-                </div>           
-                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
-                        <i class="fa fa-save"></i> Guardar
-                    </button>                    
-                    <button class="btn btn-default" onclick="Cancelar()" type="button">
-                        <i class="fa fa-arrow-circle-left"></i> Cancelar
-                    </button>
-                </div>                
-            </div>
-            <!--Fin body -->
-        </div><!-- /.box -->
+                </form>
+                <!--Fin body -->
+</div><!-- /.box -->
         <!-- Modal Eliminar -->
         <div class="modal fade" id="Form_DeleteTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -102,6 +92,13 @@
 <script>
 
     $(document).ready(function () {
+        $('#form_zona').validator().on('submit', function (e) {
+            if (e.isDefaultPrevented()) {
+                // handle the invalid form...
+            } else {
+                Guardar();
+            }
+        })
         $('#Lista_Zonas').DataTable();
         Cargar_Zonas();
     });
@@ -118,23 +115,11 @@
                 { "defaultContent": "<i>..</i>" },                
                 { "data": "nombre" },
                 { "data": "descripcion" },
-                { "defaultContent": "" },
             ],
             "columnDefs": [
                 {
                     "targets": 0, "data": "id_zona", "render": function (data, type, full, meta) {
                         return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-primary' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-primary' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
-                    }
-                },
-                {
-                    "targets": 3, "data": "imagen", "render": function (data, type, full, meta) {
-                        if (data != null) {
-                            var url = "data:image/png;base64,"+data;
-                            return "<img class='fa-border' src=" + url + " width='60px;' height='50px;' />"
-                        } else {
-                            return "<p></p>"
-                        }
-
                     }
                 }
             ]
@@ -179,10 +164,6 @@
                 $("#id").val(id_zona);
                 $("#txt_Nombre").val(data.data.nombre);
                 $("#txt_Descripcion").val(data.data.descripcion);
-                $("#imgBase64").text(data.data.imagen)
-                if (data.data.imagen != "") {                    
-                    $('#imagen').attr('src', 'data:image/png;base64,' + data.data.imagen);                
-                }
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -194,8 +175,7 @@
         Zona = {
             "id_zona": $("#id").val() == "" ? 0 : $("#id").val(),
             "nombre": $("#txt_Nombre").val(),
-            "descripcion": $("#txt_Descripcion").val(),
-            "imagen": $("#imgBase64").text(),
+            "descripcion": $("#txt_Descripcion").val()
         };
         $.ajax(
         {
@@ -213,25 +193,6 @@
                 console.log("error" + error);
             }
         });
-    }
-
-    function ConvertirImagen() {       
-        var archivoImagen = document.getElementById("subirImagen").files;
-        if (archivoImagen.length > 0) {
-            var archivoCargar = archivoImagen[0];
-            var archivoLeer = new FileReader();
-
-            archivoLeer.onload = function (eventoCargarArchivo) {
-                var srcData = eventoCargarArchivo.target.result; //Imagen base64
-                //alert(srcData);
-                var Logo = srcData.split(',')[1];
-                //alert(Logo)
-                document.getElementById("imagen").src = srcData;
-                document.getElementById("imgBase64").textContent = Logo;
-
-            }
-            archivoLeer.readAsDataURL(archivoCargar);
-        }
     }
 
     function Confirma_Eliminar(id_zona) {
