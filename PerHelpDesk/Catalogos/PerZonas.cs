@@ -161,18 +161,22 @@ namespace PerHelpDesk.Catalogos
             SqlCommand cmd = new SqlCommand();
             bool respuesta = false;
             try
-            {
-                AbrirConexion();
-                cmd.Connection = Conexion;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "DML_Zonas";
-                cmd.Parameters.AddWithValue("@Sentencia", "Update");
-                cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
-                cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
-                cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                //cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
-                cmd.ExecuteNonQuery();
-                respuesta = true;
+
+            { 
+                if (validar(entidad))
+                {
+                    AbrirConexion();
+                    cmd.Connection = Conexion;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "DML_Zonas";
+                    cmd.Parameters.AddWithValue("@Sentencia", "Update");
+                    cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
+                    cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
+                    //cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
+                    cmd.ExecuteNonQuery();
+                    respuesta = true;
+                }
             }
             catch (InvalidCastException ex)
             {
