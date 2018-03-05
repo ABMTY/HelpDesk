@@ -10,7 +10,7 @@
             <!--header -->
             <div class="box-header with-border">
                 <h1 class="box-title">
-                    Usuarios                   
+                    Usuarios
                 </h1>
                 <div class="box-tools pull-right">
                     <button class="btn btn-primary" onclick="Agregar()" id="btnAgregar">
@@ -35,79 +35,82 @@
                     </table>
                 </div>
             </div>
-
-            <div class="panel-body" id="secc_add" style="display:none;">
-                <input type="text" id="id" value="" hidden />
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <center>
-                        <p id="imgBase64" style="display: none;"></p>                        
-                        <img class="img-circle fa-border" src="~/Content/img/IconUser.png" alt="" id="imagen" width="20%;" height="20%;" />
-                        <br />
-                        <br />
-                        <div class="btn btn-primary btn-file">
-                            <i class="fa fa-paperclip"></i> Seleccionar foto
-                            <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
+            <form data-toggle="validator" role="form">
+                <div class="panel-body" id="secc_add" style="display:none;">
+                    <input type="text" id="id" value="" hidden />
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Usuario *</label>
+                        <input type="text" class="form-control" id="txt_Usuario" maxlength="100" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Contraseña *</label>
+                        <input type="text" class="form-control" id="txt_Contraseña" maxlength="100" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Nombre *</label>
+                        <input type="text" class="form-control" id="txt_Nombre" maxlength="100" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Apellidos *</label>
+                        <input type="text" class="form-control" id="txt_Apellidos" maxlength="100" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label for="txt_Correo" class="control-label">Correo *</label>
+                        <input type="email" class="form-control" id="txt_Correo" data-error="Email Invalido" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Teléfono *</label>
+                        <input type="tel" class="form-control" id="txt_Telefono" maxlength="10" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Extension *</label>
+                        <input type="tel" class="form-control" id="txt_Extension" maxlength="5" required>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Tipo usuario *</label>
+                        <div>
+                            <select class="form-control selectpicker" id="ddl_TipoUsuario" required data-live-search="true"></select>
                         </div>
-                    </center>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Usuario *</label>
-                    <input type="text" class="form-control" id="txt_Usuario" maxlength="100" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Contraseña *</label>
-                    <input type="text" class="form-control" id="txt_Contraseña" maxlength="100" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Nombre *</label>
-                    <input type="text" class="form-control" id="txt_Nombre" maxlength="100" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Apellidos *</label>
-                    <input type="text" class="form-control" id="txt_Apellidos" maxlength="100" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Correo *</label>
-                    <input type="text" class="form-control" id="txt_Correo" maxlength="100" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Teléfono *</label>
-                    <input type="text" class="form-control" id="txt_Telefono" maxlength="100" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Extension *</label>
-                    <input type="text" class="form-control" id="txt_Extension" maxlength="100" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Tipo usuario *</label>
-                    <div>
-                        <select class="form-control selectpicker" id="ddl_TipoUsuario" required data-live-search="true"></select>
                     </div>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Area *</label>
-                    <div>
-                        <select class="form-control selectpicker" id="ddl_Areas" required data-live-search="true"></select>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Area *</label>
+                        <div>
+                            <select class="form-control selectpicker" id="ddl_Areas" required data-live-search="true"></select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Sucursal *</label>
-                    <div>
-                        <select class="form-control selectpicker" id="ddl_Sucursales" required data-live-search="true"></select>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Sucursal *</label>
+                        <div>
+                            <select class="form-control selectpicker" id="ddl_Sucursales" required data-live-search="true"></select>
+                        </div>
                     </div>
-                </div>                
-                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
-                        <i class="fa fa-save"></i> Guardar
-                    </button>                   
-                    <button class="btn btn-default" onclick="Cancelar()" type="button">
-                        <i class="fa fa-arrow-circle-left"></i> Cancelar
-                    </button>
+
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <center>
+                            <p id="imgBase64" style="display: none"></p>
+                            <div id="secc_imagen">
+                                <img class="img-circle fa-border" src="~/Content/img/IconUser.png" alt="" id="imagen" width="20%;" height="20%;" />
+                                <br />
+                                <br />
+                            </div>
+                            <div class="btn btn-primary btn-file">
+                                <i class="fa fa-paperclip"></i> Seleccionar foto
+                                <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
+                            </div>
+                        </center>
+                    </div><div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
+                            <i class="fa fa-save"></i> Guardar
+                        </button>
+                        <button class="btn btn-default" onclick="Cancelar()" type="button">
+                            <i class="fa fa-arrow-circle-left"></i> Cancelar
+                        </button>
+                    </div>
+
                 </div>
-               
-            </div>
-            <!--Fin body -->
-        </div><!-- /.box -->
+            </form>
+                <!--Fin body -->
+</div><!-- /.box -->
         <!-- Modal Eliminar -->
         <div class="modal fade" id="Form_DeleteTipo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -131,7 +134,7 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     </div><!-- /.col -->
 </div><!-- /.row -->
 <!--Fin-Contenido-->
@@ -154,7 +157,7 @@
             "columns": [
                 { "defaultContent": "<i>..</i>" },
                 { "data": "nombre_completo" },
-                { "data": "user_name" },                
+                { "data": "user_name" },
                 { "data": "tipo_usuario" },
                 { "defaultContent": "" },
             ],
@@ -167,7 +170,7 @@
                 {
                     "targets": 4, "data": "foto", "render": function (data, type, full, meta) {
                         if (data != null) {
-                            var url = "data:image/png;base64,"+data;
+                            var url = "data:image/png;base64," + data;
                             return "<img class='fa-border' src=" + url + " width='60px;' height='50px;' />"
                         } else {
                             return "<p></p>"
@@ -180,16 +183,23 @@
     }
 
     function Agregar() {
+        if ($("imgBase64").text() == '') {
+            var elemento = document.getElementById("secc_imagen");
+            elemento.style.display = 'none'
+        }
         $("#secc_lista").hide();
         $("#secc_add").show();
         $("#btnAgregar").hide();
-        Limpiar();        
+        Limpiar();
         Cargar_TipoUsuario();
         Cargar_Areas();
         Cargar_Sucursales();
     }
 
     function Cancelar() {
+        var elemento = document.getElementById("secc_imagen");
+        elemento.style.display = 'block'
+        $("#imgBase64").text('');
         $("#secc_lista").show();
         $("#btnAgregar").show();
         $("#secc_add").hide();
@@ -287,15 +297,15 @@
                 $("#secc_lista").hide();
                 $("#secc_add").show();
                 $("#btnAgregar").hide();
-                $("#id").val(id_usuario);                
+                $("#id").val(id_usuario);
                 $("#txt_Usuario").val(data.data.user_name);
                 $("#txt_Contraseña").val(data.data.password);
                 $("#txt_Nombre").val(data.data.nombre);
                 $("#txt_Apellidos").val(data.data.apellidos);
                 $("#txt_Correo").val(data.data.correo);
                 $("#txt_Telefono").val(data.data.telefono);
-                $("#txt_Extension").val(data.data.ext);                
-                Cargar_TipoUsuario();               
+                $("#txt_Extension").val(data.data.ext);
+                Cargar_TipoUsuario();
                 $("#ddl_TipoUsuario").append("<option value=" + data.data.id_tipo_usuario + ">" + data.data.tipo_usuario + "</option>");
                 $("#ddl_TipoUsuario").selectpicker('refresh');
                 Cargar_Areas();
@@ -305,7 +315,7 @@
                 $("#ddl_Sucursales").append("<option value=" + data.data.id_sucursal + ">" + data.data.sucursal + "</option>");
                 $("#ddl_Sucursales").selectpicker('refresh');
                 $("#imgBase64").text(data.data.foto)
-                if (data.data.foto != "") {                    
+                if (data.data.foto != "") {
                     $('#imagen').attr('src', 'data:image/png;base64,' + data.data.foto);
                 }
             },
@@ -315,7 +325,7 @@
         });
     }
 
-    function Guardar() {      
+    function Guardar() {
         Usuario = {
             "id_usuario": $("#id").val() == "" ? 0 : $("#id").val(),
             "user_name": $("#txt_Usuario").val(),
@@ -324,8 +334,8 @@
             "apellidos": $("#txt_Apellidos").val(),
             "correo": $("#txt_Correo").val(),
             "telefono": $("#txt_Telefono").val(),
-            "ext": $("#txt_Extension").val(),            
-            "id_tipo_usuario": $("#ddl_TipoUsuario").val(),            
+            "ext": $("#txt_Extension").val(),
+            "id_tipo_usuario": $("#ddl_TipoUsuario").val(),
             "id_area": $("#ddl_Areas").val(),
             "id_sucursal": $("#ddl_Sucursales").val(),
             "foto": $("#imgBase64").text(),
@@ -349,6 +359,8 @@
     }
 
     function ConvertirImagen() {
+        var elemento = document.getElementById("secc_imagen");
+        elemento.style.display = 'block'
         var archivoImagen = document.getElementById("subirImagen").files;
         if (archivoImagen.length > 0) {
             var archivoCargar = archivoImagen[0];

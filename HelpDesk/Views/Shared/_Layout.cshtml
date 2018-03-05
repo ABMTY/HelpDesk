@@ -400,6 +400,9 @@
     }    <!-- Jcrop -->
     @Scripts.Render("~/Content/js/Jcrop.js")
 
+    <!--  Bootstrap Validator-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
     <!-- Select-Picker -->
     @Scripts.Render("~/Content/js/bootstrap-select.min.js")
     @Scripts.Render("~/Content/plugins/bootstrap-sweetalert/sweet-alert.js")
@@ -473,7 +476,8 @@
         //EJECUTAR EL CONTADOR DE LAS NOTIFICACIONES
         //$(function () {
 
-            $(document).ready(function () {
+        $(document).ready(function () {
+            $('#myForm').validator();
                 updateNotificationCount()
             });
 
