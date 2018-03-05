@@ -11,40 +11,7 @@ using System.Threading.Tasks;
 namespace PerHelpDesk.Catalogos
 {
     public class PerZonas : Persistencia
-    {
-        public bool RegisterNotification(DateTime currentTime)
-        {
-            bool respuesta = false;
-            try
-            {
-                AbrirConexion();
-                StringBuilder CadenaSql = new StringBuilder();
-
-                SqlCommand cmd = new SqlCommand();
-
-                cmd.Connection = Conexion;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "SELECT OBJECT_NAME(OBJECT_ID) AS DatabaseName, last_user_update" +
-                " FROM sys.dm_db_index_usage_stats WHERE database_id = DB_ID('db_tickets') AND OBJECT_ID = OBJECT_ID('zonas') " +
-                " AND last_user_update > @AddedOn";
-                cmd.Parameters.AddWithValue("@AddedOn", currentTime );
-
-                //Notificación de cambio en la base de datos
-                cmd.Notification = null;
-                SqlDependency sqlDep = new SqlDependency(cmd);
-                sqlDep.OnChange += sqlDep_OnChange;
-                /*----------------------------------------*/
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    respuesta =  true;
-                }
-            }
-            catch (Exception )
-            {
-            }
-            return respuesta;
-        }
+    {        
         public List<zonas> ObtenerTodos()
         {
             List<zonas> lista = new List<zonas>();
@@ -68,8 +35,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
-                        if (dr["imagen"].ToString() != string.Empty)
-                            entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
+                        //if (dr["imagen"].ToString() != string.Empty)
+                        //    entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
                         lista.Add(entidad);
                     }
                 }
@@ -114,8 +81,8 @@ namespace PerHelpDesk.Catalogos
                         entidad.id_zona = int.Parse(dr["id_zona"].ToString());
                         entidad.nombre = dr["nombre"].ToString();
                         entidad.descripcion = dr["descripcion"].ToString();
-                        if (dr["imagen"].ToString() != string.Empty)
-                            entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
+                        //if (dr["imagen"].ToString() != string.Empty)
+                        //    entidad.imagen = Convert.ToBase64String((byte[])dr["imagen"]);
                     }
                 }
             }
@@ -151,7 +118,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));               
+                //cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));               
 
                 cmd.ExecuteNonQuery();
                 respuesta = true;
@@ -175,15 +142,7 @@ namespace PerHelpDesk.Catalogos
             }
             return respuesta;
         }
-
-        private void sqlDep_OnChange(object sender, SqlNotificationEventArgs e)
-        {
-            if (e.Type == SqlNotificationType.Change)
-            {
-                SqlDependency sqlDep = sender as SqlDependency;
-                sqlDep.OnChange -= sqlDep_OnChange;                
-            }
-        }
+      
 
         public bool Update(zonas entidad)
         {
@@ -199,7 +158,7 @@ namespace PerHelpDesk.Catalogos
                 cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
                 cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
                 cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
+                //cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                 cmd.ExecuteNonQuery();
                 respuesta = true;
             }
