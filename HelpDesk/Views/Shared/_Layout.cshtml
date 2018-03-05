@@ -524,16 +524,10 @@
             });
             //signalr method for push server message to client
             notificationHub.client.notify = function (message) {                
-                if (message && message.toLowerCase() == "Notificaciones") {
-                   
+                if (message && message.toLowerCase() == "added") {                   
                     updateNotificationCount();
                     console.log('Notification Update');
-                }
-                if (message && message.toLowerCase() == "Comentarios") {
-
-                    updateNotificationCount();
-                    console.log('Notification Update');
-                }
+                }                
             }
         //})      
     </script>
