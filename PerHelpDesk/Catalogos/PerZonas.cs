@@ -150,7 +150,7 @@ namespace PerHelpDesk.Catalogos
         {
             bool valido = false;
 
-            if (entidad.nombre != String.Empty && entidad.descripcion != String.Empty)
+            if (entidad.nombre != null && entidad.descripcion != null)
                 valido = true;
 
             return valido;
