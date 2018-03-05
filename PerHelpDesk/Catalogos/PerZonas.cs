@@ -110,18 +110,21 @@ namespace PerHelpDesk.Catalogos
             bool respuesta = false;
             try
             {
-                AbrirConexion();
-                cmd.Connection = Conexion;
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "DML_Zonas";
-                cmd.Parameters.AddWithValue("@Sentencia", "Insert");
-                cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
-                cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
-                cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
-                //cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));               
+                if (validar(entidad))
+                {
+                    AbrirConexion();
+                    cmd.Connection = Conexion;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "DML_Zonas";
+                    cmd.Parameters.AddWithValue("@Sentencia", "Insert");
+                    cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
+                    cmd.Parameters.AddWithValue("@nombre", entidad.nombre);
+                    cmd.Parameters.AddWithValue("@descripcion", entidad.descripcion);
+                    //cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));               
 
-                cmd.ExecuteNonQuery();
-                respuesta = true;
+                    cmd.ExecuteNonQuery();
+                    respuesta = true;
+                }
             }
             catch (InvalidCastException ex)
             {
@@ -142,7 +145,16 @@ namespace PerHelpDesk.Catalogos
             }
             return respuesta;
         }
-      
+
+        private bool validar(zonas entidad)
+        {
+            bool valido = false;
+
+            if (entidad.nombre != String.Empty && entidad.descripcion != String.Empty)
+                valido = true;
+
+            return valido;
+        }
 
         public bool Update(zonas entidad)
         {
