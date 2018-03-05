@@ -168,8 +168,6 @@
                 }
 
                 ObtenerComentarios(data.data.id_detalle_ticket);
-                debugger;
-                alert(@Session["id_detalle_ticket"]);
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -309,38 +307,7 @@
             }
             archivoLeer.readAsDataURL(archivoCargar);
         }
-    }
-
-    //$(function () {
-    //    // Declare a proxy to reference the hub.
-    //    var notificationHub = $.connection.notificationHub;
-    //    var contador = 1;
-    //    // Create a function that the hub can call to broadcast messages.
-    //    //signalr method for push server message to client
-    //    notificationHub.client.notify = function (message) {
-    //        if (message && message.toLowerCase() == "added") {
-    //            debugger;                                
-    //            ObtenerComentarios($("#id_detalle_ticket").val());
-    //            console.log($("#id_detalle_ticket").val());
-    //            console.log('Notification Update');
-    //            contador++;
-    //    }
-
-    //        if(contador==2)
-    //        {
-    //            LimpiarComentarios(); 
-    //            ObtenerComentarios($("#id_detalle_ticket").val());
-    //        }
-    //    }
-
-        // Start the connection.
-        //$.connection.hub.start().done(function () {
-        //    alert("connection started")            
-        //}).fail(function (e) {
-        //    alert(e);
-        //});
-    
-    //});
+    }    
    
 </script>
 
