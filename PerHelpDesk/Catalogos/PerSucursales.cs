@@ -130,7 +130,7 @@ namespace PerHelpDesk.Catalogos
                     cmd.Parameters.AddWithValue("@direccion", entidad.direccion);
                     cmd.Parameters.AddWithValue("@IdZona", entidad.id_zona);
                     cmd.Parameters.AddWithValue("@IdPolitica", entidad.id_politica);
-                    if(entidad.imagen!=string.Empty)
+                    if(entidad.imagen!=null)
                         cmd.Parameters.AddWithValue("@imagen", Convert.FromBase64String(entidad.imagen));
                     cmd.ExecuteNonQuery();
                     respuesta = true;
