@@ -21,7 +21,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/css/AdminLTE.min.css">
     <!-- jquery signalR-->
-    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script> 
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>   
     <!-- jquery signalR hubs-->
     <script src="/signalr/hubs"></script>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -179,7 +180,8 @@
                     <ul class="nav navbar-nav">                                              
                         <!-- Control Sidebar Toggle Button -->
                         <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>
+                            @*<a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>*@
+                            <a href="/Chat/"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown messages-menu">
@@ -478,7 +480,9 @@
         $(document).ready(function () {
             $('#myForm').validator();
                 updateNotificationCount()
-            });
+        });
+
+
 
             // Click on notification icon for show notification
             $('span.noti').click(function (e) {

@@ -43,6 +43,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Entidad\areas.cs" />
     <Compile Include="Entidad\comentarios.cs" />
+    <Compile Include="Entidad\conversaciones.cs" />
     <Compile Include="Entidad\detalle_permiso.cs" />
     <Compile Include="Entidad\detalle_politicas.cs" />
     <Compile Include="Entidad\detalle_ticket.cs" />

@@ -44,6 +44,8 @@ namespace HelpDesk.Controllers
             if (AccesoAutorizado == true)
             {
                 Session["id_usuario"] = entUsuario.id_usuario;
+                Session["user_name"] = entUsuario.user_name;
+                Session["password"] = entUsuario.password;
                 Session["tipo_usuario"] = entUsuario.tipo_usuario;
                 Session["nombre_completo"] = entUsuario.nombre_completo;
                 Session["id_sucursal"] = entUsuario.id_sucursal;
@@ -91,7 +93,9 @@ namespace HelpDesk.Controllers
             Session["id_sucursal"] = "";
             Session["sucursal"] = "";
             Session["foto"] = "";
-            Session["id_tipo_usuario"] = "";            
+            Session["id_tipo_usuario"] = "";
+            Session["user_name"] = "";
+            Session["password"] = "";
             Response.Cookies.Clear();
             Session.Clear();
             FormsAuthentication.SignOut();
