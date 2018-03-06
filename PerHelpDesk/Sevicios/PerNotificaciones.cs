@@ -86,7 +86,8 @@ namespace PerHelpDesk.Sevicios
                 comandoSelect.CommandText = "  SELECT [id_notificacion],[id_ticket],[fecha],[dbo].[usuarios].[id_usuario],[notificado],[asunto],[estado],[tipo_notificacion],[foto],"
                                             + " [dbo].[usuarios].[nombre]  FROM[dbo].[notificaciones] left join[dbo].[usuarios]"
                                             + " on[dbo].[notificaciones].id_usuario= [dbo].[usuarios].id_usuario"
-                                            + " where  notificado is null and [dbo].[notificaciones].[id_usuario] =@IdUsuario ";
+                                            + " where  notificado is null and id_ticket in (select id_ticket from tickets where  id_usuario=@IdUsuario union all "
+                                            + " select id_ticket from detalle_ticket where id_agente=@IdUsuario)";
 
                 comandoSelect.Parameters.AddWithValue("@IdUsuario", id);
 

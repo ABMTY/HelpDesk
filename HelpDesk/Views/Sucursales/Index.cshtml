@@ -29,12 +29,13 @@
                                 <th>Nombre</th>                                
                                 <th>Zona</th>
                                 <th>Politica</th>
+                                <th>Imagen</th>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
-
+            <form data-toggle="validator" role="form" id="form_sucursal">
             <div class="panel-body" id="secc_add" style="display:none;">
                 <input type="text" id="id" value="" hidden />
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -57,8 +58,22 @@
                         <select class="form-control selectpicker" id="ddl_Politicas" required data-live-search="true"></select>
                     </div>
                 </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <center>
+                        <p id="imgBase64" style="display: none"></p>
+                        <div id="secc_imagen">
+                            <img class="img-circle fa-border" src="" alt="" id="imagen" width="20%;" height="20%;" />
+                            <br />
+                            <br />
+                        </div>
+                        <div class="btn btn-primary btn-file">
+                            <i class="fa fa-paperclip"></i> Seleccionar foto
+                            <input type="file" id="subirImagen" name="attachment" onchange="ConvertirImagen()">
+                        </div>
+                    </center>
+                </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
+                    <button class="btn btn-primary" type="submit" id="btnGuardar">
                         <i class="fa fa-save"></i> Guardar
                     </button>
                     <button class="btn btn-default" onclick="Cancelar()" type="button">
@@ -66,6 +81,7 @@
                     </button>
                 </div>
             </div>
+            </form>
             <!--Fin body -->
         </div><!-- /.box -->
         <!-- Modal Eliminar -->
@@ -100,9 +116,37 @@
 <script>
 
     $(document).ready(function () {
+        $('#form_sucursal').validator().on('submit', function (e) {
+            if (e.isDefaultPrevented()) {
+                console.log("Error en el formualrio");
+            } else {
+                Guardar();
+            }
+        });
         $('#Lista_Sucursales').DataTable();
         Cargar_Sucursales();
     });
+
+    function ConvertirImagen() {
+        var elemento = document.getElementById("secc_imagen");
+        elemento.style.display = 'block'
+        var archivoImagen = document.getElementById("subirImagen").files;
+        if (archivoImagen.length > 0) {
+            var archivoCargar = archivoImagen[0];
+            var archivoLeer = new FileReader();
+
+            archivoLeer.onload = function (eventoCargarArchivo) {
+                var srcData = eventoCargarArchivo.target.result; //Imagen base64
+                //alert(srcData);
+                var Logo = srcData.split(',')[1];
+                //alert(Logo)
+                document.getElementById("imagen").src = srcData;
+                document.getElementById("imgBase64").textContent = Logo;
+
+            }
+            archivoLeer.readAsDataURL(archivoCargar);
+        }
+    }
 
     function Cargar_Sucursales() {
         $('#Lista_Sucursales').DataTable({
@@ -117,26 +161,43 @@
                 { "data": "nombre" },                
                 { "data": "zona" },
                 { "data": "politica" },
+                { "defaultContent": "" }
             ],
             "columnDefs": [
                 {
                     "targets": 0, "data": "id_sucursal", "render": function (data, type, full, meta) {
                         return "<button type='button' title='Editar' id='btn_mas" + data + "' class='btn btn-primary' onclick='Editar(" + data + ")'  ><i class='fa fa-edit'></i></button>  <button type='button' title='Eliminar' id='btn_borrar" + data + "' class='btn btn-primary' onclick='Confirma_Eliminar(" + data + ")'><i class='fa fa-trash'></i></button> "
                     }
-                }]
+                },
+            {
+                "targets": 4, "data": "imagen", "render": function (data, type, full, meta) {
+                    if (data != null) {
+                        var url = "data:image/png;base64," + data;
+                        return "<img class='fa-border' src=" + url + " width='60px;' height='50px;' />"
+                    } else {
+                        return "<p></p>"
+                    }
+                }
+            }]
         });
     }
 
     function Agregar() {
+        if ($("imgBase64").text() == '') {
+            var elemento = document.getElementById("secc_imagen");
+            elemento.style.display = 'none'
+        }
         $("#secc_lista").hide();
         $("#secc_add").show();
         $("#btnAgregar").hide();
-        Limpiar();
         Cargar_Zonas();
         Cargar_Politicas();
     }
 
     function Cancelar() {
+        Limpiar();
+        var elemento = document.getElementById("secc_imagen");
+        elemento.style.display = 'block'
         $("#secc_lista").show();
         $("#btnAgregar").show();
         $("#secc_add").hide();
@@ -144,10 +205,12 @@
 
     function Limpiar() {
         $("#id").val("");
+        $("#imgBase64").text('');
         $("#txt_Nombre").val("");
-        $("#txt_Descripcion").val("");
-        $("#ddl_Zonas").html();
-        $("#ddl_Politicas").html();
+        $("#txt_Direccion").val("");
+        $("#ddl_Zonas").html("");
+        $("#ddl_Politicas").html("");
+        $('#imagen').attr('src', '');
     }
 
     function Cargar_Zonas() {
@@ -216,6 +279,13 @@
                 Cargar_Politicas();
                 $("#ddl_Politicas").append("<option value=" + data.data.id_politica + ">" + data.data.politica + "</option>");
                 $("#ddl_Politicas").selectpicker('refresh');
+                $("#imgBase64").text(data.data.imagen)
+                if (data.data.imagen == null) {
+                    var seccion = document.getElementById("secc_imagen");
+                    seccion.style.display = 'none'
+                } else {
+                    $('#imagen').attr('src', 'data:image/png;base64,' + data.data.imagen);
+                }
             },
             error: function (request, status, error) {
                 console.log("error" + error);
@@ -230,6 +300,7 @@
             "direccion": $("#txt_Direccion").val(),
             "id_zona": $("#ddl_Zonas").val(),
             "id_politica": $("#ddl_Politicas").val(),
+            "imagen": $("#imgBase64").text(),
         };
         $.ajax(
         {

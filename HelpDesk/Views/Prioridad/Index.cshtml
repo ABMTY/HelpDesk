@@ -32,22 +32,23 @@
                     </table>
                 </div>
             </div>
-
-            <div class="panel-body" id="secc_add" style="display:none;">
-                <input type="text" id="id" value="" hidden />
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <label>Nombre *</label>
-                    <input type="text" class="form-control" name="Prioridad" id="txt_Nombre" maxlength="100" required>
+            <form data-toggle="validator" role="form" id="form_prioridad">
+                <div class="panel-body" id="secc_add" style="display:none;">
+                    <input type="text" id="id" value="" hidden />
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <label>Nombre *</label>
+                        <input type="text" class="form-control" name="Prioridad" id="txt_Nombre" maxlength="100" required>
+                    </div>
+                    <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <button class="btn btn-primary" type="submit" id="btnGuardar">
+                            <i class="fa fa-save"></i> Guardar
+                        </button>
+                        <button class="btn btn-default" onclick="Cancelar()" type="button">
+                            <i class="fa fa-arrow-circle-left"></i> Cancelar
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <button class="btn btn-primary" type="submit" id="btnGuardar" onclick="Guardar()">
-                        <i class="fa fa-save"></i> Guardar
-                    </button>
-                    <button class="btn btn-default" onclick="Cancelar()" type="button">
-                        <i class="fa fa-arrow-circle-left"></i> Cancelar
-                    </button>
-                </div>
-            </div>
+            </form>
             <!--Fin body -->
         </div><!-- /.box -->
         <!-- Modal Eliminar -->
@@ -82,6 +83,13 @@
 <script>
 
     $(document).ready(function () {
+        $('#form_prioridad').validator().on('submit', function (e) {
+            if (e.isDefaultPrevented()) {
+                console.log("Error en Formulario");
+            } else {
+                Guardar();
+            }
+        })
         $('#Lista_Prioridad').DataTable();
         Cargar_Prioridad();
     });

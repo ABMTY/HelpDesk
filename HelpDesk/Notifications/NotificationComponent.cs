@@ -48,7 +48,7 @@ namespace HelpDesk.Notifications
                 sqlDep.OnChange -= sqlDep_OnChange;
 
                 var notificationHub = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-                notificationHub.Clients.All.notify("Notificaciones");
+                notificationHub.Clients.All.notify("added");
                 RegisterNotification(DateTime.Now);
             }
         }
