@@ -180,7 +180,7 @@
                     <ul class="nav navbar-nav">                                              
                         <!-- Control Sidebar Toggle Button -->
                         <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span><span class="msgcount label label-success"></span></a>
                             @*<a href="/Chat/"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>*@
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
@@ -524,6 +524,13 @@
                 }
             }
 
+            function updateMessagerCount() {
+                var count = 0;
+                count = parseInt($('span.msgcount').html()) || 0;
+                count++;
+                $('span.msgcount').html(count);
+            }
+
             var chatHub = $.connection.chatHub;
             loadClientMethods(chatHub);
             $.connection.hub.start().done(function () {
@@ -584,6 +591,7 @@
             chatHub.client.getMessages = function (userName, message, foto, fecha_hrs) {
               
                 $("#txtMessage").val('');
+                updateMessagerCount();
                 var nombreCliente = $('#hUserName').val();               
                 if (nombreCliente == userName) {                    
                     $('#divMessage').append(
