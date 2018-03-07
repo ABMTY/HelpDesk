@@ -20,9 +20,10 @@ namespace EntHelpDesk.Entidad
         public int id_usuario { get; set; }
         public int id_admin { get; set; }
 
-
+        
         public string nombre_usuario { get; set; }
-       
+        public string foto_usuario { get; set; }
+
 
     }
 }

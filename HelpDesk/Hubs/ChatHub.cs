@@ -7,6 +7,7 @@ using EntHelpDesk.Entidad;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 
 namespace HelpDesk.Hubs
 {
@@ -31,7 +32,7 @@ namespace HelpDesk.Hubs
             usuarios usuario = new usuarios();
             string conStr = ConfigurationManager.ConnectionStrings["DBConnectionString"].ConnectionString;
 
-            string sqlCommand = @"SELECT [id_usuario],[user_name],[codigo_admin] FROM [dbo].[usuarios] WHERE [user_name]=@userName AND [password]=@password";
+            string sqlCommand = @"SELECT [id_usuario],[user_name],[codigo_admin],[foto] FROM [dbo].[usuarios] WHERE [user_name]=@userName AND [password]=@password";
             using (SqlConnection conexion = new SqlConnection(conStr))
             {
                 SqlCommand comandoSelect = new SqlCommand(sqlCommand, conexion);
@@ -50,6 +51,7 @@ namespace HelpDesk.Hubs
                         usuario.id_usuario = int.Parse(dr["id_usuario"].ToString());
                         usuario.user_name = dr["user_name"].ToString();
                         usuario.codigo_admin = int.Parse(dr["codigo_admin"].ToString());
+                        usuario.foto = Convert.ToBase64String((byte[])dr["foto"]);
                     }
                 }
 
@@ -94,7 +96,7 @@ namespace HelpDesk.Hubs
                     strg.freeflag = "0";
 
                     //now add USER to UsersList
-                    UsersList.Add(new usuarios { ConnectionId = id, id_usuario = usuario.id_usuario, user_name = userName, UserGroup = userGroup, freeflag = "0", tpflag = "0", });
+                    UsersList.Add(new usuarios { ConnectionId = id, id_usuario = usuario.id_usuario, user_name = userName, UserGroup = userGroup, freeflag = "0", tpflag = "0", foto=usuario.foto});
                     //whether it is Admin or User now both of them has userGroup and I Join this user or admin to specific group 
                     Groups.Add(Context.ConnectionId, userGroup);
                     Clients.Caller.onConnected(id, userName, usuario.id_usuario, userGroup);
@@ -104,7 +106,7 @@ namespace HelpDesk.Hubs
                 {
                     //If user has admin code so admin code is same userGroup
                     //now add ADMIN to UsersList
-                    UsersList.Add(new usuarios { ConnectionId = id, AdminID = usuario.id_usuario, user_name = userName, UserGroup = usuario.codigo_admin.ToString(), freeflag = "1", tpflag = "1" });
+                    UsersList.Add(new usuarios { ConnectionId = id, AdminID = usuario.id_usuario, user_name = userName, UserGroup = usuario.codigo_admin.ToString(), freeflag = "1", tpflag = "1", foto = usuario.foto });
                     //whether it is Admin or User now both of them has userGroup and I Join this user or admin to specific group 
                     Groups.Add(Context.ConnectionId, usuario.codigo_admin.ToString());
                     Clients.Caller.onConnected(id, userName, usuario.id_usuario, usuario.codigo_admin.ToString());
@@ -123,27 +125,34 @@ namespace HelpDesk.Hubs
         }
         // <<<<<-- ***** Return to Client [  NoExist  ] *****
 
-
+        public string Fecha_Hora()
+        {      
+            DateTime Fecha = DateTime.Now;
+            Fecha.ToString("tt", CultureInfo.InvariantCulture);
+            string Fecha_Hora = Fecha.ToString("d MMMM hh:mm:ss tt", CultureInfo.CreateSpecificCulture("es-MX"));   
+            return Fecha_Hora;
+        }
 
         //--group ***** Receive Request From Client [  SendMessageToGroup  ] *****
         public void SendMessageToGroup(string userName, string message)
         {
-
             if (UsersList.Count != 0)
             {
                 var strg = (from s in UsersList where (s.user_name == userName) select s).First();
 
-                MessageList.Add(new conversaciones { nombre_usuario = userName, mensaje = message, grupo_usuarios = strg.UserGroup });
+                MessageList.Add(new conversaciones { nombre_usuario = userName, mensaje = message, grupo_usuarios = strg.UserGroup, foto_usuario= strg.foto });
                 string strgroup = strg.UserGroup;
+                string fecha_hrs = Fecha_Hora();
                 // If you want to Broadcast message to all UsersList use below line
                 // Clients.All.getMessages(userName, message);
 
                 //If you want to establish peer to peer connection use below line so message will be send just for user and admin who are in same group
                 //***** Return to Client *****
-                Clients.Group(strgroup).getMessages(userName, message);
+                Clients.Group(strgroup).getMessages(userName, message,strg.foto, fecha_hrs);
             }
 
         }
+
         // <<<<<-- ***** Return to Client [  getMessages  ] *****
 
 

@@ -265,6 +265,7 @@
                 <input id="hId" type="hidden" />
                 <input id="hUserName" type="hidden" />
                 <input id="hGroup" type="hidden" />
+                <input id="fotochat" type="hidden" />
 
                 <input type="button" value="Conectar" class="btn btn-primary btn-flat" id="btnConectar" />
                 <div id="divalarm"></div>
@@ -411,25 +412,25 @@
     <!-- jquery signalR hubs-->
     <script src="/signalr/hubs" type="text/javascript"></script>
     <script type="text/javascript">
-                
+
         //CERRAR SESION DEL SISTEMA
         function CerrarSesion() {
             return window.location.href = "@Url.Action("CerrarSesion", "Acceso")";
         }
-        
+
         //OBTIENES LOS TICKETS DE ACUERDO AL USUARIO AUTENTICADO
-        function Obtener_Tickets() {            
+        function Obtener_Tickets() {
             $('#menuNotificaciones').empty();
             $('#menuNotificaciones').append($('<li>Cargando...</li>'));
             $.ajax({
                 cache: false,
                 destroy: true,
                 searching: true,
-                dataType: "json",                             
+                dataType: "json",
                 url: '/Tickets/GetNotificacion/',
                 contentType: "application/json; charset=utf-8",
                 type: 'POST',
-                success: function (datos) {                
+                success: function (datos) {
                     $('#menuNotificaciones').empty();
                     if (datos.data.length == 0) {
                         $('#menuNotificaciones').append($('<li style="aling:center;">Sin Notificaciones</li>'));
@@ -437,14 +438,14 @@
                     else {
                         $("#tituloNotificaciones").html(datos.data.length + " Notificación");
                     }
-                    $.each(datos.data, function (index, value) {                        
+                    $.each(datos.data, function (index, value) {
                         if (datos.data[index].tipo_notificacion == "Ticket") {
                             $('#menuNotificaciones').append($('<li><a href="#" onclick="Seguimiento(' + datos.data[index].id_ticket + ')"><div class="pull-left"><img src="../Content/img/Ticket.png" class="img-circle" alt="User Image"></div><h4>' + datos.data[index].asunto + '<small><i class="fa fa-clock-o"></i> 5 mins</small></h4><p>Estado ' + datos.data[index].estado + '</p></a></li>'));
                         } else {
                             if (datos.data[index].tipo_notificacion == "Comentario") {
                                 $('#menuNotificaciones').append($('<li><a href="#" onclick="Seguimiento(' + datos.data[index].id_ticket + ')"><div class="pull-left"><img src="data:image/png;base64,' + datos.data[index].foto + '" alt="User Image"></div><h4>' + datos.data[index].nombre + ' respondio <small><i class="fa fa-clock-o"></i> 5 mins</small></h4><p>el Ticket #' + datos.data[index].id_ticket + '</p><p>' + datos.data[index].asunto + '</p></a></li>'));
                             }
-                        }                        
+                        }
                     });
                 },
                 error: function (error) {
@@ -453,9 +454,9 @@
             })
         }
 
-       
+
         //DETALLE DEL TICKET PARA EL SEGUIMIENTO
-        function Seguimiento(id_ticket) {                
+        function Seguimiento(id_ticket) {
             if ("@Session["tipo_usuario"]" == "Supervisor") {
                 window.location = "/Tickets/SeguimientoSucursal?id_ticket=" + id_ticket;
             }
@@ -463,7 +464,7 @@
                 window.location = "/Tickets/SeguimientoMesaAyuda?id_ticket=" + id_ticket;
             }
         }
-        
+
         //EJECUTAR EL CONTADOR DE LAS NOTIFICACIONES
         //$(function () {
 
@@ -484,10 +485,10 @@
                     Obtener_Tickets();
                 }
                 $('span.count', this).html('&nbsp;');
-            })            
+            })
 
             // update notification count
-            function updateNotificationCount() {                
+            function updateNotificationCount() {
                 $.ajax({
                     cache: false,
                     destroy: true,
@@ -499,7 +500,7 @@
                     success: function (datos) {
                         console.log(datos.data.length);
                         if (datos.data.length > 0) {
-                            $('span.count').html(datos.data.length);                        
+                            $('span.count').html(datos.data.length);
                         }
                         else
                             $('span.count').html('');
@@ -508,7 +509,7 @@
                         console.log(error);
                     }
                 })
-               
+
             }
             // signalr js code for start hub and send receive notification
             var notificationHub = $.connection.notificationHub;
@@ -516,44 +517,31 @@
                 console.log('Notification hub started');
             });
             //signalr method for push server message to client
-            notificationHub.client.notify = function (message) {                
-                if (message && message.toLowerCase() == "added") {                   
+            notificationHub.client.notify = function (message) {
+                if (message && message.toLowerCase() == "added") {
                     updateNotificationCount();
                     console.log('Notification Update');
-                }                
+                }
             }
 
-          
-        //})      
-    </script>
-       
-    <script>
-        //$(function () { //This section will run whenever we call Chat.cshtml page
-           $(document).ready(function () {
-            //debugger;
-            var objHub = $.connection.chatHub;
-            loadClientMethods(objHub);
+            var chatHub = $.connection.chatHub;
+            loadClientMethods(chatHub);
             $.connection.hub.start().done(function () {
-                loadEvents(objHub);
+                loadEvents(chatHub);
                 console.log('Chat Iniciado!');
             });
-        });
 
 
-        function loadEvents(objHub) {
+
+            function loadEvents(chatHub) {
             //debugger;
             $("#btnConectar").click(function () {
-
                 var name = '@Session["user_name"]';
                 var pass = '@Session["password"]';
 
-                console.log(name, pass);
-
                 if (name.length > 0 && pass.length > 0) {
                     // <<<<<-- ***** Return to Server [  Connect  ] *****
-                    objHub.server.connect(name, pass);
-                    console.log('conectado');
-
+                    chatHub.server.connect(name, pass);
                 }
                 else {
                     alert("Please Insert UserName and Password");
@@ -566,7 +554,7 @@
                 if (msg.length > 0) {
                     var userName = $('#hUserName').val();
                     // <<<<<-- ***** Return to Server [  SendMessageToGroup  ] *****
-                    objHub.server.sendMessageToGroup(userName, msg);
+                    chatHub.server.sendMessageToGroup(userName, msg);
                 }
             });
 
@@ -581,10 +569,10 @@
 
 
 
-        function loadClientMethods(objHub) {
+        function loadClientMethods(chatHub) {
 
 
-            objHub.client.NoExistAdmin = function () {
+            chatHub.client.NoExistAdmin = function () {
                 var divNoExist = $('<div><p>No hay administrador para responder, intente de nuevo más tarde</P></div>');
 
                 $(divNoExist).hide();
@@ -593,36 +581,33 @@
             }
 
 
-            objHub.client.getMessages = function (userName, message) {
-             
+            chatHub.client.getMessages = function (userName, message, foto, fecha_hrs) {
+              
                 $("#txtMessage").val('');
-                var nombreCliente = $('#hUserName').val();
-
-                if (nombreCliente == userName) {
-
+                var nombreCliente = $('#hUserName').val();               
+                if (nombreCliente == userName) {                    
                     $('#divMessage').append(
                                             '<div class="direct-chat-msg">' +
                                                  '<div class="direct-chat-info clearfix">' +
                                                      '<span class="direct-chat-name pull-left">' + userName + '</span>' +
-                                                     '<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>' +
+                                                     '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
                                                  '</div>' +
-                                                 //'<img class="direct-chat-img" src="#" alt="Message User Image">' +
+                                                 '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
                                                  '<div class="direct-chat-text">' +
                                                      message +
                                                  '</div>' +
                                              '</div>'
                                             );
                 }
-                else {
-
-                    //Administrador
+                else {                    
+                    //Administrador o Agente
                     $('#divMessage').append(
                                            '<div class="direct-chat-msg right">'+
                                                 '<div class="direct-chat-info clearfix">'+
                                                     '<span class="direct-chat-name pull-left">'+ userName +'</span>'+
-                                                    '<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>'+
+                                                    '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
                                                 '</div>'+
-                                                //'<img class="direct-chat-img" src="#" alt="Message User Image">' +
+                                                '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
                                                 '<div class="direct-chat-text">'+
                                                     message +
                                                 '</div>'+
@@ -634,9 +619,7 @@
             $('#divMessage').scrollTop(height);
         }
 
-        objHub.client.onConnected = function (id, userName, UserID, userGroup) {
-            
-            //var strWelcome = 'titulo' + +userName;
+            chatHub.client.onConnected = function (id, userName, UserID, userGroup) {        
             $('#titulo').html('');
             $('#titulo').append('<div><p>Chat del ' + '@Session["tipo_usuario"]' + '</p></div>');
 
@@ -644,11 +627,9 @@
             $('#hUserId').val(UserID);
             $('#hUserName').val(userName);
             $('#hGroup').val(userGroup);
-
-
-        }
-
-
+            $('#fotochat').val('@Session["foto"]');
+          
+            }           
 
         }
 
