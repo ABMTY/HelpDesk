@@ -3,3 +3,172 @@
     ViewBag.Title = "Index";
 }
 
+<div class="row">
+    <div class="col-md-4">
+
+        <!-- Widget: user widget style 1 -->
+        <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-light-blue">
+                
+                <div id="divalarm"></div>
+                @*<div class="widget-user-image">
+                        <img class="img-circle" src="~/Content/img/muser2-160x160.jpg" alt="User Avatar">
+                    </div>*@
+                <!-- /.widget-user-image -->
+                <h3 class="widget-user-username">Lista de Usuarios</h3>
+                <h5 class="widget-user-desc" id="welcome"></h5>
+            </div>
+            <div class="box-footer no-padding">
+                <ul class="nav nav-stacked">
+                    <li><a href="#">Daniel<i class="pull-right fa fa-circle text-green"></i></a></li>
+                    <li><a href="#">Alvarado<i class="pull-right fa fa-circle text-gray"></i></a></li>
+                    <li><a href="#">Luis<i class="pull-right fa fa-circle text-green"></i></a></li>
+                    <li><a href="#">Estefany<i class="pull-right fa fa-circle text-gray"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.widget-user -->
+
+
+
+    </div>
+    <div class="col-md-8">
+    </div>
+       
+</div>
+
+<input id="hUserId" type="hidden" />
+<input id="hId" type="hidden" />
+<input id="hUserName" type="hidden" />
+<input id="hGroup" type="hidden" />
+
+
+
+
+    <script>
+    $(function () { //This section will run whenever we call Chat.cshtml page
+        //$(document).ready(function () {
+        //debugger;
+            var objHub = $.connection.chatHub;
+           loadClientMethods(objHub);
+           $.connection.hub.start().done(function () {          
+               loadEvents(objHub);
+               console.log('Chat Iniciado!');
+           });
+       });
+
+
+     function loadEvents(objHub) {
+         //debugger;
+         $("#btnConectar").click(function () {
+
+             var name = '@Session["user_name"]';
+             var pass = '@Session["password"]';
+
+             debugger;
+             if (name.length > 0 && pass.length > 0) {
+                 // <<<<<-- ***** Return to Server [  Connect  ] *****
+                 objHub.server.connect(name, pass);
+
+             }
+             else {
+                 alert("Please Insert UserName and Password");
+             }
+
+         });
+
+           $('#btnSendMessage').click(function () {
+               var msg = $("#txtMessage").val();
+               if (msg.length > 0) {
+                   var userName = $('#hUserName').val();
+                   // <<<<<-- ***** Return to Server [  SendMessageToGroup  ] *****
+                   objHub.server.sendMessageToGroup(userName, msg);
+               }
+           });
+
+           $("#txtMessage").keypress(function (e) {
+               if (e.which == 13) {
+                   $('#btnSendMessage').click();
+               }
+           });
+
+
+       }
+
+
+
+    function loadClientMethods(objHub) {
+
+
+
+
+           objHub.client.NoExistAdmin = function () {
+               var divNoExist = $('<div><p>No hay administrador para responder, intente de nuevo más tarde</P></div>');
+
+               $(divNoExist).hide();
+               $('#divalarm').prepend(divNoExist);
+               $(divNoExist).fadeIn(900).delay(9000).fadeOut(900);
+           }
+
+         
+           objHub.client.getMessages = function (userName, message) {
+
+
+               $("#txtMessage").val('');
+               //$('#divMessage').append('<div><p>' + userName + ': ' + message + '</p></div>');
+               //debugger;
+               //if (userName == "Supervisor") {
+
+                   $('#divMessage').append(
+                                           '<div class="direct-chat-msg">' +
+                                                '<div class="direct-chat-info clearfix">' +
+                                                    '<span class="direct-chat-name pull-left">' + userName + '</span>' +
+                                                    '<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>' +
+                                                '</div>' +
+                                                '<img class="direct-chat-img" src="#" alt="Message User Image">' +
+                                                '<div class="direct-chat-text">' +
+                                                    message +
+                                                '</div>' +
+                                            '</div>'
+                                           );
+               //}
+               @*else {
+
+                   //Administrador
+                   $('#divMessage').append(
+                                          '<div class="direct-chat-msg right">'+
+                                               '<div class="direct-chat-info clearfix">'+
+                                                   '<span class="direct-chat-name pull-left">'+ userName +'</span>'+
+                                                   '<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>'+
+                                               '</div>'+
+                                               '<img class="direct-chat-img" src="\"" + @Session["foto"] + "\"" alt="Message User Image">' +
+                                               '<div class="direct-chat-text">'+
+                                                   message +
+                                               '</div>'+
+                                           '</div>'
+                                          );
+               }*@
+
+               var height = $('#divMessage')[0].scrollHeight;
+               $('#divMessage').scrollTop(height);
+           }
+
+        objHub.client.onConnected = function (id, userName, UserID, userGroup) {
+
+            var strWelcome = 'Welcome' + +userName;
+            $('#welcome').append('<div><p>Welcome:' + userName + '</p></div>');
+
+            $('#hId').val(id);
+            $('#hUserId').val(UserID);
+            $('#hUserName').val(userName);
+            $('#hGroup').val(userGroup);
+
+        
+        }
+
+
+
+        }
+
+    </script>

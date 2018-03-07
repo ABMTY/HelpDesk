@@ -48,6 +48,7 @@ namespace HelpDesk.Controllers
                 Session["password"] = entUsuario.password;
                 Session["tipo_usuario"] = entUsuario.tipo_usuario;
                 Session["nombre_completo"] = entUsuario.nombre_completo;
+                Session["nombre"] = entUsuario.nombre;
                 Session["id_sucursal"] = entUsuario.id_sucursal;
                 Session["sucursal"] = entUsuario.sucursal;
                 Session["id_tipo_usuario"] = entUsuario.id_tipo_usuario;
@@ -87,6 +88,7 @@ namespace HelpDesk.Controllers
             Session.Abandon();
             Response.Cookies.Add(new HttpCookie("ASP.NET_SessionId", ""));
             Response.AppendHeader("Cache-Control", "no-store");
+            Session["nombre"] = "";
             Session["id_usuario"] = "";
             Session["tipo_usuario"] = "";
             Session["nombre_completo"] = "";

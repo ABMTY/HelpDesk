@@ -2,6 +2,8 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(HelpDesk.Startup))]
+[assembly: OwinStartup(typeof(HelpDesk.Startup))]
+
 namespace HelpDesk
 {
     public partial class Startup

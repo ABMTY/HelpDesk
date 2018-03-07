@@ -24,7 +24,7 @@
     <script src="~/Scripts/jquery.signalR-2.2.2.js"></script> 
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>   
     <!-- jquery signalR hubs-->
-    <script src="/signalr/hubs"></script>
+    <script src="/signalr/hubs" type="text/javascript"></script>
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->    
     <link rel="stylesheet" href="~/Content/css/_all-skins.min.css">
@@ -165,7 +165,7 @@
             <!-- Logo -->
             <a href="/Home/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><img src="~/Content/img/apple-touch-icon.png" class="user-image" width="42px"></span>                
+                <span class="logo-mini"><img src="~/Content/img/apple-touch-icon.png" class="user-image" width="42"></span>                
                 <!-- logo for regular state and mobile devices -->                
                 <img src="~/Content/img/logo_helpdesk_b.png" class="user-image" >
             </a>
@@ -180,8 +180,8 @@
                     <ul class="nav navbar-nav">                                              
                         <!-- Control Sidebar Toggle Button -->
                         <li>
-                            @*<a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>*@
-                            <a href="/Chat/"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>
+                            @*<a href="/Chat/"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>*@
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
                         <li class="dropdown messages-menu">
@@ -255,69 +255,48 @@
             <strong>Copyright &copy; 2018 <a href="#">Abarrotes Monterrey S.A de C.V.</a></strong> Todos los Derechos Reservados.
         </footer>
 
+        @*SOPORTE CHAT*@
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-light">            
             <!-- Tab panes -->
             <div class="tab-content">
                 <br />
+                <input id="hUserId" type="hidden" />
+                <input id="hId" type="hidden" />
+                <input id="hUserName" type="hidden" />
+                <input id="hGroup" type="hidden" />
+
+                <input type="button" value="Conectar" class="btn btn-primary btn-flat" id="btnConectar" />
+                <div id="divalarm"></div>
                 <!-- DIRECT CHAT PRIMARY -->
-                <div class="box box-primary direct-chat direct-chat-primary">
+                <div class="box box-primary direct-chat direct-chat-primary" style="height:100%;">
                     <div class="box-header with-border">
-                        <h3 class="box-title">Chat</h3>
+                        <h3 class="box-title" id="titulo"></h3>
                         <div class="box-tools pull-right">
-                            <span data-toggle="tooltip" title="3 Nuevos Mensajes" class="badge bg-light-blue">3</span>
+                            @*<span data-toggle="tooltip" title="3 Nuevos Mensajes" class="badge bg-light-blue">3</span>*@
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
                             </button>
                             <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contactos" data-widget="chat-pane-toggle">
-                                <i class="fa fa-comments"></i>
-                            </button>
+                            <i class="fa fa-comments"></i>
+                        </button>
                             @*<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
                         </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
                         <!-- Conversations are loaded here -->
-                        <div class="direct-chat-messages">
-                            <!-- Message. Default to the left -->
-                            <div class="direct-chat-msg">
-                                <div class="direct-chat-info clearfix">
-                                    <span class="direct-chat-name pull-left">Sarah Bullock</span>
-                                    <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                                </div>
-                                <!-- /.direct-chat-info -->                                                 
-                                <img class="direct-chat-img" src="~/Content/img/user3-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
-                                <div class="direct-chat-text">
-                                    Hola ayuda con cable de red
-                                </div>
-                                <!-- /.direct-chat-text -->
-                            </div>
-                            <!-- /.direct-chat-msg -->
-                            <!-- Message to the right -->
-                            <div class="direct-chat-msg right">
-                                <div class="direct-chat-info clearfix">
-                                    <span class="direct-chat-name pull-right">Alexander Pierce</span>
-                                    <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
-                                </div>
-                                <!-- /.direct-chat-info -->
-                                <img class="direct-chat-img" src="~/Content/img/user8-128x128.jpg" alt="Message User Image"><!-- /.direct-chat-img -->
-                                <div class="direct-chat-text">
-                                   En un momento lo atiendo!!
-                                </div>
-                                <!-- /.direct-chat-text -->
-                            </div>
-                            <!-- /.direct-chat-msg -->
-                        </div>
-                        <!--/.direct-chat-messages-->
+                        <div class="direct-chat-messages" id="divMessage">
+                        </div>  
                         <!-- Contacts are loaded here -->
                         <div class="direct-chat-contacts">
                             <ul class="contacts-list">
                                 <li>
-                                    <a href="#">                                        
+                                    <a href="#">
                                         <img class="contacts-list-img" src="~/Content/img/muser2-160x160.jpg" alt="User Image">
                                         <div class="contacts-list-info">
                                             <span class="contacts-list-name">
-                                               Luis Angel
+                                                Luis Angel
                                                 <small class="contacts-list-date pull-right">2/28/2015</small>
                                             </span>
                                             <span class="contacts-list-msg">Me pueden ayudar con un problema de red</span>
@@ -329,21 +308,19 @@
                             </ul>
                             <!-- /.contatcts-list -->
                         </div>
-                        <!-- /.direct-chat-pane -->
+                        <!-- /.direct-chat-pane -->                     
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
-                        <form action="#" method="post">
-                            <div class="input-group">
-                                <input type="text" name="message" placeholder="Escriba el mensaje ..." class="form-control">
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary btn-flat">Enviar</button>
-                                </span>
-                            </div>
-                        </form>
+                        <div class="input-group">
+                            <input type="text" name="message" id="txtMessage" placeholder="Escriba el mensaje ..." class="form-control">
+                            <span class="input-group-btn">
+                                <input type="button" value="Enviar" class="btn btn-primary btn-flat" id="btnSendMessage" />
+                            </span>
+                        </div>
                     </div>
                     <!-- /.box-footer-->
-                </div>                
+                </div>
             </div>
         </aside>
         <!-- /.control-sidebar -->
@@ -414,12 +391,25 @@
     @Scripts.Render("~/Content/plugins/DataTables/jszip.min.js")
     @Scripts.Render("~/Content/plugins/DataTables/pdfmake.min.js")
     @Scripts.Render("~/Content/plugins/DataTables/vfs_fonts.js")
+
+    <!-- jquery signalR-->
+    @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.js")
+    @Scripts.Render("~/Scripts/jquery.signalR-2.2.2.min.js")    
+    <!-- jquery signalR hubs-->
+    @*@Scripts.Render("~/signalr/hubs")*@
+    <script src="@Url.Content("~/signalr/hubs")" type="text/javascript"></script>  
+    
+    
     <!-- Datatable init js -->
     @Scripts.Render("~/Content/pages/datatables.init.js")
     @*@Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
-
+    <!-- jquery signalR-->
+    <script src="~/Scripts/jquery.signalR-2.2.2.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <!-- jquery signalR hubs-->
+    <script src="/signalr/hubs" type="text/javascript"></script>
     <script type="text/javascript">
                 
         //CERRAR SESION DEL SISTEMA
@@ -532,10 +522,137 @@
                     console.log('Notification Update');
                 }                
             }
+
+          
         //})      
     </script>
        
+    <script>
+        //$(function () { //This section will run whenever we call Chat.cshtml page
+           $(document).ready(function () {
+            //debugger;
+            var objHub = $.connection.chatHub;
+            loadClientMethods(objHub);
+            $.connection.hub.start().done(function () {
+                loadEvents(objHub);
+                console.log('Chat Iniciado!');
+            });
+        });
 
+
+        function loadEvents(objHub) {
+            //debugger;
+            $("#btnConectar").click(function () {
+
+                var name = '@Session["user_name"]';
+                var pass = '@Session["password"]';
+
+                console.log(name, pass);
+
+                if (name.length > 0 && pass.length > 0) {
+                    // <<<<<-- ***** Return to Server [  Connect  ] *****
+                    objHub.server.connect(name, pass);
+                    console.log('conectado');
+
+                }
+                else {
+                    alert("Please Insert UserName and Password");
+                }
+
+            });
+
+            $('#btnSendMessage').click(function () {
+                var msg = $("#txtMessage").val();
+                if (msg.length > 0) {
+                    var userName = $('#hUserName').val();
+                    // <<<<<-- ***** Return to Server [  SendMessageToGroup  ] *****
+                    objHub.server.sendMessageToGroup(userName, msg);
+                }
+            });
+
+            $("#txtMessage").keypress(function (e) {
+                if (e.which == 13) {
+                    $('#btnSendMessage').click();
+                }
+            });
+
+
+        }
+
+
+
+        function loadClientMethods(objHub) {
+
+
+            objHub.client.NoExistAdmin = function () {
+                var divNoExist = $('<div><p>No hay administrador para responder, intente de nuevo más tarde</P></div>');
+
+                $(divNoExist).hide();
+                $('#divalarm').prepend(divNoExist);
+                $(divNoExist).fadeIn(900).delay(9000).fadeOut(900);
+            }
+
+
+            objHub.client.getMessages = function (userName, message) {
+             
+                $("#txtMessage").val('');
+                var nombreCliente = $('#hUserName').val();
+
+                if (nombreCliente == userName) {
+
+                    $('#divMessage').append(
+                                            '<div class="direct-chat-msg">' +
+                                                 '<div class="direct-chat-info clearfix">' +
+                                                     '<span class="direct-chat-name pull-left">' + userName + '</span>' +
+                                                     '<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>' +
+                                                 '</div>' +
+                                                 //'<img class="direct-chat-img" src="#" alt="Message User Image">' +
+                                                 '<div class="direct-chat-text">' +
+                                                     message +
+                                                 '</div>' +
+                                             '</div>'
+                                            );
+                }
+                else {
+
+                    //Administrador
+                    $('#divMessage').append(
+                                           '<div class="direct-chat-msg right">'+
+                                                '<div class="direct-chat-info clearfix">'+
+                                                    '<span class="direct-chat-name pull-left">'+ userName +'</span>'+
+                                                    '<span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>'+
+                                                '</div>'+
+                                                //'<img class="direct-chat-img" src="#" alt="Message User Image">' +
+                                                '<div class="direct-chat-text">'+
+                                                    message +
+                                                '</div>'+
+                                            '</div>'
+                                           );
+            }
+
+            var height = $('#divMessage')[0].scrollHeight;
+            $('#divMessage').scrollTop(height);
+        }
+
+        objHub.client.onConnected = function (id, userName, UserID, userGroup) {
+            
+            //var strWelcome = 'titulo' + +userName;
+            $('#titulo').html('');
+            $('#titulo').append('<div><p>Chat del ' + '@Session["tipo_usuario"]' + '</p></div>');
+
+            $('#hId').val(id);
+            $('#hUserId').val(UserID);
+            $('#hUserName').val(userName);
+            $('#hGroup').val(userGroup);
+
+
+        }
+
+
+
+        }
+
+    </script>
      
 
 
