@@ -220,7 +220,7 @@
     <Compile Include="Controllers\Administracion\TipoUsuarioController.cs" />
     <Compile Include="Controllers\Administracion\UsuariosController.cs" />
     <Compile Include="Controllers\Administracion\ZonasController.cs" />
-    <Compile Include="Controllers\ChatRoomController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\Proceso\DashboardController.cs" />
@@ -741,6 +741,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -768,7 +769,6 @@
     <Content Include="Views\Tickets\IndexMesaAyuda.cshtml" />
     <Content Include="Views\Tickets\SeguimientoMesaAyuda.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\ChatRoom\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

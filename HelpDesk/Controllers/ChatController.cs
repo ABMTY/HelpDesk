@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace HelpDesk.Controllers
 {
-    public class ChatRoomController : Controller
+    public class ChatController : Controller
     {
-        // GET: ChatRoom
+        // GET: Chat
         public ActionResult Index()
         {
             return View();
