@@ -23,7 +23,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>1</h3>
+                        <h3>0</h3>
                         <p>Vencidos</p>
                     </div>
                     <div class="icon">
@@ -37,7 +37,7 @@
                 <!-- small box -->
                 <div class="small-box bg-blue">
                     <div class="inner">
-                        <h3>5</h3>
+                        <h3 class="open">0</h3>
                         <p>Abiertos</p>
                     </div>
                     <div class="icon">
@@ -51,8 +51,8 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>6</h3>
-                        <p>En espera</p>
+                        <h3 class="process">0</h3>
+                        <p>En proceso</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-ticket"></i>
@@ -65,7 +65,7 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>1</h3>
+                        <h3 class="now">0</h3>
                         <p>Vence hoy</p>
                     </div>
                     <div class="icon">
@@ -79,7 +79,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>2</h3>
+                        <h3 class="unassigned">0</h3>
                         <p>Sin asignar</p>
                     </div>
                     <div class="icon">
@@ -93,7 +93,7 @@
                 <!-- small box -->
                 <div class="small-box bg-gray">
                     <div class="inner">
-                        <h3>2</h3>
+                        <h3>0</h3>
                         <p>Otro Indicador</p>
                     </div>
                     <div class="icon">
@@ -552,3 +552,33 @@
 
 
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        updateEstatosCount()
+    });
+
+    // update  count tickets
+    function updateEstatosCount() {
+        debugger;
+        $.ajax({
+            cache: false,
+            destroy: true,
+            searching: true,
+            dataType: "json",
+            url: '/Tickets/GetEsadosTickets/',
+            contentType: "application/json; charset=utf-8",
+            type: 'GET',
+            success: function (datos) {
+                console.log(datos.data);                
+                $('h3.open').html(datos.data.abiertos);
+                $('h3.process').html(datos.data.en_proceso);
+                $('h3.unassigned').html(datos.data.sin_asignar);
+                
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+
+    }
+</script>

@@ -152,6 +152,19 @@ namespace HelpDesk.Controllers.Proceso
             }
         }
 
+        public ActionResult GetEsadosTickets()
+        {
+            tickets entidad = new tickets();
+            usuarios usuario = new usuarios();
+            int id_usuario = int.Parse(Session["id_usuario"].ToString());
+            usuario = ctrlUsuarios.Obtener(id_usuario);
+            entidad = control.ObtenerEstados(usuario);
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = entidad }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
         public ActionResult GetTickets()
         {
             List<tickets> Listado = new List<tickets>();

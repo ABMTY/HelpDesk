@@ -31,6 +31,10 @@ namespace CtrlHelpDesk.Servicios
         {
             return (tickets)new PerTickets().Obtener(id_tickets);
         }
+        public tickets ObtenerEstados(usuarios usuario)
+        {
+            return (tickets)new PerTickets().ObtenerEstados(usuario);
+        }
         public List<tickets> ObtenerPorUsuario(int id_usuario)
         {
             return (List<tickets>)new PerTickets().ObtenerPorUsuario(id_usuario);
