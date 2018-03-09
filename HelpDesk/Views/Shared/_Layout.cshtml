@@ -267,8 +267,31 @@
                 <input id="hGroup" type="hidden" />
                 <input id="fotochat" type="hidden" />
 
-                <input type="button" value="Conectar" class="btn btn-primary btn-flat" id="btnConectar" />
+                @*<input type="button" value="Conectar" class="btn btn-primary btn-flat" id="btnConectar" />*@
                 <div id="divalarm"></div>
+
+                <!-- Chat users list -->
+                
+                <!-- Widget: user widget style 1 -->
+                <div class="box box-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-light-blue-active">
+                        <div class="widget-user-image">                            
+                            <img class="img-circle" src="~/Content/img/Users-icon.png" alt="Usuarios">
+                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username" id="countuser">Usuarios</h3>
+                        <h5 class="widget-user-desc">En Linea</h5>
+                    </div>
+                    <div class="box-footer no-padding" >
+                        <ul class="nav nav-stacked" id="divusersdefault"></ul>
+                        <ul class="nav nav-stacked" id="divusers">                           
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.widget-user -->
+
+               
                 <!-- DIRECT CHAT PRIMARY -->
                 <div class="box box-primary direct-chat direct-chat-primary" style="height:100%;">
                     <div class="box-header with-border">
@@ -278,9 +301,9 @@
                             <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
                             </button>
-                            <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contactos" data-widget="chat-pane-toggle">
+                            @*<button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="Contactos" data-widget="chat-pane-toggle">
                             <i class="fa fa-comments"></i>
-                        </button>
+                            </button>*@
                             @*<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>*@
                         </div>
                     </div>
@@ -288,28 +311,7 @@
                     <div class="box-body">
                         <!-- Conversations are loaded here -->
                         <div class="direct-chat-messages" id="divMessage">
-                        </div>  
-                        <!-- Contacts are loaded here -->
-                        <div class="direct-chat-contacts">
-                            <ul class="contacts-list">
-                                <li>
-                                    <a href="#">
-                                        <img class="contacts-list-img" src="~/Content/img/muser2-160x160.jpg" alt="User Image">
-                                        <div class="contacts-list-info">
-                                            <span class="contacts-list-name">
-                                                Luis Angel
-                                                <small class="contacts-list-date pull-right">2/28/2015</small>
-                                            </span>
-                                            <span class="contacts-list-msg">Me pueden ayudar con un problema de red</span>
-                                        </div>
-                                        <!-- /.contacts-list-info -->
-                                    </a>
-                                </li>
-                                <!-- End Contact Item -->
-                            </ul>
-                            <!-- /.contatcts-list -->
-                        </div>
-                        <!-- /.direct-chat-pane -->                     
+                        </div>                          
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
@@ -321,6 +323,9 @@
                         </div>
                     </div>
                     <!-- /.box-footer-->
+                </div>
+                <div id="divContentPrivate">
+
                 </div>
             </div>
         </aside>
@@ -524,45 +529,44 @@
                 }
             }
 
+
+
+            //INICIO DE CHAT
             var chatHub = $.connection.chatHub;
+
             loadClientMethods(chatHub);
+
             $.connection.hub.start().done(function () {
                 loadEvents(chatHub);
                 console.log('Chat Iniciado!');
             });
 
-
-
             function loadEvents(chatHub) {
-            //debugger;
-            $("#btnConectar").click(function () {
+
                 var name = '@Session["user_name"]';
                 var pass = '@Session["password"]';
 
                 if (name.length > 0 && pass.length > 0) {
                     // <<<<<-- ***** Return to Server [  Connect  ] *****
                     chatHub.server.connect(name, pass);
-                }
-                else {
-                    alert("Please Insert UserName and Password");
+
                 }
 
-            });
+                $('#btnSendMessage').click(function () {
+                    var msg = $("#txtMessage").val();
+                    if (msg.length > 0) {
 
-            $('#btnSendMessage').click(function () {
-                var msg = $("#txtMessage").val();
-                if (msg.length > 0) {
-                    var userName = $('#hUserName').val();
-                    // <<<<<-- ***** Return to Server [  SendMessageToGroup  ] *****
-                    chatHub.server.sendMessageToGroup(userName, msg);
-                }
-            });
+                        var userName = $('#hUserName').val();
+                        chatHub.server.sendMessageToAll(userName, msg);
+                        $("#txtMessage").val('');
+                    }
+                });
 
-            $("#txtMessage").keypress(function (e) {
-                if (e.which == 13) {
-                    $('#btnSendMessage').click();
-                }
-            });
+                $("#txtMessage").keypress(function (e) {
+                    if (e.which == 13) {
+                        $('#btnSendMessage').click();
+                    }
+                });
 
 
         }
@@ -571,65 +575,258 @@
 
         function loadClientMethods(chatHub) {
 
+            chatHub.client.onConnected = function (id, userName, allUsers, messages) {
+                
+                debugger;
+                $('#titulo').html('');
+                $('#titulo').append('<div><p>Chat del ' + '@Session["tipo_usuario"]' + '</p></div>');
+                //$('#countuser').append(allUsers.length + ' Usuarios');
+                $('#hId').val(id);
+                //$('#hUserId').val(UserID);
+                $('#hUserName').val(userName);
+                //$('#hGroup').val(userGroup);
+                @*$('#fotochat').val('@Session["foto"]');*@
 
-            chatHub.client.NoExistAdmin = function () {
-                var divNoExist = $('<div><p>No hay administrador para responder, intente de nuevo más tarde</P></div>');
+                // Add All Users
+                for (i = 0; i < allUsers.length; i++) {
 
-                $(divNoExist).hide();
-                $('#divalarm').prepend(divNoExist);
-                $(divNoExist).fadeIn(900).delay(9000).fadeOut(900);
+                    AddUser(chatHub, allUsers[i].ConnectionId, allUsers[i].user_name);
+                }
+
+                // Add Existing Messages
+                for (i = 0; i < messages.length; i++) {
+
+                    AddMessage(messages[i].UserName, messages[i].Message);
+                }
+
             }
 
+            // On New User Connected
+            chatHub.client.onNewUserConnected = function (id, name) {
+                debugger;
+                console.log(id);
+                AddUser(chatHub, id, name);
+            }
 
-            chatHub.client.getMessages = function (userName, message, foto, fecha_hrs) {
-              
-                $("#txtMessage").val('');
-                var nombreCliente = $('#hUserName').val();               
-                if (nombreCliente == userName) {                    
-                    $('#divMessage').append(
-                                            '<div class="direct-chat-msg">' +
-                                                 '<div class="direct-chat-info clearfix">' +
-                                                     '<span class="direct-chat-name pull-left">' + userName + '</span>' +
-                                                     '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
-                                                 '</div>' +
-                                                 '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
-                                                 '<div class="direct-chat-text">' +
-                                                     message +
-                                                 '</div>' +
-                                             '</div>'
-                                            );
+            // On User Disconnected
+            chatHub.client.onUserDisconnected = function (id, userName) {
+
+                $('#' + id).remove();
+
+                var ctrId = 'private_' + id;
+                $('#' + ctrId).remove();
+
+                
+                var disc = $('<li><a>' + userName + ' <a class="label pull-right bg-red">Desconectado</a></a></li>');
+
+                $(disc).hide();
+                $('#divusers').prepend(disc);
+                $(disc).fadeIn(200).delay(2000).fadeOut(200);
+
+            }
+
+            chatHub.client.messageReceived = function (userName, message, userPhoto, fecha_hrs) {
+                AddMessage(userName, message, userPhoto, fecha_hrs);
+            }
+
+            chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message) {
+                debugger;
+
+                var ctrId = 'private_' + windowId;
+
+
+                if ($('#' + ctrId).length == 0) {
+
+                    createPrivateChatWindow(chatHub, windowId, ctrId, fromUserName);
                 }
-                else {                    
-                    //Administrador o Agente
-                    $('#divMessage').append(
-                                           '<div class="direct-chat-msg right">'+
-                                                '<div class="direct-chat-info clearfix">'+
-                                                    '<span class="direct-chat-name pull-left">'+ userName +'</span>'+
-                                                    '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
-                                                '</div>'+
-                                                '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
-                                                '<div class="direct-chat-text">'+
-                                                    message +
-                                                '</div>'+
-                                            '</div>'
-                                           );
+
+                $('#' + ctrId).find('#divMessagePrivate').append('<div class="message"><span class="userName">' + fromUserName + '</span>: ' + message + '</div>');
+
+                // set scrollbar
+                var height = $('#' + ctrId).find('#divMessagePrivate')[0].scrollHeight;
+                $('#' + ctrId).find('#divMessagePrivate').scrollTop(height);
+
+            }
+        }
+
+        function AddUser(chatHub, id, name) {
+            debugger;
+
+            console.log(name);
+            var userId = $('#hId').val();
+
+            var code = "";
+            //var codedefault = "";
+
+            if (userId == id) {
+                code = $('<li><a>' + name + '<i class="pull-right fa fa-circle text-blue"></i></a></li>');
+            }
+            else {
+                debugger;
+                code = $('<li><a id="' + id + '">' + name + '<i class="pull-right fa fa-circle text-green"></i></a></li>');
+                $(code).dblclick(function () {
+                    debugger;
+                    var id = $(this).attr('id');
+                    console.log(id);
+                    if (userId != id)
+                        debugger;
+                        OpenPrivateChatWindow(chatHub, id, name);
+                });
+            }
+            
+            //$("#divusersdefault").append(codedefault);
+            $("#divusers").append(code);
+
+        }
+
+        function AddMessage(userName, message, photo, fecha_hrs) {
+
+            $("#txtMessage").val('');
+            var nombreCliente = $('#hUserName').val();
+            if (nombreCliente == userName) {
+                $('#divMessage').append(
+                                        '<div class="direct-chat-msg">' +
+                                             '<div class="direct-chat-info clearfix">' +
+                                                 '<span class="direct-chat-name pull-left">' + userName + '</span>' +
+                                                 '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
+                                             '</div>' +
+                                             '<img class="direct-chat-img" src="data:image/png;base64,' + photo + '" alt="Message User Image">' +
+                                             '<div class="direct-chat-text">' +
+                                                 message +
+                                             '</div>' +
+                                         '</div>'
+                                        );
+            }
+            else {
+                //Administrador o Agente
+                $('#divMessage').append(
+                                       '<div class="direct-chat-msg right">' +
+                                            '<div class="direct-chat-info clearfix">' +
+                                                '<span class="direct-chat-name pull-left">' + userName + '</span>' +
+                                                '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
+                                            '</div>' +
+                                            '<img class="direct-chat-img" src="data:image/png;base64,' + photo + '" alt="Message User Image">' +
+                                            '<div class="direct-chat-text">' +
+                                                message +
+                                            '</div>' +
+                                        '</div>'
+                                       );
             }
 
             var height = $('#divMessage')[0].scrollHeight;
             $('#divMessage').scrollTop(height);
+
+
+
+            //$('#divChatWindow').append('<div class="message"><span class="userName">' + userName + '</span>: ' + message + '</div>');
+
+            //var height = $('#divChatWindow')[0].scrollHeight;
+            //$('#divChatWindow').scrollTop(height);
         }
 
-            chatHub.client.onConnected = function (id, userName, UserID, userGroup) {        
-            $('#titulo').html('');
-            $('#titulo').append('<div><p>Chat del ' + '@Session["tipo_usuario"]' + '</p></div>');
+        function OpenPrivateChatWindow(chatHub, id, userName) {
+            debugger;
+            var ctrId = 'private_' + id;
 
-            $('#hId').val(id);
-            $('#hUserId').val(UserID);
-            $('#hUserName').val(userName);
-            $('#hGroup').val(userGroup);
-            $('#fotochat').val('@Session["foto"]');
-          
-            }           
+            if ($('#' + ctrId).length > 0) return;
+
+            createPrivateChatWindow(chatHub, id, ctrId, userName);
+
+        }
+
+        function createPrivateChatWindow(chatHub, userId, ctrId, userName) {
+            debugger;
+            var div = '<div id="' + ctrId + '" class="box box-primary direct-chat direct-chat-primary" style="height:100%;">' +
+                        '<div class="box-header with-border">'+
+                            '<h3 class="box-title" id="titulo">' + userName + '</h3>' +
+                            '<div class="box-tools pull-right">'+                                
+                                '<button type="button" class="btn btn-box-tool" data-widget="collapse">'+
+                                    '<i class="fa fa-minus"></i>'+
+                                '</button>'+
+                                '<button id="btnCerrarPrivate" style="cursor:pointer;" type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>' +
+                            '</div>'+
+                        '</div>'+                    
+                        '<div class="box-body">'+                        
+                            '<div class="direct-chat-messages" id="divMessagePrivate">' +
+                            '</div>'+            
+                        '</div>'+                    
+                        '<div class="box-footer">'+
+                            '<div class="input-group">'+
+                                '<input type="text" name="message" id="txtPrivateMessage" placeholder="Escriba el mensaje ..." class="form-control">' +
+                                '<span class="input-group-btn">'+
+                                    '<input type="button" value="Enviar" class="btn btn-primary btn-flat" id="btnSendMessagePrivate" />' +
+                                '</span>'+
+                            '</div>'+
+                        '</div>'+                    
+                    '</div>';
+
+            //var div = '<div id="' + ctrId + '" class="ui-widget-content draggable" rel="0">' +
+            //           '<div class="header">' +
+            //              '<div  style="float:right;">' +
+            //                  '<img id="imgDelete"  style="cursor:pointer;" src="/Images/delete.png"/>' +
+            //               '</div>' +
+
+            //               '<span class="selText" rel="0">' + userName + '</span>' +
+            //           '</div>' +
+            //           '<div id="divMessage" class="messageArea">' +
+
+            //           '</div>' +
+            //           '<div class="buttonBar">' +
+            //              '<input id="txtPrivateMessage" class="msgText" type="text"   />' +
+            //              '<input id="btnSendMessage" class="submitButton button" type="button" value="Send"   />' +
+            //           '</div>' +
+            //        '</div>';
+
+            var $div = $(div);
+
+            // DELETE BUTTON IMAGE
+            $div.find('#btnCerrarPrivate').click(function () {
+                $('#' + ctrId).remove();
+            });
+
+            // Send Button event
+            $div.find("#btnSendMessagePrivate").click(function () {
+                debugger;
+                $textBox = $div.find("#txtPrivateMessage");
+                //var userId = $('#hId').val();
+                var msg = $textBox.val();
+                console.log(userId);
+                if (msg.length > 0) {
+                    debugger;
+                    console.log(userId);
+                    console.log(msg);
+                    chatHub.server.sendPrivateMessage(userId, msg);
+                    $textBox.val('');
+                }
+            });
+
+            // Text Box event
+            $div.find("#txtPrivateMessage").keypress(function (e) {
+                if (e.which == 13) {
+                    $div.find("#btnSendMessagePrivate").click();
+                }
+            });
+
+            AddDivToContainer($div);
+
+        }
+
+        function AddDivToContainer($div) {
+            $('#divContentPrivate').prepend($div);
+
+            //$div.draggable({
+
+            //    handle: ".header",
+            //    stop: function () {
+
+            //    }
+            //});
+
+            ////$div.resizable({
+            ////    stop: function () {
+
+            ////    }
+            ////});
 
         }
 

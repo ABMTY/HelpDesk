@@ -25,5 +25,10 @@ namespace EntHelpDesk.Entidad
         public string foto_usuario { get; set; }
 
 
+        public string UserName { get; set; }
+
+        public string Message { get; set; }
+
+
     }
 }
