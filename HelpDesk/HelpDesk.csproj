@@ -458,6 +458,7 @@
     <Content Include="Content\img\logo_helpdesk_b.png" />
     <Content Include="Content\img\muser2-160x160.jpg" />
     <Content Include="Content\img\ticket.png" />
+    <Content Include="Content\img\Users-icon.png" />
     <Content Include="Content\js\app.js" />
     <Content Include="Content\js\app.min.js" />
     <Content Include="Content\js\bootstrap-select.min.js" />
@@ -696,6 +697,8 @@
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Content\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Content\sound\Chat.mp3" />
+    <Content Include="Content\sound\Notificacion.mp3" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
