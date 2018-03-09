@@ -180,7 +180,7 @@
                     <ul class="nav navbar-nav">                                              
                         <!-- Control Sidebar Toggle Button -->
                         <li>
-                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span><span class="msgcount label label-success"></span></a>
                             @*<a href="/Chat/"><i class="fa fa-wechat"></i><span class="hidden-xs"> Chat</span></a>*@
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
@@ -529,6 +529,13 @@
                 }
             }
 
+            function updateMessagerCount() {
+                var count = 0;
+                count = parseInt($('span.msgcount').html()) || 0;
+                count++;
+                $('span.msgcount').html(count);
+            }
+
 
 
             //INICIO DE CHAT
@@ -679,38 +686,38 @@
 
         }
 
-        function AddMessage(userName, message, photo, fecha_hrs) {
-
-            $("#txtMessage").val('');
-            var nombreCliente = $('#hUserName').val();
-            if (nombreCliente == userName) {
-                $('#divMessage').append(
-                                        '<div class="direct-chat-msg">' +
-                                             '<div class="direct-chat-info clearfix">' +
-                                                 '<span class="direct-chat-name pull-left">' + userName + '</span>' +
-                                                 '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
-                                             '</div>' +
-                                             '<img class="direct-chat-img" src="data:image/png;base64,' + photo + '" alt="Message User Image">' +
-                                             '<div class="direct-chat-text">' +
-                                                 message +
-                                             '</div>' +
-                                         '</div>'
-                                        );
-            }
-            else {
-                //Administrador o Agente
-                $('#divMessage').append(
-                                       '<div class="direct-chat-msg right">' +
-                                            '<div class="direct-chat-info clearfix">' +
-                                                '<span class="direct-chat-name pull-left">' + userName + '</span>' +
-                                                '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
-                                            '</div>' +
-                                            '<img class="direct-chat-img" src="data:image/png;base64,' + photo + '" alt="Message User Image">' +
-                                            '<div class="direct-chat-text">' +
-                                                message +
-                                            '</div>' +
-                                        '</div>'
-                                       );
+            chatHub.client.getMessages = function (userName, message, foto, fecha_hrs) {
+              
+                $("#txtMessage").val('');
+                var nombreCliente = $('#hUserName').val();               
+                if (nombreCliente == userName) {                    
+                    $('#divMessage').append(
+                                            '<div class="direct-chat-msg">' +
+                                                 '<div class="direct-chat-info clearfix">' +
+                                                     '<span class="direct-chat-name pull-left">' + userName + '</span>' +
+                                                     '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
+                                                 '</div>' +
+                                                 '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
+                                                 '<div class="direct-chat-text">' +
+                                                     message +
+                                                 '</div>' +
+                                             '</div>'
+                                            );
+                }
+                else {                    
+                    //Administrador o Agente
+                    $('#divMessage').append(
+                                           '<div class="direct-chat-msg right">'+
+                                                '<div class="direct-chat-info clearfix">'+
+                                                    '<span class="direct-chat-name pull-left">'+ userName +'</span>'+
+                                                    '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
+                                                '</div>'+
+                                                '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
+                                                '<div class="direct-chat-text">'+
+                                                    message +
+                                                '</div>'+
+                                            '</div>'
+                                           );
             }
 
             var height = $('#divMessage')[0].scrollHeight;

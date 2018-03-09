@@ -17,11 +17,16 @@ namespace EntHelpDesk.Entidad
         public string asunto { get; set; }
         public string descripcion { get; set; }
         public string imagen { get; set; }
-        public string fechahora_creacion { get; set; }                
-        
-            
-        
-        
+        public string fechahora_creacion { get; set; }        
+
+        public int vencidos { get; set; }
+        public int abiertos { get; set; }
+        public int en_proceso { get; set; }
+        public int en_espera { get; set; }
+        public int vence_hoy { get; set; }
+        public int sin_asignar { get; set; }
+        public int otros { get; set; }
+        public int no_tickets { get; set; }
 
     }
 }

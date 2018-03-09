@@ -213,6 +213,107 @@ namespace PerHelpDesk.Sevicios
             }
             return entidad;
         }
+        public tickets ObtenerEstados(usuarios usuario)
+        {
+            tickets entidad = new tickets();
+            try
+            {
+                AbrirConexion();
+                StringBuilder CadenaSql = new StringBuilder();
+
+                SqlCommand comandoSelect = new SqlCommand();
+
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Count_Tickets";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Select");
+
+                if (usuario!=null && usuario.tipo_usuario=="Supervisor")
+                    comandoSelect.Parameters.AddWithValue("@IdUsuario", usuario.id_usuario);
+                if (usuario != null && usuario.tipo_usuario == "Agente")
+                    comandoSelect.Parameters.AddWithValue("@IdAgente", usuario.id_usuario);
+
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        entidad.vencidos = int.Parse(dr["Vencidos"].ToString());
+                        entidad.abiertos = int.Parse(dr["Abierto"].ToString());
+                        entidad.en_espera = int.Parse(dr["En_Espera"].ToString());
+                        entidad.en_proceso = int.Parse(dr["En_Proceso"].ToString());
+                        entidad.vence_hoy = int.Parse(dr["Vence_Hoy"].ToString());
+                        entidad.sin_asignar = int.Parse(dr["Sin_Asignar"].ToString());
+                        entidad.otros = int.Parse(dr["Otros"].ToString());
+                    }
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+            return entidad;
+        }
+        public List<tickets> ObtenerPrioridad()
+        {
+            List<tickets> lista = new List<tickets>();
+            tickets entidad = new tickets();
+            try
+            {
+                AbrirConexion();
+                StringBuilder CadenaSql = new StringBuilder();
+
+                SqlCommand comandoSelect = new SqlCommand();
+
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Count_Tickets";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Prioridad");
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        entidad = new tickets();                        
+                        entidad.id_usuario = int.Parse(dr["id_usuario"].ToString());
+                        entidad.usuario = dr["usuario"].ToString();                       
+                        entidad.id_sucursal = int.Parse(dr["id_sucursal"].ToString());
+                        entidad.sucursal = dr["sucursal"].ToString();                       
+                        entidad.prioridad = dr["prioridad"].ToString();
+                        entidad.no_tickets = int.Parse(dr["tickets"].ToString());
+
+                        lista.Add(entidad);
+                    }
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar tickets";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+            return lista;
+        }
         public List<tickets> ObtenerPorUsuario(int id)
         {
             List<tickets> lista = new List<tickets>();
