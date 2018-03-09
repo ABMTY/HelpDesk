@@ -152,7 +152,7 @@ namespace HelpDesk.Controllers.Proceso
             }
         }
 
-        public ActionResult GetEsadosTickets()
+        public ActionResult GetEstadosTickets()
         {
             tickets entidad = new tickets();
             usuarios usuario = new usuarios();
@@ -165,6 +165,8 @@ namespace HelpDesk.Controllers.Proceso
             json.MaxJsonLength = 500000000;
             return json;
         }
+
+
         public ActionResult GetTickets()
         {
             List<tickets> Listado = new List<tickets>();
@@ -221,6 +223,17 @@ namespace HelpDesk.Controllers.Proceso
         {            
             var Listado = control.Obtener(id);
             //Session["id_detalle_ticket"] = ((tickets)Listado).id_detalle_ticket;
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
+
+        public ActionResult GetTicketPrioridad()
+        {
+            var Listado = control.ObtenerPrioridad();
+
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             serializer.MaxJsonLength = 500000000;
             var json = Json(new { data = Listado }, JsonRequestBehavior.AllowGet);

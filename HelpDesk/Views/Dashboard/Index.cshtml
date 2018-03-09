@@ -23,7 +23,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>0</h3>
+                        <h3 class="ending">0</h3>
                         <p>Vencidos</p>
                     </div>
                     <div class="icon">
@@ -123,67 +123,7 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <ul class="products-list product-list-in-box">
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="~/Content/img/Ticket.png" alt="Product Image">
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title">
-                                        Sucursal - Solicitante
-                                        <span class="label label-danger pull-right">4 Tickets </span>
-                                    </a>
-                                    <span class="product-description">
-                                        Detalle del Ticket
-                                    </span>
-                                </div>
-                            </li>
-                            <!-- /.item -->
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="~/Content/img/Ticket.png" alt="Product Image">
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title">
-                                        Sucursal - Solicitante
-                                        <span class="label label-danger pull-right">3 Tickets</span>
-                                    </a>
-                                    <span class="product-description">
-                                        Detalle del Ticket
-                                    </span>
-                                </div>
-                            </li>
-                            <!-- /.item -->
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="~/Content/img/Ticket.png" alt="Product Image">
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title">
-                                        Sucursal - Solicitante
-                                        <span class="label label-danger pull-right">3 Tickets</span>
-                                    </a>
-                                    <span class="product-description">
-                                        Detalle del Ticket
-                                    </span>
-                                </div>
-                            </li>
-                            <!-- /.item -->
-                            <li class="item">
-                                <div class="product-img">
-                                    <img src="~/Content/img/Ticket.png" alt="Product Image">
-                                </div>
-                                <div class="product-info">
-                                    <a href="javascript:void(0)" class="product-title">
-                                        Sucursal - Solicitante
-                                        <span class="label label-danger pull-right">2 Tickets</span>
-                                    </a>
-                                    <span class="product-description">
-                                        Detalle del Ticket
-                                    </span>
-                                </div>
-                            </li>
-                            <!-- /.item -->
+                        <ul class="priority products-list product-list-in-box">                           
                         </ul>
                     </div>
                     <!-- /.box-body -->
@@ -554,31 +494,67 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        updateEstatosCount()
+        updateEstatosCount();
+        GetPrioridadTickets();
     });
 
     // update  count tickets
-    function updateEstatosCount() {
-        debugger;
+    function updateEstatosCount() {        
         $.ajax({
             cache: false,
             destroy: true,
             searching: true,
             dataType: "json",
-            url: '/Tickets/GetEsadosTickets/',
+            url: '/Tickets/GetEstadosTickets/',
             contentType: "application/json; charset=utf-8",
             type: 'GET',
             success: function (datos) {
-                console.log(datos.data);                
+                console.log(datos.data);
+                
+                $('h3.ending').html(datos.data.vencidos);
                 $('h3.open').html(datos.data.abiertos);
                 $('h3.process').html(datos.data.en_proceso);
                 $('h3.unassigned').html(datos.data.sin_asignar);
-                
+                $('h3.now').html(datos.data.vence_hoy);
             },
             error: function (error) {
                 console.log(error);
             }
         })
+
+    }
+    // update  count tickets
+    function GetPrioridadTickets() {        
+        $.ajax({
+            cache: false,
+            destroy: true,
+            searching: true,
+            dataType: "json",
+            url: '/Tickets/GetTicketPrioridad/',
+            contentType: "application/json; charset=utf-8",
+            type: 'GET',
+            success: function (datos) {
+                $('ul.priority').empty();
+                $.each(datos.data, function (index, value) {
+                    $('ul.priority').append($(
+                       '<li class="item">'+
+                            '<div class="product-img">'+
+                                '<img src="../Content/img/Ticket.png" alt="Product Image">'+
+                            '</div>'+
+                            '<div class="product-info">'+
+                                '<a href="javascript:void(0)" class="product-title">' + datos.data[index].sucursal + ' - '+ datos.data[index].usuario +' '+
+                                    '<span class="label label-danger pull-right">'+ datos.data[index].no_tickets +' Tickets </span>'+
+                                '</a>'+
+                                '<span class="product-description"> Detalle del Ticket </span>'+
+                            '</div>'+
+                        '</li>')
+                    );
+                });
+                },
+                    error: function (error) {
+                    console.log(error);
+                }
+                })
 
     }
 </script>
