@@ -187,13 +187,14 @@
         });
     }
 
-    function Cargar_Estados() {
+    function Cargar_Estados(id) {
 
         $("#ddl_Estados").html("");
 
         $.ajax({
-            url: "/Estados/GetEstados/",
+            url: "/Estados/GetSigEstados/",
             async: true,
+            data: '{ id:' + id + '}',
             dataType: "json",
             type: "POST",
             contentType: "application/json; charset=utf-8",
@@ -256,7 +257,7 @@
                     $('#foto_solicitante').attr('src', data.data.foto_usuario);
                 }
                 $("#sucursal").text(data.data.sucursal);
-                Cargar_Estados();
+                Cargar_Estados(data.data.id_estado);
                 $("#ddl_Estados").append("<option value=" + data.data.id_estado + ">" + data.data.estado + "</option>");
                 $("#ddl_Estados").selectpicker('refresh');
 

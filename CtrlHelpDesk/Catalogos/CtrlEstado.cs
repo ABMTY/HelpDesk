@@ -22,6 +22,10 @@ namespace CtrlHelpDesk.Catalogos
         {
             return (List<estado>)new PerEstado().ObtenerTodos();
         }
+        public List<estado> ObtenerFiltro(int id)
+        {
+            return (List<estado>)new PerEstado().ObtenerSig(id);
+        }
         public estado Obtener(int id_estado)
         {
             return (estado)new PerEstado().Obtener(id_estado);

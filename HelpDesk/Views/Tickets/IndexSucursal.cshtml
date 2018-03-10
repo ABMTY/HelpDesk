@@ -124,7 +124,7 @@
                 { "data": "fechahora_creacion" },
                 { "data": "estado","render": function ( data, type, row ) {
                     if(data === 'Abierto'){
-                        return '<span class="label label-warning">'+data+'</span>';
+                        return '<span class="label label-primary">'+data+'</span>';
                     }else if(data === 'Pendiente'){
                         return '<span class="label label-default">'+data+'</span>';
                     }else if(data === 'Resuelto'){
@@ -135,8 +135,10 @@
                         return '<span class="label label-primary">'+data+'</span>';
                     }else if(data === 'En Proceso'){
                         return '<span class="label label-info">'+data+'</span>';
+                    } else if (data === 'En Espera') {
+                        return '<span class="label label-warning">' + data + '</span>';
                     }else{
-                        return '<span class="label label-info">'+data+'</span>';
+                        return '<span class="label label-primary">'+data+'</span>';
                     }
                 }},
 

@@ -188,7 +188,7 @@
                 } },
                 { "data": "estado","render": function ( data, type, row ) {
                     if(data === 'Abierto'){
-                        return '<span class="label label-warning">'+data+'</span>';
+                        return '<span class="label label-primary">' + data + '</span>';
                     }else if(data === 'Pendiente'){
                         return '<span class="label label-default">'+data+'</span>';
                     }else if(data === 'Resuelto'){
@@ -198,9 +198,11 @@
                     }else if(data === 'Cerrado'){
                         return '<span class="label label-primary">'+data+'</span>';
                     }else if(data === 'En Proceso'){
-                        return '<span class="label label-info">'+data+'</span>';
+                        return '<span class="label label-info">' + data + '</span>';
+                    } else if (data === 'En Espera') {
+                        return '<span class="label label-warning">' + data + '</span>';
                     }else{
-                        return '<span class="label label-info">'+data+'</span>';
+                        return '<span class="label label-primary">' + data + '</span>';
                     }
                 }},
                 { "data": "fechahora_creacion" },
@@ -231,7 +233,7 @@
         Cargar_Areas();
         Cargar_TiposSoporte();
         Cargar_Prioridades();
-        Cargar_Estados();
+        Cargar_Estados(0);
         Cargar_Agentes();
     }
 
@@ -323,14 +325,15 @@
         });
     }
 
-    function Cargar_Estados() {
+    function Cargar_Estados(id) {
 
         $("#ddl_Estados").html("");
 
         $.ajax({
-            url: "/Estados/GetEstados/",
+            url: "/Estados/GetSigEstados/",            
             async: true,
-            dataType: "json",
+            data: '{ id:' + id + '}',
+            dataType: "json",            
             type: "POST",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -411,12 +414,12 @@
         window.location = "/Tickets/SeguimientoMesaAyuda?id_ticket=" + id_ticket;
     }
 
-    function Editar(id_tiket) {
+    function Editar(id_ticket) {
         $.ajax({
             url: "/Tickets/GetTicket/",
             async: true,
             dataType: "json",
-            data: '{ id:' + id_tiket + '}',
+            data: '{ id:' + id_ticket + '}',
             type: "POST",
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -425,7 +428,7 @@
                 $("#secc_lista").hide();
                 $("#secc_add").show();
                 $("#btnAgregar").hide();
-                $("#id").val(id_tiket);
+                $("#id").val(id_ticket);
                 $("#id_detalle_ticket").val(data.data.id_detalle_ticket);
                 $("#txt_Asunto").val(data.data.asunto);
                 $("#txt_Descripcion").val(data.data.descripcion);
@@ -441,7 +444,7 @@
                 Cargar_Prioridades();
                 $("#ddl_Prioridades").append("<option value=" + data.data.id_prioridad + ">" + data.data.prioridad + "</option>");
                 $("#ddl_Prioridades").selectpicker('refresh');
-                Cargar_Estados();
+                Cargar_Estados(data.data.id_estado);
                 $("#ddl_Estados").append("<option value=" + data.data.id_estado + ">" + data.data.estado + "</option>");
                 $("#ddl_Estados").selectpicker('refresh');
                 Cargar_Agentes();

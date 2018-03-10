@@ -56,6 +56,51 @@ namespace PerHelpDesk.Catalogos
             }
             return lista;
         }
+        public List<estado> ObtenerSig(int id)
+        {
+            List<estado> lista = new List<estado>();
+            estado entidad;
+            try
+            {
+                AbrirConexion();
+                StringBuilder CadenaSql = new StringBuilder();
+
+                SqlCommand comandoSelect = new SqlCommand();
+
+                comandoSelect.Connection = Conexion;
+                comandoSelect.CommandType = CommandType.StoredProcedure;
+                comandoSelect.CommandText = "DML_Estado";
+                comandoSelect.Parameters.AddWithValue("@Sentencia", "Filter");
+                comandoSelect.Parameters.AddWithValue("@IdEstado", id);
+                using (var dr = comandoSelect.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        entidad = new estado();
+                        entidad.id_estado = int.Parse(dr["id_estado"].ToString());
+                        entidad.nombre = dr["nombre"].ToString();
+                        lista.Add(entidad);
+                    }
+                }
+            }
+            catch (InvalidCastException ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de conversión de tipos con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar estado";
+                throw excepcion;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException excepcion = new ApplicationException("Se genero un error de aplicación con el siguiente mensaje: " + ex.Message, ex);
+                excepcion.Source = "Insertar estado";
+                throw excepcion;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+            return lista;
+        }
         public estado Obtener(int id)
         {
             estado entidad = new estado();

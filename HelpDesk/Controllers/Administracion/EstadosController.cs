@@ -45,6 +45,15 @@ namespace HelpDesk.Controllers.Administracion
             json.MaxJsonLength = 500000000;
             return json;
         }
+        public ActionResult GetSigEstados(int id)
+        {
+            var Lista = control.ObtenerFiltro(id);
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            serializer.MaxJsonLength = 500000000;
+            var json = Json(new { data = Lista }, JsonRequestBehavior.AllowGet);
+            json.MaxJsonLength = 500000000;
+            return json;
+        }
         public ActionResult GetEstado(int id)
         {
             var Entidad = control.Obtener(id);
