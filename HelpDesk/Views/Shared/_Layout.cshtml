@@ -260,22 +260,11 @@
         <aside class="control-sidebar control-sidebar-light">            
             <!-- Tab panes -->
             <div class="tab-content">
-                <br />
-                <input id="hUserId" type="hidden" />
-                <input id="hId" type="hidden" />
-                <input id="hUserName" type="hidden" />
-                <input id="hGroup" type="hidden" />
-                <input id="fotochat" type="hidden" />
 
                 <input id="hdId" type="hidden" />
                 <input id="hdUserName" type="hidden" />
-
-                @*<input type="button" value="Conectar" class="btn btn-primary btn-flat" id="btnConectar" />*@
-                <div id="divalarm"></div>
-
-                <!-- Chat users list -->
                 
-                <!-- Widget: user widget style 1 -->
+                <!-- Chat users list -->
                 <div class="box box-widget widget-user-2">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-light-blue-active">
@@ -292,11 +281,9 @@
                         </ul>
                     </div>
                 </div>
-                <!-- /.widget-user -->
-
-               
-                <!-- DIRECT CHAT PRIMARY -->
-                <div class="box box-primary direct-chat direct-chat-primary" style="height:100%;">
+                <!-- /.widget-user -->               
+                <!-- CHAT GRUPAL -->
+                @*<div class="box box-primary direct-chat direct-chat-primary" style="height:100%;">
                     <div class="box-header with-border">
                         <h3 class="box-title" id="titulo"></h3>
                         <div class="box-tools pull-right">                            
@@ -317,7 +304,8 @@
                             </span>
                         </div>
                     </div>                    
-                </div>
+                </div>*@
+                <!-- CHAT PRIMARY PRIVATE-->
                 <div id="divContentPrivate">
 
                 </div>
@@ -328,10 +316,6 @@
          immediately after the control sidebar -->
         <div class="control-sidebar-bg"></div>
 
-
-
-
-        
     </div>
 
     <div class="modal fade" id="Modal_Exit">
@@ -355,7 +339,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <audio controls="controls" id="chataudio">
+    <audio controls="controls" id="chataudio" style="display:none;">
         <source src="~/Content/sound/Chat.mp3" type="audio/mpeg" />
     </audio>
     <!-- /.modal -->   
@@ -536,7 +520,7 @@
 
             
             
-        //-------------INICIO DE CHAT ........//                      
+        //-------------INICIO DEL CHAT ........//                      
 
             // Declare a proxy to reference the hub. 
             var chatHub = $.connection.chatHub;
@@ -599,11 +583,10 @@
                         AddUser(chatHub, allUsers[i].ConnectionId, allUsers[i].user_name);
                     }
                     
-                    // Add Existing Messages
-                    for (i = 0; i < messages.length; i++) {
-
-                        AddMessage(messages[i].UserName, messages[i].Message, messages[i].foto_usuario, messages[i].fecha_Mensaje);
-                    }
+                    //// Add Existing Messages
+                    //for (i = 0; i < messages.length; i++) {
+                    //    AddMessage(messages[i].UserName, messages[i].Message, messages[i].foto_usuario, messages[i].fecha_Mensaje);
+                    //}
 
 
                 }
@@ -632,14 +615,14 @@
 
                 }
 
-                chatHub.client.messageReceived = function (userName, message, userPhoto, fecha_hrs) {
-                    document.getElementById('chataudio').play();
-                    AddMessage(userName, message, userPhoto, fecha_hrs);
-                }
+                //CHAT GRUPAL
+                //chatHub.client.messageReceived = function (userName, message, userPhoto, fecha_hrs) {
+                //    document.getElementById('chataudio').play();
+                //    AddMessage(userName, message, userPhoto, fecha_hrs);
+                //}
 
 
                 chatHub.client.sendPrivateMessage = function (windowId, fromUserName, message, userPhoto, fecha_hrs) {
-
 
                     var ctrId = 'private_' + windowId;
 
@@ -648,9 +631,6 @@
                     }
 
                     document.getElementById('chataudio').play();
-
-                    //$('#' + ctrId).find('#divMessagePrivate').append('<div class="message"><span class="userName">' + fromUserName + '</span>: ' + message + '</div>');
-
 
                     $("#txtMessage").val('');
                     var nombreCliente = $('#hdUserName').val();
@@ -669,7 +649,7 @@
                                                 );
                     }
                     else {
-                        //Administrador o Agente
+                    //Administrador o Agente
                     $('#' + ctrId).find('#divMessagePrivate').append(
                                                '<div class="direct-chat-msg right">' +
                                                     '<div class="direct-chat-info clearfix">' +
@@ -686,12 +666,6 @@
 
                     var height = $('#divMessagePrivate')[0].scrollHeight;
                     $('#divMessagePrivate').scrollTop(height);
-
-
-                    //// set scrollbar
-                    //var height = $('#' + ctrId).find('#divMessagePrivate')[0].scrollHeight;
-                    //$('#' + ctrId).find('#divMessagePrivate').scrollTop(height);
-
                 }
 
             }
@@ -704,11 +678,11 @@
                 var code = "";
 
                 if (userId == id) {                    
-                    codeDefaults = $('<li><a>' + name + '<i class="pull-right fa fa-circle text-blue"></i></a></li>');
+                    codeDefaults = $('<li style="cursor:pointer;"><a>' + name + '<i class="pull-right fa fa-circle text-blue"></i></a></li>');
 
                 }
                 else {                    
-                    code = $('<li id="' + id + '"><a>' + name + '<i class="pull-right fa fa-circle text-green"></i></a></li>');
+                    code = $('<li style="cursor:pointer;" id="' + id + '"><a>' + name + '<i class="pull-right fa fa-circle text-green"></i></a></li>');
                     $(code).dblclick(function () {
 
                         var id = $(this).attr('id');                        
@@ -724,49 +698,45 @@
 
 
             }
+            
+            //MENSAJE GRUPAL
+            //function AddMessage(userName, message, foto, fecha_hrs) {
 
-            function AddMessage(userName, message, foto, fecha_hrs) {
+            //    $("#txtMessage").val('');
+            //    var nombreCliente = $('#hdUserName').val();
+            //    if (nombreCliente == userName) {
+            //        $('#divMessage').append(
+            //                                '<div class="direct-chat-msg">' +
+            //                                     '<div class="direct-chat-info clearfix">' +
+            //                                         '<span class="direct-chat-name pull-left">' + userName + '</span>' +
+            //                                         '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
+            //                                     '</div>' +
+            //                                     '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
+            //                                     '<div class="direct-chat-text">' +
+            //                                         message +
+            //                                     '</div>' +
+            //                                 '</div>'
+            //                                );
+            //    }
+            //    else {
+            //        //Administrador o Agente
+            //        $('#divMessage').append(
+            //                               '<div class="direct-chat-msg right">' +
+            //                                    '<div class="direct-chat-info clearfix">' +
+            //                                        '<span class="direct-chat-name pull-left">' + userName + '</span>' +
+            //                                        '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
+            //                                    '</div>' +
+            //                                    '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
+            //                                    '<div class="direct-chat-text">' +
+            //                                        message +
+            //                                    '</div>' +
+            //                                '</div>'
+            //                               );
+            //    }
 
-                $("#txtMessage").val('');
-                var nombreCliente = $('#hdUserName').val();
-                if (nombreCliente == userName) {
-                    $('#divMessage').append(
-                                            '<div class="direct-chat-msg">' +
-                                                 '<div class="direct-chat-info clearfix">' +
-                                                     '<span class="direct-chat-name pull-left">' + userName + '</span>' +
-                                                     '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
-                                                 '</div>' +
-                                                 '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
-                                                 '<div class="direct-chat-text">' +
-                                                     message +
-                                                 '</div>' +
-                                             '</div>'
-                                            );
-                }
-                else {
-                    //Administrador o Agente
-                    $('#divMessage').append(
-                                           '<div class="direct-chat-msg right">' +
-                                                '<div class="direct-chat-info clearfix">' +
-                                                    '<span class="direct-chat-name pull-left">' + userName + '</span>' +
-                                                    '<span class="direct-chat-timestamp pull-right">' + fecha_hrs + '</span>' +
-                                                '</div>' +
-                                                '<img class="direct-chat-img" src="data:image/png;base64,' + foto + '" alt="Message User Image">' +
-                                                '<div class="direct-chat-text">' +
-                                                    message +
-                                                '</div>' +
-                                            '</div>'
-                                           );
-                }
-
-                var height = $('#divMessage')[0].scrollHeight;
-                $('#divMessage').scrollTop(height);
-
-                //$('#divChatWindow').append('<div class="message"><span class="userName">' + userName + '</span>: ' + message + '</div>');
-
-                //var height = $('#divChatWindow')[0].scrollHeight;
-                //$('#divChatWindow').scrollTop(height);
-            }
+            //    var height = $('#divMessage')[0].scrollHeight;
+            //    $('#divMessage').scrollTop(height);
+            //}
 
             function OpenPrivateChatWindow(chatHub, id, userName) {                
                 var ctrId = 'private_' + id;
